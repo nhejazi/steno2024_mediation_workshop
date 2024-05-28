@@ -1,0 +1,88 @@
+project:
+  type: book
+  output-dir: _notes
+  render:
+    - "*.qmd"
+
+execute:
+  freeze: auto
+  #echo: false
+  warning: false
+  message: false
+
+book:
+  title: "Modern Causal Mediation Analysis"
+  page-footer:
+    left: |
+    right: |
+  site-url: https://codex.nimahejazi.org/causal_mediation_workshops/
+  repo-url: https://github.com/nhejazi/causal_mediation_workshops/
+  repo-branch: master
+  repo-actions: [edit, issue]
+  reader-mode: true
+  chapters:
+    - index.qmd
+    - preface.qmd
+    - effects_defn.qmd
+    - how_to_choose.qmd
+    - estimation_prelims.qmd
+    - estimation_natural_interv.qmd
+    - estimation_walkthrough.qmd
+    - longitudinal.qmd
+    - appx_additional_readings.qmd
+    - appx_stochastic_effects.qmd
+
+format:
+  html:
+    theme: [sandstone, style.scss]
+    callout-appearance: simple
+    # TeX-related options
+    include-in-header:
+      - file: headers/mathjax.html
+    # ToC options
+    toc: true
+    toc-depth: 2
+    toc-title: Contents
+    # citation/reference location
+    reference-location: margin
+    citation-location: margin
+    # figure options
+    fig-width: 8
+    fig-asp: 0.618
+    # code block options
+    code-link: true
+    code-fold: true
+    code-tools: true
+    code-line-numbers: true
+    code-block-bg: dark
+    highlight-style: ayu-mirage
+  #pdf:
+    #documentclass: scrbook
+    #papersize: letter
+    #fontsize: 11pt
+    #geometry:
+      #- margin=1in
+      #- heightrounded
+    #number-sections: true
+    #colorlinks: true
+    #link-citations: true
+    #callout-appearance: simple
+    #callout-icon: false
+    ## TeX-related options
+    #pdf-engine: lualatex
+    #include-in-header:
+      #- file: headers/preamble.tex
+    ## ToC options
+    #toc: true
+    #toc-depth: 2
+    #toc-title: Contents
+    ## figure options
+    #fig-width: 8
+    #fig-asp: 0.618
+    #fig-cap-location: bottom
+    ## code block options
+    #code-line-numbers: false
+    #highlight-style: nord
+
+bibliography: refs.bib
+editor: visual

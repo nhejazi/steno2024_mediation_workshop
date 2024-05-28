@@ -1,0 +1,17 @@
+.Rproj.user
+.Rhistory
+*.rds
+*.RData
+.DS_Store
+
+/.quarto/
+/_freeze/
+/_notes/
+/site_libs/
+/*_cache/
+/*_files/
+
+*.pdf
+*.html
+*/*_files/
+!mathjax.html
