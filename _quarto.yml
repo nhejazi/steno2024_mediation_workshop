@@ -15,8 +15,8 @@ book:
   page-footer:
     left: |
     right: |
-  site-url: https://codex.nimahejazi.org/causal_mediation_workshops/
-  repo-url: https://github.com/nhejazi/causal_mediation_workshops/
+  site-url: https://codex.nimahejazi.org/steno2024_mediation_workshop/
+  repo-url: https://github.com/nhejazi/steno2024_mediation_workshop/
   repo-branch: master
   repo-actions: [edit, issue]
   reader-mode: true
