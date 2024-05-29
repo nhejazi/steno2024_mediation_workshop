@@ -567,7 +567,7 @@ window.Quarto = {
 </details>
 </div>
 </li>
-<li><p>This yields a true NDE value of 0.5805</p></li>
+<li><p>This yields a true NDE value of 0.5806</p></li>
 <li>
 <p>Let’s perform a simulation where we draw 1000 datasets from the above distribution, and compute a g-computation estimator based on</p>
 <div class="cell">
@@ -851,7 +851,7 @@ window.Quarto = {
 <details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="do">## One-step estimator</span></span>
 <span id="cb13-2"><a href="#cb13-2"></a><span class="fu">mean</span>(eif)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.6069674</code></pre>
+<pre><code>[1] 0.5765607</code></pre>
 </div>
 </div>
 </li>
@@ -896,7 +896,7 @@ van der Laan, Mark J, Eric C Polley, and Alan E Hubbard. 2007. <span>“<span>Su
 <span id="cb16-3"><a href="#cb16-3"></a>  <span class="sc">+</span> (<span class="fu">mean_y</span>(<span class="dv">0</span>, <span class="dv">1</span>, w_big) <span class="sc">-</span> <span class="fu">mean_y</span>(<span class="dv">0</span>, <span class="dv">0</span>, w_big)) <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> <span class="fu">mean_m</span>(<span class="dv">0</span>, w_big)))</span>
 <span id="cb16-4"><a href="#cb16-4"></a><span class="fu">print</span>(trueval)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.5805669</code></pre>
+<pre><code>[1] 0.5804983</code></pre>
 </div>
 </div>
 <ul>
