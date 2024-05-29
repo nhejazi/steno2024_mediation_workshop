@@ -1,4 +1,5 @@
 Package: mcmaWorkshops
+Type: Website
 Title: Modern Causal Mediation Analysis Workshops
 Version: 0.3.0
 Authors@R: c(
