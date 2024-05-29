@@ -1,0 +1,2082 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.554">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>Modern Causal Mediation Analysis - 2&nbsp; Types of path-specific causal mediation effects</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./how_to_choose.html" rel="next">
+<link href="./preface.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script><script>
+  MathJax = {
+    tex: {
+      tags: 'ams',  // should be 'ams', 'none', or 'all'
+      macros: {
+        E: '{\\mathbb{E}}',
+        V: '{\\mathbb{V}}',
+        P: '{\\mathsf{P}}',
+        M: '{\\mathsf{M}}',
+        Pr: '{\\mathbb{P}}',
+        R: '{\\mathbb{R}}',
+        I: '{\\mathbb{I}}',
+        1: '{\\mathbb{1}}',
+        D: '{\\mathcal{D}}',
+        F: '{\\mathcal{F}}',
+        M: '{\\mathcal{M}}',
+        C: '{\\mathcal{C}}',
+        G: '{\\mathcal{G}}',
+        X: '{\\mathcal{X}}',
+        Z: '{\\mathcal{Z}}',
+        Hold: '{\\mathcal{H}}',
+        lik: '{\\mathcal{L}}',
+        logit: '{\\operatorname{logit}}',
+        expit: '{\\operatorname{expit}}',
+        argmin: '{\\operatorname*{arg\\,min}}',
+        argmax: '{\\operatorname*{arg\\,max}}',
+        indep: '{\\perp\\!\\!\\!\\perp}',
+        notindep: '{\\centernot{\\perp\\!\\!\\!\\perp}}',
+        coloneqq: '{\\mathrel{\\vcenter{:}}=}',
+        iid: '{\\,\\, \\mathbin{\\overset{\\text{iid}}{\\sim}} \\,\\,}',
+        asto: '{\\mathbin{\\underset{a.s.}{\\to}}}',
+        pto: '{\\mathbin{\\underset{p}{\\to}}}',
+        dto: '{\\mathbin{\\underset{d}{\\to}}}'
+      }
+    }
+  };
+</script><script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script><script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+</head>
+<body class="nav-sidebar floating slimcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./effects_defn.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Types of path-specific causal mediation effects</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Modern Causal Mediation Analysis</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/nhejazi/causal_mediation_workshops/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Welcome!</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./preface.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Causal mediation analysis intro</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./effects_defn.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Types of path-specific causal mediation effects</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./how_to_choose.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">How to choose an estimand: Real-world example</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./estimation_prelims.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Estimation preliminaries: review of doubly robust estimators for the average treatment effect</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./estimation_natural_interv.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Construction of G-computation and weighted estimators for the NDE: The case of the natural direct effect</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./estimation_walkthrough.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title"><code>R</code> packages for estimation of the causal (in)direct effects</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./longitudinal.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Mediation with time-varying treatments, mediators, and covariates</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./appx_additional_readings.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Appendix: Additional topics of interest</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./appx_stochastic_effects.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Appendix: Stochastic direct and indirect effects</span></span></a>
+  </div>
+</li>
+    </ul>
+</div>
+</nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Contents</h2>
+   
+  <ul class="collapse">
+<li><a href="#controlled-direct-effects" id="toc-controlled-direct-effects" class="nav-link active" data-scroll-target="#controlled-direct-effects"><span class="header-section-number">2.1</span> Controlled direct effects</a></li>
+  <li><a href="#natural-direct-and-indirect-effects" id="toc-natural-direct-and-indirect-effects" class="nav-link" data-scroll-target="#natural-direct-and-indirect-effects"><span class="header-section-number">2.2</span> Natural direct and indirect effects</a></li>
+  <li><a href="#interventional-indirect-effects" id="toc-interventional-indirect-effects" class="nav-link" data-scroll-target="#interventional-indirect-effects"><span class="header-section-number">2.3</span> Interventional (in)direct effects</a></li>
+  <li><a href="#estimand-summary" id="toc-estimand-summary" class="nav-link" data-scroll-target="#estimand-summary"><span class="header-section-number">2.4</span> Estimand Summary</a></li>
+  </ul><div class="toc-actions"><ul class="collapse"><li><a href="https://github.com/nhejazi/causal_mediation_workshops/edit/master/effects_defn.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/nhejazi/causal_mediation_workshops/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content page-columns page-full" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
+<div class="quarto-title-block"><div><h1 class="title"><span id="estimands" class="quarto-section-identifier"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Types of path-specific causal mediation effects</span></span></h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header><div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>- The project is out-of-sync -- use `renv::status()` for details.</code></pre>
+</div>
+</div>
+<ul>
+<li>Controlled direct effects</li>
+<li>Natural direct and indirect effects</li>
+<li>Interventional direct and indirect effects</li>
+</ul>
+<div class="cell">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource tex number-lines code-with-copy"><code class="sourceCode latex"><span id="cb2-1"><a href="#cb2-1"></a><span class="fu">\dimendef\prevdepth</span>=0</span>
+<span id="cb2-2"><a href="#cb2-2"></a><span class="fu">\pgfdeclarelayer</span>{background}</span>
+<span id="cb2-3"><a href="#cb2-3"></a><span class="fu">\pgfsetlayers</span>{background,main}</span>
+<span id="cb2-4"><a href="#cb2-4"></a><span class="fu">\usetikzlibrary</span>{arrows,positioning}</span>
+<span id="cb2-5"><a href="#cb2-5"></a><span class="fu">\tikzset</span>{</span>
+<span id="cb2-6"><a href="#cb2-6"></a>&gt;=stealth',</span>
+<span id="cb2-7"><a href="#cb2-7"></a>punkt/.style={</span>
+<span id="cb2-8"><a href="#cb2-8"></a>rectangle,</span>
+<span id="cb2-9"><a href="#cb2-9"></a>rounded corners,</span>
+<span id="cb2-10"><a href="#cb2-10"></a>draw=black, very thick,</span>
+<span id="cb2-11"><a href="#cb2-11"></a>text width=6.5em,</span>
+<span id="cb2-12"><a href="#cb2-12"></a>minimum height=2em,</span>
+<span id="cb2-13"><a href="#cb2-13"></a>text centered},</span>
+<span id="cb2-14"><a href="#cb2-14"></a>pil/.style={</span>
+<span id="cb2-15"><a href="#cb2-15"></a>-&gt;,</span>
+<span id="cb2-16"><a href="#cb2-16"></a>thick,</span>
+<span id="cb2-17"><a href="#cb2-17"></a>shorten &lt;=2pt,</span>
+<span id="cb2-18"><a href="#cb2-18"></a>shorten &gt;=2pt,}</span>
+<span id="cb2-19"><a href="#cb2-19"></a>}</span>
+<span id="cb2-20"><a href="#cb2-20"></a><span class="fu">\newcommand</span>{<span class="ex">\Vertex</span>}[2]</span>
+<span id="cb2-21"><a href="#cb2-21"></a>{<span class="fu">\node</span>[minimum width=0.6cm,inner sep=0.05cm] (#2) at (#1) {<span class="ss">$#2$</span>};</span>
+<span id="cb2-22"><a href="#cb2-22"></a>}</span>
+<span id="cb2-23"><a href="#cb2-23"></a><span class="fu">\newcommand</span>{<span class="ex">\VertexR</span>}[2]</span>
+<span id="cb2-24"><a href="#cb2-24"></a>{<span class="fu">\node</span>[rectangle, draw, minimum width=0.6cm,inner sep=0.05cm] (#2) at (#1) {<span class="ss">$#2$</span>};</span>
+<span id="cb2-25"><a href="#cb2-25"></a>}</span>
+<span id="cb2-26"><a href="#cb2-26"></a><span class="fu">\newcommand</span>{<span class="ex">\ArrowR</span>}[3]</span>
+<span id="cb2-27"><a href="#cb2-27"></a>{ <span class="kw">\begin</span>{<span class="ex">pgfonlayer</span>}{background}</span>
+<span id="cb2-28"><a href="#cb2-28"></a><span class="fu">\draw</span>[-&gt;,#3] (#1) to[bend right=30] (#2);</span>
+<span id="cb2-29"><a href="#cb2-29"></a><span class="kw">\end</span>{<span class="ex">pgfonlayer</span>}</span>
+<span id="cb2-30"><a href="#cb2-30"></a>}</span>
+<span id="cb2-31"><a href="#cb2-31"></a><span class="fu">\newcommand</span>{<span class="ex">\ArrowL</span>}[3]</span>
+<span id="cb2-32"><a href="#cb2-32"></a>{ <span class="kw">\begin</span>{<span class="ex">pgfonlayer</span>}{background}</span>
+<span id="cb2-33"><a href="#cb2-33"></a><span class="fu">\draw</span>[-&gt;,#3] (#1) to[bend left=45] (#2);</span>
+<span id="cb2-34"><a href="#cb2-34"></a><span class="kw">\end</span>{<span class="ex">pgfonlayer</span>}</span>
+<span id="cb2-35"><a href="#cb2-35"></a>}</span>
+<span id="cb2-36"><a href="#cb2-36"></a><span class="fu">\newcommand</span>{<span class="ex">\EdgeL</span>}[3]</span>
+<span id="cb2-37"><a href="#cb2-37"></a>{ <span class="kw">\begin</span>{<span class="ex">pgfonlayer</span>}{background}</span>
+<span id="cb2-38"><a href="#cb2-38"></a><span class="fu">\draw</span>[dashed,#3] (#1) to[bend right=-45] (#2);</span>
+<span id="cb2-39"><a href="#cb2-39"></a><span class="kw">\end</span>{<span class="ex">pgfonlayer</span>}</span>
+<span id="cb2-40"><a href="#cb2-40"></a>}</span>
+<span id="cb2-41"><a href="#cb2-41"></a><span class="fu">\newcommand</span>{<span class="ex">\Arrow</span>}[3]</span>
+<span id="cb2-42"><a href="#cb2-42"></a>{ <span class="kw">\begin</span>{<span class="ex">pgfonlayer</span>}{background}</span>
+<span id="cb2-43"><a href="#cb2-43"></a><span class="fu">\draw</span>[-&gt;,#3] (#1) -- +(#2);</span>
+<span id="cb2-44"><a href="#cb2-44"></a><span class="kw">\end</span>{<span class="ex">pgfonlayer</span>}</span>
+<span id="cb2-45"><a href="#cb2-45"></a>}</span>
+<span id="cb2-46"><a href="#cb2-46"></a><span class="kw">\begin</span>{<span class="ex">tikzpicture</span>}</span>
+<span id="cb2-47"><a href="#cb2-47"></a>  <span class="fu">\Vertex</span>{-4, 0}{W}</span>
+<span id="cb2-48"><a href="#cb2-48"></a>  <span class="fu">\Vertex</span>{0, 0}{M}</span>
+<span id="cb2-49"><a href="#cb2-49"></a>  <span class="fu">\Vertex</span>{-2, 0}{A}</span>
+<span id="cb2-50"><a href="#cb2-50"></a>  <span class="fu">\Vertex</span>{2, 0}{Y}</span>
+<span id="cb2-51"><a href="#cb2-51"></a>  <span class="fu">\Arrow</span>{W}{A}{black}</span>
+<span id="cb2-52"><a href="#cb2-52"></a>  <span class="fu">\Arrow</span>{A}{M}{black}</span>
+<span id="cb2-53"><a href="#cb2-53"></a>  <span class="fu">\Arrow</span>{M}{Y}{black}</span>
+<span id="cb2-54"><a href="#cb2-54"></a>  <span class="fu">\ArrowL</span>{W}{Y}{black}</span>
+<span id="cb2-55"><a href="#cb2-55"></a>  <span class="fu">\ArrowL</span>{A}{Y}{black}</span>
+<span id="cb2-56"><a href="#cb2-56"></a>  <span class="fu">\ArrowL</span>{W}{M}{black}</span>
+<span id="cb2-57"><a href="#cb2-57"></a><span class="kw">\end</span>{<span class="ex">tikzpicture</span>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="effects_defn_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="768"></p>
+<figcaption>Directed acyclic graph under <em>no intermediate confounders</em> of the mediator-outcome relation affected by treatment</figcaption></figure>
+</div>
+</div>
+</div>
+<section id="controlled-direct-effects" class="level2" data-number="2.1"><h2 data-number="2.1" class="anchored" data-anchor-id="controlled-direct-effects">
+<span class="header-section-number">2.1</span> Controlled direct effects</h2>
+<p><span class="math display">\[\psi_{\text{CDE}} = \E(Y_{1,m} - Y_{0,m})\]</span></p>
+<p><img src="img/graphic4a3.png" class="img-fluid" style="width:40.0%"></p>
+<ul>
+<li>Set the mediator to a reference value <span class="math inline">\(M=m\)</span> uniformly for everyone in the population</li>
+<li>Compare <span class="math inline">\(A=1\)</span> vs <span class="math inline">\(A=0\)</span> with <span class="math inline">\(M=m\)</span> fixed</li>
+</ul>
+<section id="identification-assumptions" class="level3" data-number="2.1.1"><h3 data-number="2.1.1" class="anchored" data-anchor-id="identification-assumptions">
+<span class="header-section-number">2.1.1</span> Identification assumptions:</h3>
+<ul>
+<li>Confounder assumptions:
+<ul>
+<li><span class="math inline">\(A \indep Y_{a,m} \mid W\)</span></li>
+<li><span class="math inline">\(M \indep Y_{a,m} \mid W, A\)</span></li>
+</ul>
+</li>
+<li>Positivity assumptions:
+<ul>
+<li><span class="math inline">\(\P(M = m \mid A=a, W) &gt; 0 \text{  } a.e.\)</span></li>
+<li><span class="math inline">\(\P(A=a \mid W) &gt; 0 \text{  } a.e.\)</span></li>
+</ul>
+</li>
+</ul>
+<p>Under the above identification assumptions, the controlled direct effect can be identified: <span class="math display">\[
+  \E(Y_{1,m} - Y_{0,m}) = \E\{ \color{ForestGreen}{\E(Y \mid A=1, M=m, W) -
+    \E(Y \mid A=0, M=m, W)} \}
+\]</span></p>
+<ul>
+<li>
+<p>For intuition about this formula in R, let’s continue with a toy example:</p>
+<div class="cell">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>n <span class="ot">&lt;-</span> <span class="fl">1e6</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a>w <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n)</span>
+<span id="cb3-3"><a href="#cb3-3"></a>a <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(n, <span class="dv">1</span>, <span class="fl">0.5</span>)</span>
+<span id="cb3-4"><a href="#cb3-4"></a>m <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, w <span class="sc">+</span> a)</span>
+<span id="cb3-5"><a href="#cb3-5"></a>y <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, w <span class="sc">+</span> a <span class="sc">+</span> m)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</li>
+<li>
+<p>First we fit a correct model for the outcome</p>
+<div class="cell">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>lm_y <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> m <span class="sc">+</span> a <span class="sc">+</span> w)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</li>
+<li><p>Assume we would like the CDE at <span class="math inline">\(m=0\)</span></p></li>
+<li>
+<p>Then we generate predictions <span class="math display">\[
+  \color{ForestGreen}{\E(Y \mid A=1, M=m, W)} \text{ and }
+    \color{ForestGreen}{\E(Y \mid A=0, M=m, W)} \ :
+\]</span></p>
+<div class="cell">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>pred_y1 <span class="ot">&lt;-</span> <span class="fu">predict</span>(lm_y, <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">a =</span> <span class="dv">1</span>, <span class="at">m =</span> <span class="dv">0</span>, <span class="at">w =</span> w))</span>
+<span id="cb5-2"><a href="#cb5-2"></a>pred_y0 <span class="ot">&lt;-</span> <span class="fu">predict</span>(lm_y, <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">a =</span> <span class="dv">0</span>, <span class="at">m =</span> <span class="dv">0</span>, <span class="at">w =</span> w))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</li>
+<li>
+<p>Then we compute the difference between the predicted values <span class="math inline">\(\color{ForestGreen}{\E(Y \mid A=1, M=m, W) - \E(Y \mid A=0, M=m, W)}\)</span>, and average across values of <span class="math inline">\(W\)</span></p>
+<div class="cell">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="do">## CDE at m = 0</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a><span class="fu">mean</span>(pred_y1 <span class="sc">-</span> pred_y0)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.9990842</code></pre>
+</div>
+</div>
+</li>
+</ul></section><section id="is-this-the-estimand-i-want" class="level3" data-number="2.1.2"><h3 data-number="2.1.2" class="anchored" data-anchor-id="is-this-the-estimand-i-want">
+<span class="header-section-number">2.1.2</span> Is this the estimand I want?</h3>
+<ul>
+<li>Makes the most sense if can intervene directly on <span class="math inline">\(M\)</span>
+<ul>
+<li>And can think of a policy that would set everyone to a constant level <span class="math inline">\(m
+\in \mathcal{M}\)</span>.</li>
+<li>Judea Pearl calls this <em>prescriptive</em>.</li>
+<li>Can you think of an example? (Air pollution, rescue inhaler dosage, hospital visits…)</li>
+<li>Does not provide a decomposition of the average treatment effect into direct and indirect effects.</li>
+</ul>
+</li>
+</ul>
+<p><em>What if our research question doesn’t involve intervening directly on the mediator?</em></p>
+<p><em>What if we want to decompose the average treatment effect into its direct and indirect counterparts?</em></p>
+</section></section><section id="natural-direct-and-indirect-effects" class="level2 page-columns page-full" data-number="2.2"><h2 data-number="2.2" class="anchored" data-anchor-id="natural-direct-and-indirect-effects">
+<span class="header-section-number">2.2</span> Natural direct and indirect effects</h2>
+<p>Still using the same DAG as above,</p>
+<ul>
+<li><p>Recall the definition of the nested counterfactual: <span class="math display">\[\begin{equation*}
+  Y_{1, M_0} = f_Y(W, 1, M_0, U_Y)
+\end{equation*}\]</span></p></li>
+<li>
+<p>Interpreted as <em>the outcome for an individual in a hypothetical world where treatment was given but the mediator was held at the value it would have taken under no treatment</em></p>
+<p><img src="img/graphic4a.png" class="img-fluid" style="width:40.0%"></p>
+</li>
+<li><p>Recall that, because of the definition of counterfactuals <span class="math display">\[\begin{equation*}
+  Y_{1, M_1} = Y_1
+\end{equation*}\]</span></p></li>
+</ul>
+<p>Then we can decompose the <em>average treatment effect</em> <span class="math inline">\(\E(Y_1-Y_0)\)</span> as follows</p>
+<p><span class="math display">\[\begin{equation*}
+\E[Y_{1,M_1} - Y_{0,M_0}] = \underbrace{\E[Y_{\color{red}{1},\color{blue}{M_1}}
+  - Y_{\color{red}{1},\color{blue}{M_0}}]}_{\text{natural indirect effect}} +
+  \underbrace{\E[Y_{\color{blue}{1},\color{red}{M_0}} -
+  Y_{\color{blue}{0},\color{red}{M_0}}]}_{\text{natural direct effect}}
+\end{equation*}\]</span></p>
+<ul>
+<li>Natural direct effect (NDE): Varying treatment while keeping the mediator fixed at the value it would have taken under no treatment</li>
+<li>Natural indirect effect (NIE): Varying the mediator from the value it would have taken under treatment to the value it would have taken under control, while keeping treatment fixed</li>
+</ul>
+<section id="identification-assumptions-1" class="level3" data-number="2.2.1"><h3 data-number="2.2.1" class="anchored" data-anchor-id="identification-assumptions-1">
+<span class="header-section-number">2.2.1</span> Identification assumptions:</h3>
+<ul>
+<li><span class="math inline">\(A \indep Y_{a,m} \mid W\)</span></li>
+<li><span class="math inline">\(M \indep Y_{a,m} \mid W, A\)</span></li>
+<li><span class="math inline">\(A \indep M_a \mid W\)</span></li>
+<li><span class="math inline">\(M_0 \indep Y_{1,m} \mid W\)</span></li>
+<li>and positivity assumptions</li>
+</ul></section><section id="cross-world-independence-assumption" class="level3" data-number="2.2.2"><h3 data-number="2.2.2" class="anchored" data-anchor-id="cross-world-independence-assumption">
+<span class="header-section-number">2.2.2</span> Cross-world independence assumption</h3>
+<p>What does <span class="math inline">\(M_0 \indep Y_{1,m} \mid W\)</span> mean?</p>
+<ul>
+<li>Conditional on <span class="math inline">\(W\)</span>, knowledge of the mediator value in the absence of treatment, <span class="math inline">\(M_0\)</span>, provides no information about the outcome under treatment, <span class="math inline">\(Y_{1,m}\)</span>.</li>
+<li>Can you think of a data-generating mechanism that would violate this assumption?</li>
+<li>Example: in a randomized study, whenever we believe that treatment assignment works through adherence (i.e., almost always), we are violating this assumption (more on this later).</li>
+<li>Cross-world assumptions are problematic for other reasons, including:
+<ul>
+<li>You can never design a randomized study where the assumption holds by design.</li>
+</ul>
+</li>
+</ul>
+<p><strong>If the cross-world assumption holds, can write the NDE as a weighted average of controlled direct effects at each level of <span class="math inline">\(M=m\)</span>.</strong></p>
+<p><span class="math display">\[
+  \E \sum_m \{\E(Y_{1,m} \mid W) - \E(Y_{0,m} \mid W)\} \P(M_{0}=m \mid W)
+\]</span></p>
+<ul>
+<li>If CDE(<span class="math inline">\(m\)</span>) is constant across <span class="math inline">\(m\)</span>, then CDE = NDE.</li>
+</ul></section><section id="identification-formula" class="level3" data-number="2.2.3"><h3 data-number="2.2.3" class="anchored" data-anchor-id="identification-formula">
+<span class="header-section-number">2.2.3</span> Identification formula:</h3>
+<ul>
+<li><p>Under the above identification assumptions, the natural direct effect can be identified: <span class="math display">\[\begin{equation*}
+  \E(Y_{1,M_0} - Y_{0,M_0}) =
+  \E[\color{Goldenrod}{\E\{}\color{ForestGreen}{\E(Y \mid A=1, M, W) -
+  \E(Y \mid A=0, M, W)}\color{Goldenrod}{\mid A=0,W\}}]
+\end{equation*}\]</span></p></li>
+<li><p>The natural indirect effect can be identified similarly.</p></li>
+<li>
+<p>Let’s dissect this formula in <code>R</code>:</p>
+<div class="cell">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>n <span class="ot">&lt;-</span> <span class="fl">1e6</span></span>
+<span id="cb8-2"><a href="#cb8-2"></a>w <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n)</span>
+<span id="cb8-3"><a href="#cb8-3"></a>a <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(n, <span class="dv">1</span>, <span class="fl">0.5</span>)</span>
+<span id="cb8-4"><a href="#cb8-4"></a>m <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, w <span class="sc">+</span> a)</span>
+<span id="cb8-5"><a href="#cb8-5"></a>y <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, w <span class="sc">+</span> a <span class="sc">+</span> m)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</li>
+<li>
+<p>First we fit a correct model for the outcome</p>
+<div class="cell">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>lm_y <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> m <span class="sc">+</span> a <span class="sc">+</span> w)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</li>
+<li>
+<p>Then we generate predictions <span class="math inline">\(\color{ForestGreen}{\E(Y \mid A=1, M, W)}
+\text{ and }\color{ForestGreen}{\E(Y \mid A=0, M, W)}\)</span> with <span class="math inline">\(A\)</span> fixed but letting <span class="math inline">\(M\)</span> and <span class="math inline">\(W\)</span> take their observed values</p>
+<div class="cell">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>pred_y1 <span class="ot">&lt;-</span> <span class="fu">predict</span>(lm_y, <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">a =</span> <span class="dv">1</span>, <span class="at">m =</span> m, <span class="at">w =</span> w))</span>
+<span id="cb10-2"><a href="#cb10-2"></a>pred_y0 <span class="ot">&lt;-</span> <span class="fu">predict</span>(lm_y, <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">a =</span> <span class="dv">0</span>, <span class="at">m =</span> m, <span class="at">w =</span> w))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</li>
+<li><p>Then we compute the difference between the predicted values <span class="math inline">\(\color{ForestGreen}{\E(Y \mid A=1, M, W) - \E(Y \mid A=0, M, W)},\)</span></p></li>
+<li>
+<p>and use this difference as a pseudo-outcome in a regression on <span class="math inline">\(A\)</span> and <span class="math inline">\(W\)</span>: <span class="math inline">\(\color{Goldenrod}{\E\{}\color{ForestGreen}{\E(Y \mid A=1, M, W) - \E(Y \mid
+A=0, M, W)}\color{Goldenrod}{\mid A=0,W\}}\)</span></p>
+<div class="cell">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a>pseudo <span class="ot">&lt;-</span> pred_y1 <span class="sc">-</span> pred_y0</span>
+<span id="cb11-2"><a href="#cb11-2"></a>lm_pseudo <span class="ot">&lt;-</span> <span class="fu">lm</span>(pseudo <span class="sc">~</span> a <span class="sc">+</span> w)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</li>
+<li>
+<p>Now we predict the value of this pseudo-outcome under <span class="math inline">\(A=0\)</span>, and average the result</p>
+<div class="cell">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a>pred_pseudo <span class="ot">&lt;-</span> <span class="fu">predict</span>(lm_pseudo, <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">a =</span> <span class="dv">0</span>, <span class="at">w =</span> w))</span>
+<span id="cb12-2"><a href="#cb12-2"></a><span class="do">## NDE:</span></span>
+<span id="cb12-3"><a href="#cb12-3"></a><span class="fu">mean</span>(pred_pseudo)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>[1] 1.001073</code></pre>
+</div>
+</div>
+</li>
+</ul></section><section id="is-this-the-estimand-i-want-1" class="level3" data-number="2.2.4"><h3 data-number="2.2.4" class="anchored" data-anchor-id="is-this-the-estimand-i-want-1">
+<span class="header-section-number">2.2.4</span> Is this the estimand I want?</h3>
+<ul>
+<li>Makes sense to intervene on <span class="math inline">\(A\)</span> but not directly on <span class="math inline">\(M\)</span>.</li>
+<li>Want to understand a natural mechanism underlying an association / total effect. J. Pearl calls this <em>descriptive</em>.</li>
+<li>NDE + NIE = total effect (ATE).</li>
+<li>Okay with the assumptions.</li>
+</ul>
+<p><em>What if our data structure involves a post-treatment confounder of the mediator-outcome relationship (e.g., adherence)?</em></p>
+<div class="cell">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource tex number-lines code-with-copy"><code class="sourceCode latex"><span id="cb14-1"><a href="#cb14-1"></a><span class="fu">\dimendef\prevdepth</span>=0</span>
+<span id="cb14-2"><a href="#cb14-2"></a><span class="fu">\pgfdeclarelayer</span>{background}</span>
+<span id="cb14-3"><a href="#cb14-3"></a><span class="fu">\pgfsetlayers</span>{background,main}</span>
+<span id="cb14-4"><a href="#cb14-4"></a><span class="fu">\usetikzlibrary</span>{arrows,positioning}</span>
+<span id="cb14-5"><a href="#cb14-5"></a><span class="fu">\tikzset</span>{</span>
+<span id="cb14-6"><a href="#cb14-6"></a>&gt;=stealth',</span>
+<span id="cb14-7"><a href="#cb14-7"></a>punkt/.style={</span>
+<span id="cb14-8"><a href="#cb14-8"></a>rectangle,</span>
+<span id="cb14-9"><a href="#cb14-9"></a>rounded corners,</span>
+<span id="cb14-10"><a href="#cb14-10"></a>draw=black, very thick,</span>
+<span id="cb14-11"><a href="#cb14-11"></a>text width=6.5em,</span>
+<span id="cb14-12"><a href="#cb14-12"></a>minimum height=2em,</span>
+<span id="cb14-13"><a href="#cb14-13"></a>text centered},</span>
+<span id="cb14-14"><a href="#cb14-14"></a>pil/.style={</span>
+<span id="cb14-15"><a href="#cb14-15"></a>-&gt;,</span>
+<span id="cb14-16"><a href="#cb14-16"></a>thick,</span>
+<span id="cb14-17"><a href="#cb14-17"></a>shorten &lt;=2pt,</span>
+<span id="cb14-18"><a href="#cb14-18"></a>shorten &gt;=2pt,}</span>
+<span id="cb14-19"><a href="#cb14-19"></a>}</span>
+<span id="cb14-20"><a href="#cb14-20"></a><span class="fu">\newcommand</span>{<span class="ex">\Vertex</span>}[2]</span>
+<span id="cb14-21"><a href="#cb14-21"></a>{<span class="fu">\node</span>[minimum width=0.6cm,inner sep=0.05cm] (#2) at (#1) {<span class="ss">$#2$</span>};</span>
+<span id="cb14-22"><a href="#cb14-22"></a>}</span>
+<span id="cb14-23"><a href="#cb14-23"></a><span class="fu">\newcommand</span>{<span class="ex">\VertexR</span>}[2]</span>
+<span id="cb14-24"><a href="#cb14-24"></a>{<span class="fu">\node</span>[rectangle, draw, minimum width=0.6cm,inner sep=0.05cm] (#2) at (#1) {<span class="ss">$#2$</span>};</span>
+<span id="cb14-25"><a href="#cb14-25"></a>}</span>
+<span id="cb14-26"><a href="#cb14-26"></a><span class="fu">\newcommand</span>{<span class="ex">\ArrowR</span>}[3]</span>
+<span id="cb14-27"><a href="#cb14-27"></a>{ <span class="kw">\begin</span>{<span class="ex">pgfonlayer</span>}{background}</span>
+<span id="cb14-28"><a href="#cb14-28"></a><span class="fu">\draw</span>[-&gt;,#3] (#1) to[bend right=30] (#2);</span>
+<span id="cb14-29"><a href="#cb14-29"></a><span class="kw">\end</span>{<span class="ex">pgfonlayer</span>}</span>
+<span id="cb14-30"><a href="#cb14-30"></a>}</span>
+<span id="cb14-31"><a href="#cb14-31"></a><span class="fu">\newcommand</span>{<span class="ex">\ArrowL</span>}[3]</span>
+<span id="cb14-32"><a href="#cb14-32"></a>{ <span class="kw">\begin</span>{<span class="ex">pgfonlayer</span>}{background}</span>
+<span id="cb14-33"><a href="#cb14-33"></a><span class="fu">\draw</span>[-&gt;,#3] (#1) to[bend left=45] (#2);</span>
+<span id="cb14-34"><a href="#cb14-34"></a><span class="kw">\end</span>{<span class="ex">pgfonlayer</span>}</span>
+<span id="cb14-35"><a href="#cb14-35"></a>}</span>
+<span id="cb14-36"><a href="#cb14-36"></a><span class="fu">\newcommand</span>{<span class="ex">\EdgeL</span>}[3]</span>
+<span id="cb14-37"><a href="#cb14-37"></a>{ <span class="kw">\begin</span>{<span class="ex">pgfonlayer</span>}{background}</span>
+<span id="cb14-38"><a href="#cb14-38"></a><span class="fu">\draw</span>[dashed,#3] (#1) to[bend right=-45] (#2);</span>
+<span id="cb14-39"><a href="#cb14-39"></a><span class="kw">\end</span>{<span class="ex">pgfonlayer</span>}</span>
+<span id="cb14-40"><a href="#cb14-40"></a>}</span>
+<span id="cb14-41"><a href="#cb14-41"></a><span class="fu">\newcommand</span>{<span class="ex">\Arrow</span>}[3]</span>
+<span id="cb14-42"><a href="#cb14-42"></a>{ <span class="kw">\begin</span>{<span class="ex">pgfonlayer</span>}{background}</span>
+<span id="cb14-43"><a href="#cb14-43"></a><span class="fu">\draw</span>[-&gt;,#3] (#1) -- +(#2);</span>
+<span id="cb14-44"><a href="#cb14-44"></a><span class="kw">\end</span>{<span class="ex">pgfonlayer</span>}</span>
+<span id="cb14-45"><a href="#cb14-45"></a>}</span>
+<span id="cb14-46"><a href="#cb14-46"></a><span class="kw">\begin</span>{<span class="ex">tikzpicture</span>}</span>
+<span id="cb14-47"><a href="#cb14-47"></a>  <span class="fu">\Vertex</span>{0, -1}{Z}</span>
+<span id="cb14-48"><a href="#cb14-48"></a>  <span class="fu">\Vertex</span>{-4, 0}{W}</span>
+<span id="cb14-49"><a href="#cb14-49"></a>  <span class="fu">\Vertex</span>{0, 0}{M}</span>
+<span id="cb14-50"><a href="#cb14-50"></a>  <span class="fu">\Vertex</span>{-2, 0}{A}</span>
+<span id="cb14-51"><a href="#cb14-51"></a>  <span class="fu">\Vertex</span>{2, 0}{Y}</span>
+<span id="cb14-52"><a href="#cb14-52"></a>  <span class="fu">\ArrowR</span>{W}{Z}{black}</span>
+<span id="cb14-53"><a href="#cb14-53"></a>  <span class="fu">\Arrow</span>{Z}{M}{black}</span>
+<span id="cb14-54"><a href="#cb14-54"></a>  <span class="fu">\Arrow</span>{W}{A}{black}</span>
+<span id="cb14-55"><a href="#cb14-55"></a>  <span class="fu">\Arrow</span>{A}{M}{black}</span>
+<span id="cb14-56"><a href="#cb14-56"></a>  <span class="fu">\Arrow</span>{M}{Y}{black}</span>
+<span id="cb14-57"><a href="#cb14-57"></a>  <span class="fu">\Arrow</span>{A}{Z}{black}</span>
+<span id="cb14-58"><a href="#cb14-58"></a>  <span class="fu">\Arrow</span>{Z}{Y}{black}</span>
+<span id="cb14-59"><a href="#cb14-59"></a>  <span class="fu">\ArrowL</span>{W}{Y}{black}</span>
+<span id="cb14-60"><a href="#cb14-60"></a>  <span class="fu">\ArrowL</span>{A}{Y}{black}</span>
+<span id="cb14-61"><a href="#cb14-61"></a>  <span class="fu">\ArrowL</span>{W}{M}{black}</span>
+<span id="cb14-62"><a href="#cb14-62"></a><span class="kw">\end</span>{<span class="ex">tikzpicture</span>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="effects_defn_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="768"></p>
+<figcaption>Directed acyclic graph under intermediate confounders of the mediator-outcome relation affected by treatment</figcaption></figure>
+</div>
+</div>
+</div>
+<p><img src="img/ctndag.png" class="img-fluid"></p>
+</section><section id="unidentifiability-of-the-nde-and-nie-in-this-setting" class="level3 page-columns page-full" data-number="2.2.5"><h3 data-number="2.2.5" class="anchored" data-anchor-id="unidentifiability-of-the-nde-and-nie-in-this-setting">
+<span class="header-section-number">2.2.5</span> Unidentifiability of the NDE and NIE in this setting</h3>
+<ul>
+<li><p>In this example, natural direct and indirect effects are not generally point identified from observed data <span class="math inline">\(O=(W,A,Z,M,Y)\)</span>.</p></li>
+<li><p>The reason for this is that the cross-world counterfactual assumption <span class="math display">\[
+  Y_{1,m} \indep M_0 \mid W
+\]</span> does not hold in the above directed acyclic graph.</p></li>
+<li>
+<p>To give intuition, we focus on the counterfactual outcome <span class="math inline">\(Y_{A=1, M_{A=0}}\)</span>.</p>
+<ul>
+<li>This counterfactual outcome involves two counterfactual worlds simultaneously: one in which <span class="math inline">\(A=1\)</span> for the first portion of the counterfactual outcome, and one in which <span class="math inline">\(A=0\)</span> for the nested portion of the counterfactual outcome.</li>
+<li>Setting <span class="math inline">\(A=1\)</span> induces a counterfactual treatment-induced confounder, denoted <span class="math inline">\(Z_{A=1}\)</span>. Setting <span class="math inline">\(A=0\)</span> induces another counterfactual treatment-induced confounder, denoted <span class="math inline">\(Z_{A=0}\)</span>.</li>
+<li>The two treatment-induced counterfactual confounders, <span class="math inline">\(Z_{A=1}\)</span> and <span class="math inline">\(Z_{A=0}\)</span> share unmeasured common causes, <span class="math inline">\(U_Z\)</span>, which creates a spurious association.</li>
+<li>Because <span class="math inline">\(Z_{A=1}\)</span> is causally related to <span class="math inline">\(Y_{A=1, M=m}\)</span>, and <span class="math inline">\(Z_{A=0}\)</span> is also casually related to <span class="math inline">\(M_{A=0}\)</span>, the path through <span class="math inline">\(U_Z\)</span> means that the backdoor criterion is not met for identification of <span class="math inline">\(Y_{A=1, M_{A=0}}\)</span>, i.e., <span class="math inline">\(M_{0} \notindep Y_{A=1, m} \mid W\)</span>, where <span class="math inline">\(W\)</span> denotes baseline covariates.</li>
+</ul>
+</li>
+</ul>
+<div class="cell">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource tex number-lines code-with-copy"><code class="sourceCode latex"><span id="cb15-1"><a href="#cb15-1"></a><span class="fu">\dimendef\prevdepth</span>=0</span>
+<span id="cb15-2"><a href="#cb15-2"></a><span class="fu">\pgfdeclarelayer</span>{background}</span>
+<span id="cb15-3"><a href="#cb15-3"></a><span class="fu">\pgfsetlayers</span>{background,main}</span>
+<span id="cb15-4"><a href="#cb15-4"></a><span class="fu">\usetikzlibrary</span>{arrows,positioning}</span>
+<span id="cb15-5"><a href="#cb15-5"></a><span class="fu">\tikzset</span>{</span>
+<span id="cb15-6"><a href="#cb15-6"></a>&gt;=stealth',</span>
+<span id="cb15-7"><a href="#cb15-7"></a>punkt/.style={</span>
+<span id="cb15-8"><a href="#cb15-8"></a>rectangle,</span>
+<span id="cb15-9"><a href="#cb15-9"></a>rounded corners,</span>
+<span id="cb15-10"><a href="#cb15-10"></a>draw=black, very thick,</span>
+<span id="cb15-11"><a href="#cb15-11"></a>text width=6.5em,</span>
+<span id="cb15-12"><a href="#cb15-12"></a>minimum height=2em,</span>
+<span id="cb15-13"><a href="#cb15-13"></a>text centered},</span>
+<span id="cb15-14"><a href="#cb15-14"></a>pil/.style={</span>
+<span id="cb15-15"><a href="#cb15-15"></a>-&gt;,</span>
+<span id="cb15-16"><a href="#cb15-16"></a>thick,</span>
+<span id="cb15-17"><a href="#cb15-17"></a>shorten &lt;=2pt,</span>
+<span id="cb15-18"><a href="#cb15-18"></a>shorten &gt;=2pt,}</span>
+<span id="cb15-19"><a href="#cb15-19"></a>}</span>
+<span id="cb15-20"><a href="#cb15-20"></a><span class="fu">\newcommand</span>{<span class="ex">\Vertex</span>}[2]</span>
+<span id="cb15-21"><a href="#cb15-21"></a>{<span class="fu">\node</span>[minimum width=0.6cm,inner sep=0.05cm] (#2) at (#1) {<span class="ss">$#2$</span>};</span>
+<span id="cb15-22"><a href="#cb15-22"></a>}</span>
+<span id="cb15-23"><a href="#cb15-23"></a><span class="fu">\newcommand</span>{<span class="ex">\VertexR</span>}[2]</span>
+<span id="cb15-24"><a href="#cb15-24"></a>{<span class="fu">\node</span>[rectangle, draw, minimum width=0.6cm,inner sep=0.05cm] (#2) at (#1) {<span class="ss">$#2$</span>};</span>
+<span id="cb15-25"><a href="#cb15-25"></a>}</span>
+<span id="cb15-26"><a href="#cb15-26"></a><span class="fu">\newcommand</span>{<span class="ex">\ArrowR</span>}[3]</span>
+<span id="cb15-27"><a href="#cb15-27"></a>{ <span class="kw">\begin</span>{<span class="ex">pgfonlayer</span>}{background}</span>
+<span id="cb15-28"><a href="#cb15-28"></a><span class="fu">\draw</span>[-&gt;,#3] (#1) to[bend right=30] (#2);</span>
+<span id="cb15-29"><a href="#cb15-29"></a><span class="kw">\end</span>{<span class="ex">pgfonlayer</span>}</span>
+<span id="cb15-30"><a href="#cb15-30"></a>}</span>
+<span id="cb15-31"><a href="#cb15-31"></a><span class="fu">\newcommand</span>{<span class="ex">\ArrowL</span>}[3]</span>
+<span id="cb15-32"><a href="#cb15-32"></a>{ <span class="kw">\begin</span>{<span class="ex">pgfonlayer</span>}{background}</span>
+<span id="cb15-33"><a href="#cb15-33"></a><span class="fu">\draw</span>[-&gt;,#3] (#1) to[bend left=45] (#2);</span>
+<span id="cb15-34"><a href="#cb15-34"></a><span class="kw">\end</span>{<span class="ex">pgfonlayer</span>}</span>
+<span id="cb15-35"><a href="#cb15-35"></a>}</span>
+<span id="cb15-36"><a href="#cb15-36"></a><span class="fu">\newcommand</span>{<span class="ex">\EdgeL</span>}[3]</span>
+<span id="cb15-37"><a href="#cb15-37"></a>{ <span class="kw">\begin</span>{<span class="ex">pgfonlayer</span>}{background}</span>
+<span id="cb15-38"><a href="#cb15-38"></a><span class="fu">\draw</span>[dashed,#3] (#1) to[bend left=45] (#2);</span>
+<span id="cb15-39"><a href="#cb15-39"></a><span class="kw">\end</span>{<span class="ex">pgfonlayer</span>}</span>
+<span id="cb15-40"><a href="#cb15-40"></a>}</span>
+<span id="cb15-41"><a href="#cb15-41"></a><span class="fu">\newcommand</span>{<span class="ex">\EdgeR</span>}[3]</span>
+<span id="cb15-42"><a href="#cb15-42"></a>{ <span class="kw">\begin</span>{<span class="ex">pgfonlayer</span>}{background}</span>
+<span id="cb15-43"><a href="#cb15-43"></a><span class="fu">\draw</span>[dashed,#3] (#1) to[bend right=-45] (#2);</span>
+<span id="cb15-44"><a href="#cb15-44"></a><span class="kw">\end</span>{<span class="ex">pgfonlayer</span>}</span>
+<span id="cb15-45"><a href="#cb15-45"></a>}</span>
+<span id="cb15-46"><a href="#cb15-46"></a><span class="fu">\newcommand</span>{<span class="ex">\Arrow</span>}[3]</span>
+<span id="cb15-47"><a href="#cb15-47"></a>{ <span class="kw">\begin</span>{<span class="ex">pgfonlayer</span>}{background}</span>
+<span id="cb15-48"><a href="#cb15-48"></a><span class="fu">\draw</span>[-&gt;,#3] (#1) -- +(#2);</span>
+<span id="cb15-49"><a href="#cb15-49"></a><span class="kw">\end</span>{<span class="ex">pgfonlayer</span>}</span>
+<span id="cb15-50"><a href="#cb15-50"></a>}</span>
+<span id="cb15-51"><a href="#cb15-51"></a></span>
+<span id="cb15-52"><a href="#cb15-52"></a><span class="kw">\begin</span>{<span class="ex">tikzpicture</span>}</span>
+<span id="cb15-53"><a href="#cb15-53"></a>  <span class="fu">\Vertex</span>{0, 1}{Z_0}</span>
+<span id="cb15-54"><a href="#cb15-54"></a>  <span class="fu">\Vertex</span>{0, -1}{Z_1}</span>
+<span id="cb15-55"><a href="#cb15-55"></a>  <span class="fu">\Vertex</span>{-2, 0}{U_Z}</span>
+<span id="cb15-56"><a href="#cb15-56"></a>  <span class="fu">\Vertex</span>{2, 1}{M_0}</span>
+<span id="cb15-57"><a href="#cb15-57"></a>  <span class="fu">\Vertex</span>{4, -1}{Y_{1, m}}</span>
+<span id="cb15-58"><a href="#cb15-58"></a>  <span class="fu">\Arrow</span>{Z_0}{M_0}{black}</span>
+<span id="cb15-59"><a href="#cb15-59"></a>  <span class="fu">\Arrow</span>{Z_1}{Y_{1, m}}{black}</span>
+<span id="cb15-60"><a href="#cb15-60"></a>  <span class="fu">\Arrow</span>{U_Z}{Z_0}{black}</span>
+<span id="cb15-61"><a href="#cb15-61"></a>  <span class="fu">\Arrow</span>{U_Z}{Z_1}{black}</span>
+<span id="cb15-62"><a href="#cb15-62"></a><span class="kw">\end</span>{<span class="ex">tikzpicture</span>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="effects_defn_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="768"></p>
+<figcaption>Parallel worlds model of the scenario considered</figcaption></figure>
+</div>
+</div>
+</div>
+<!--
+this is what we used to have
+- Technically, the reason for this is that an intervention setting $A=1$
+  (necessary for the definition of $Y_{1,m}$) induces a counterfactual variable
+  $Z_1$.
+- Likewise, an intervention setting $A=0$ (necessary for the definition of
+  $M_0$) induces a counterfactual $Z_0$.
+- The variables $Z_1$ and $Z_0$ are correlated because they share unmeasured
+  common causes, $U_Z$.
+- The variable $Z_1$ is correlated with $Y_{1,m}$, and the variable $Z_0$ is
+  correlated with $M_0$, because they are counterfactual outcomes in the same
+  hypothetical worlds.
+- To see this in the definition of counterfactual from a causal structural
+  model:
+\begin{align*}
+  Y_{1,m} &= f_Y(W, 1, Z_1, m, U_Y), \text{ and }\\
+  M_0 &= f_M(W, 0, Z_0, U_M)\\
+\end{align*}
+are correlated even after adjusting for $W$ by virtue of $Z_1$ and $Z_0$ being
+correlated.
+-->
+<!--
+Intuitively:
+- $Z$ is a confounder of the relation $M \rightarrow Y$, which requires
+  adjustment
+- But $Z$ is on the pathway $A\rightarrow Y$, which precludes adjustment
+-->
+<p>However:</p>
+<ul>
+<li>We can actually actually identify the NIE/NDE in the above setting if we are willing to invoke monotonicity between a treatment and one or more binary treatment-induced confounders <span class="citation" data-cites="tchetgen2014identification">(<a href="#ref-tchetgen2014identification" role="doc-biblioref">Tchetgen Tchetgen and VanderWeele 2014</a>)</span>.</li>
+<li>Assuming monotonicity is also sometimes referred to as assuming “no defiers” – in other words, assuming that there are no individuals who would do the opposite of the encouragement.</li>
+<li>Monotonicity may seem like a restrictive assumption, but may be reasonable in some common scenarios (e.g., in trials where the intervention is randomized treatment assignment and the treatment-induced confounder is whether or not treatment was actually taken – in this setting, we may feel comfortable assuming that there are no “defiers”, frequently assumed when using IVs to identify causal effects)</li>
+</ul>
+<div class="no-row-height column-margin column-container"><div id="ref-tchetgen2014identification" class="csl-entry" role="listitem">
+Tchetgen Tchetgen, Eric J, and Tyler J VanderWeele. 2014. <span>“On Identification of Natural Direct Effects When a Confounder of the Mediator Is Directly Affected by Exposure.”</span> <em>Epidemiology</em> 25 (2): 282.
+</div></div><p>Note: CDEs are still identified in this setting. They can be identified and estimated similarly to a longitudinal data sructure with a two-time-point intervention.</p>
+</section></section><section id="interventional-indirect-effects" class="level2 page-columns page-full" data-number="2.3"><h2 data-number="2.3" class="anchored" data-anchor-id="interventional-indirect-effects">
+<span class="header-section-number">2.3</span> Interventional (in)direct effects</h2>
+<ul>
+<li>Let <span class="math inline">\(G_a\)</span> denote a random draw from the distribution of <span class="math inline">\(M_a \mid W\)</span>
+</li>
+<li>Define the counterfactual <span class="math inline">\(Y_{1,G_0}\)</span> as the counterfactual variable in a hypothetical world where <span class="math inline">\(A\)</span> is set <span class="math inline">\(A=1\)</span> and <span class="math inline">\(M\)</span> is set to <span class="math inline">\(M=G_0\)</span> with probability one.</li>
+</ul>
+<p><img src="img/graphic4b.png" class="img-fluid" style="width:60.0%"></p>
+<ul>
+<li><p>Define <span class="math inline">\(Y_{0,G_0}\)</span> and <span class="math inline">\(Y_{1,G_1}\)</span> similarly</p></li>
+<li><p>Then we can define: <span class="math display">\[
+  \E[Y_{1,G_1} - Y_{0,G_0}] = \underbrace{\E[Y_{\color{red}{1},
+    \color{blue}{G_1}} - Y_{\color{red}{1},
+    \color{blue}{G_0}}]}_{\text{interventional indirect effect}} +
+    \underbrace{\E[Y_{\color{blue}{1},\color{red}{G_0}} -
+    Y_{\color{blue}{0},
+    \color{red}{G_0}}]}_{\text{interventional direct effect}}
+\]</span></p></li>
+<li><p>Note that <span class="math inline">\(\E[Y_{1,G_1} - Y_{0,G_0}]\)</span> is still a <em>total effect</em> of treatment, even if it is different from the ATE <span class="math inline">\(\E[Y_{1} - Y_{0}]\)</span></p></li>
+<li><p>We gain in the ability to solve a problem, but lose in terms of interpretation of the causal effect (cannot decompose the ATE)</p></li>
+</ul>
+<section id="an-alternative-definition-of-the-effects" class="level3" data-number="2.3.1"><h3 data-number="2.3.1" class="anchored" data-anchor-id="an-alternative-definition-of-the-effects">
+<span class="header-section-number">2.3.1</span> An alternative definition of the effects:</h3>
+<ul>
+<li>Above we defined <span class="math inline">\(G_a\)</span> as a random draw from the distribution of <span class="math inline">\(M_a \mid W\)</span>
+</li>
+<li>What if instead we define <span class="math inline">\(G_a\)</span> as a random draw from the distribution of <span class="math inline">\(M_a
+\mid (Z_a,W)\)</span>
+</li>
+<li>It turns out the indirect effect defined in this way only measures the path <span class="math inline">\(A\rightarrow M \rightarrow Y\)</span>, and not the path <span class="math inline">\(A\rightarrow Z\rightarrow M
+\rightarrow Y\)</span>
+</li>
+<li>There may be important reasons to choose one over another (e.g., survival analyses where we want the distribution conditional on <span class="math inline">\(Z\)</span>, instrumental variable designs where it doesn’t make sense to condition on <span class="math inline">\(Z\)</span>)</li>
+</ul>
+<!--
+ + Marginal PIDE: $\E(Y_{a, g_{M \mid a^{\star}, W}}) -
+   \E(Y_{a^{\star}, g_{M \mid a^{\star}, W}})$
+ + Marginal PIIE: $\E(Y_{a, g_{M \mid a, W}}) -
+   \E(Y_{a, g_{M \mid a^{\star}, W}})$
+ + Conditional PIDE: $\E(Y_{a, g_{M \mid Z, a^{\star}, W}}) -
+   \E(Y_{a^{\star}, g_{M \mid Z, a^{\star}, W}})$
+ + Conditional PIIE: $\E(Y_{a, g_{M \mid Z, a, W}}) -
+   \E(Y_{a, g_{M \mid Z, a^{\star}, W}})$
+ + Can you think of an example when you would want the conditional versions?
+   Marginal versions?
+--></section><section id="identification-assumptions-2" class="level3" data-number="2.3.2"><h3 data-number="2.3.2" class="anchored" data-anchor-id="identification-assumptions-2">
+<span class="header-section-number">2.3.2</span> Identification assumptions:</h3>
+<ul>
+<li><span class="math inline">\(A \indep Y_{a,m} \mid W\)</span></li>
+<li><span class="math inline">\(M \indep Y_{a,m} \mid W, A, Z\)</span></li>
+<li><span class="math inline">\(A \indep M_a \mid W\)</span></li>
+<li>and positivity assumptions.</li>
+</ul>
+<p>Under these assumptions, the population interventional direct and indirect effect is identified: <span class="math display">\[\begin{align*}
+  \E &amp;(Y_{a, G_{a'}}) = \\
+     &amp; \E\left[\color{Purple}{\E\left\{\color{Goldenrod}{\sum_z}
+      \color{ForestGreen}{\E(Y \mid A=a, Z=z, M, W)}
+      \color{Goldenrod}{\P(Z=z \mid A=a, W)}\mid A=a', W\right\}} \right]
+\end{align*}\]</span></p>
+<ul>
+<li>
+<p>Let’s dissect this formula in <code>R</code>:</p>
+<div class="cell">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a>n <span class="ot">&lt;-</span> <span class="fl">1e6</span></span>
+<span id="cb16-2"><a href="#cb16-2"></a>w <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n)</span>
+<span id="cb16-3"><a href="#cb16-3"></a>a <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(n, <span class="dv">1</span>, <span class="fl">0.5</span>)</span>
+<span id="cb16-4"><a href="#cb16-4"></a>z <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(n, <span class="dv">1</span>, <span class="fl">0.5</span> <span class="sc">+</span> <span class="fl">0.2</span> <span class="sc">*</span> a)</span>
+<span id="cb16-5"><a href="#cb16-5"></a>m <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, w <span class="sc">+</span> a <span class="sc">-</span> z)</span>
+<span id="cb16-6"><a href="#cb16-6"></a>y <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, w <span class="sc">+</span> a <span class="sc">+</span> z <span class="sc">+</span> m)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</li>
+<li><p>Let us compute <span class="math inline">\(\E(Y_{1, G_0})\)</span> (so that <span class="math inline">\(a = 1\)</span>, and <span class="math inline">\(a'=0\)</span>).</p></li>
+<li>
+<p>First, fit a regression model for the outcome, and compute <span class="math inline">\(\color{ForestGreen}{\E(Y \mid A=a, Z=z, M, W)}\)</span> for all values of <span class="math inline">\(z\)</span></p>
+<div class="cell">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a>lm_y <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> m <span class="sc">+</span> a <span class="sc">+</span> z <span class="sc">+</span> w)</span>
+<span id="cb17-2"><a href="#cb17-2"></a>pred_a1z0 <span class="ot">&lt;-</span> <span class="fu">predict</span>(lm_y, <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">m =</span> m, <span class="at">a =</span> <span class="dv">1</span>, <span class="at">z =</span> <span class="dv">0</span>, <span class="at">w =</span> w))</span>
+<span id="cb17-3"><a href="#cb17-3"></a>pred_a1z1 <span class="ot">&lt;-</span> <span class="fu">predict</span>(lm_y, <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">m =</span> m, <span class="at">a =</span> <span class="dv">1</span>, <span class="at">z =</span> <span class="dv">1</span>, <span class="at">w =</span> w))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</li>
+<li>
+<p>Now we fit the true model for <span class="math inline">\(Z \mid A, W\)</span> and get the conditional probability that <span class="math inline">\(Z=1\)</span> fixing <span class="math inline">\(A=1\)</span></p>
+<div class="cell">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a>prob_z <span class="ot">&lt;-</span> <span class="fu">lm</span>(z <span class="sc">~</span> a)</span>
+<span id="cb18-2"><a href="#cb18-2"></a>pred_z <span class="ot">&lt;-</span> <span class="fu">predict</span>(prob_z, <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">a =</span> <span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</li>
+<li>
+<p>Now we compute the following pseudo-outcome: <span class="math inline">\(\color{Goldenrod}{\sum_z}\color{ForestGreen}{\E(Y \mid A=a, Z=z, M, W)}
+\color{Goldenrod}{\P(Z=z \mid A=a, w)}\)</span></p>
+<div class="cell">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a>pseudo_out <span class="ot">&lt;-</span> pred_a1z0 <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> pred_z) <span class="sc">+</span> pred_a1z1 <span class="sc">*</span> pred_z</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</li>
+<li>
+<p>Now we regress this pseudo-outcome on <span class="math inline">\(A,W\)</span>, and compute the predictions setting <span class="math inline">\(A=0\)</span>, that is, []</p>
+<div class="cell">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a>fit_pseudo <span class="ot">&lt;-</span> <span class="fu">lm</span>(pseudo_out <span class="sc">~</span> a <span class="sc">+</span> w)</span>
+<span id="cb20-2"><a href="#cb20-2"></a>pred_pseudo <span class="ot">&lt;-</span> <span class="fu">predict</span>(fit_pseudo, <span class="fu">data.frame</span>(<span class="at">a =</span> <span class="dv">0</span>, <span class="at">w =</span> w))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</li>
+<li>
+<p>And finally, just average those predictions!</p>
+<div class="cell">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a><span class="do">## Mean(Y(1, G(0)))</span></span>
+<span id="cb21-2"><a href="#cb21-2"></a><span class="fu">mean</span>(pred_pseudo)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>[1] 1.194464</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>This was for <span class="math inline">\((a,a')=(1,0)\)</span>. Can do the same with <span class="math inline">\((a,a')=(1,1)\)</span>, and <span class="math inline">\((a,a')=(0,0)\)</span> to obtain an effect decomposition</p>
+<p><span class="math display">\[\begin{equation*}
+  \E[Y_{1,G_1} - Y_{0,G_0}] = \underbrace{\E[Y_{\color{red}{1},
+    \color{blue}{G_1}} -
+    Y_{\color{red}{1},
+    \color{blue}{G_0}}]}_{\text{interventional indirect effect}} +
+    \underbrace{\E[Y_{\color{blue}{1},\color{red}{G_0}} -
+    Y_{\color{blue}{0},
+    \color{red}{G_0}}]}_{\text{interventional direct effect}}
+\end{equation*}\]</span></p>
+</li>
+</ul></section><section id="is-this-the-estimand-i-want-2" class="level3" data-number="2.3.3"><h3 data-number="2.3.3" class="anchored" data-anchor-id="is-this-the-estimand-i-want-2">
+<span class="header-section-number">2.3.3</span> Is this the estimand I want?</h3>
+<ul>
+<li>Makes sense to intervene on <span class="math inline">\(A\)</span> but not directly on <span class="math inline">\(M\)</span>.</li>
+<li>Goal is to understand a descriptive type of mediation.</li>
+<li>Okay with the assumptions!</li>
+</ul></section><section id="but-there-is-an-important-limitation-of-interventional-effects" class="level3 page-columns page-full" data-number="2.3.4"><h3 data-number="2.3.4" class="anchored" data-anchor-id="but-there-is-an-important-limitation-of-interventional-effects">
+<span class="header-section-number">2.3.4</span> But, there is an important limitation of interventional effects</h3>
+<p><span class="citation" data-cites="miles2022causal">Miles (<a href="#ref-miles2022causal" role="doc-biblioref">2022</a>)</span> recently uncovered an important limitation of these effects, which can be described as follows. The sharp mediational hull hypothesis can be defined as</p>
+<div class="no-row-height column-margin column-container"><div id="ref-miles2022causal" class="csl-entry" role="listitem">
+Miles, Caleb H. 2022. <span>“On the Causal Interpretation of Randomized Interventional Indirect Effects.”</span> <em>arXiv Preprint arXiv:2203.00245</em>. <a href="https://arxiv.org/abs/2203.00245">https://arxiv.org/abs/2203.00245</a>.
+</div></div><p><span class="math display">\[
+  H_0:Y(a, M(a')) = Y(a, M(a^\star));\text{ for all }a, a', a^\star \ .
+\]</span></p>
+<p>The problem is that interventional effects are not guaranteed to be null when the sharp mediational hypothesis is true.</p>
+<p>This could present a problem in practice if some subgroup of the population has a relationship between <span class="math inline">\(A\)</span> and <span class="math inline">\(M\)</span>, but not between <span class="math inline">\(M\)</span> and <span class="math inline">\(Y\)</span>. Then, another distinct subgroup of the population has a relationship between <span class="math inline">\(M\)</span> and <span class="math inline">\(Y\)</span> but not between <span class="math inline">\(A\)</span> and <span class="math inline">\(M\)</span>. In such a scenario, the interventional indirect effect would be nonzero, but there would be no one person in the population whose effect of <span class="math inline">\(A\)</span> on <span class="math inline">\(Y\)</span> would be mediated by <span class="math inline">\(M\)</span>.</p>
+<!--
+One counterexample involves creating an NPSEM with independent errors,
+$W=\emptyset$, and an exogenous binary variable $U_Z$ such that $M(a)
+= M(a')$ in the event $U_Z=1$ and $Y(a,m') = Y(a,m)$ in the event
+$U_Z=0$ for all $a$, $a'$, and $m$, such that there is no causal
+influence of $A$ on $Y$ operating through $M$. It is easy to see that
+the randomized interventional indirect effect in this example equals
+
+\[\sum_{z,m} E(Y\mid m, z,a) P(Z=z\mid a)[P(M=m\mid a)-P(M=m\mid
+a')],\]
+
+which is generally not null, and would only be null if $U_Z$
+was observed and conditioned upon in all the above quantities.
+-->
+<p>More details in the original paper.</p>
+</section></section><section id="estimand-summary" class="level2" data-number="2.4"><h2 data-number="2.4" class="anchored" data-anchor-id="estimand-summary">
+<span class="header-section-number">2.4</span> Estimand Summary</h2>
+<p><img src="img/table1.png" class="img-fluid"></p>
+
+
+<!-- -->
+
+
+</section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  const viewSource = window.document.getElementById('quarto-view-source') ||
+                     window.document.getElementById('quarto-code-tools-source');
+  if (viewSource) {
+    const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+    viewSource.addEventListener("click", function(e) {
+      if (sourceUrl) {
+        // rstudio viewer pane
+        if (/\bcapabilities=\b/.test(window.location)) {
+          window.open(sourceUrl);
+        } else {
+          window.location.href = sourceUrl;
+        }
+      } else {
+        const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+        modal.show();
+      }
+      return false;
+    });
+  }
+  function toggleCodeHandler(show) {
+    return function(e) {
+      const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+      for (let i=0; i<detailsSrc.length; i++) {
+        const details = detailsSrc[i].parentElement;
+        if (show) {
+          details.open = true;
+        } else {
+          details.removeAttribute("open");
+        }
+      }
+      const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+      const fromCls = show ? "hidden" : "unhidden";
+      const toCls = show ? "unhidden" : "hidden";
+      for (let i=0; i<cellCodeDivs.length; i++) {
+        const codeDiv = cellCodeDivs[i];
+        if (codeDiv.classList.contains(fromCls)) {
+          codeDiv.classList.remove(fromCls);
+          codeDiv.classList.add(toCls);
+        } 
+      }
+      return false;
+    }
+  }
+  const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+  if (hideAllCode) {
+    hideAllCode.addEventListener("click", toggleCodeHandler(false));
+  }
+  const showAllCode = window.document.getElementById("quarto-show-all-code");
+  if (showAllCode) {
+    showAllCode.addEventListener("click", toggleCodeHandler(true));
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/codex\.nimahejazi\.org\/causal_mediation_workshops\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script><nav class="page-navigation"><div class="nav-page nav-page-previous">
+      <a href="./preface.html" class="pagination-link" aria-label="Causal mediation analysis intro">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Causal mediation analysis intro</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./how_to_choose.html" class="pagination-link" aria-label="How to choose an estimand: Real-world example">
+        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">How to choose an estimand: Real-world example</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="sourceCode" id="cb23" data-shortcodes="false"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb23-1"><a href="#cb23-1"></a><span class="fu"># Types of path-specific causal mediation effects {#estimands}</span></span>
+<span id="cb23-2"><a href="#cb23-2"></a></span>
+<span id="cb23-5"><a href="#cb23-5"></a><span class="in">```{r}</span></span>
+<span id="cb23-6"><a href="#cb23-6"></a><span class="co">#| label: load-renv</span></span>
+<span id="cb23-7"><a href="#cb23-7"></a><span class="co">#| echo: false</span></span>
+<span id="cb23-8"><a href="#cb23-8"></a><span class="co">#| message: false</span></span>
+<span id="cb23-9"><a href="#cb23-9"></a>renv<span class="sc">::</span><span class="fu">load</span>(here<span class="sc">::</span><span class="fu">here</span>())</span>
+<span id="cb23-10"><a href="#cb23-10"></a><span class="fu">library</span>(here)</span>
+<span id="cb23-11"><a href="#cb23-11"></a><span class="in">```</span></span>
+<span id="cb23-12"><a href="#cb23-12"></a></span>
+<span id="cb23-13"><a href="#cb23-13"></a><span class="ss">- </span>Controlled direct effects</span>
+<span id="cb23-14"><a href="#cb23-14"></a><span class="ss">- </span>Natural direct and indirect effects</span>
+<span id="cb23-15"><a href="#cb23-15"></a><span class="ss">- </span>Interventional direct and indirect effects</span>
+<span id="cb23-16"><a href="#cb23-16"></a></span>
+<span id="cb23-19"><a href="#cb23-19"></a><span class="in">```{tikz}</span></span>
+<span id="cb23-20"><a href="#cb23-20"></a><span class="in">#| fig-cap: Directed acyclic graph under *no intermediate confounders* of the mediator-outcome relation affected by treatment</span></span>
+<span id="cb23-21"><a href="#cb23-21"></a><span class="in">\dimendef\prevdepth=0</span></span>
+<span id="cb23-22"><a href="#cb23-22"></a><span class="in">\pgfdeclarelayer{background}</span></span>
+<span id="cb23-23"><a href="#cb23-23"></a><span class="in">\pgfsetlayers{background,main}</span></span>
+<span id="cb23-24"><a href="#cb23-24"></a><span class="in">\usetikzlibrary{arrows,positioning}</span></span>
+<span id="cb23-25"><a href="#cb23-25"></a><span class="in">\tikzset{</span></span>
+<span id="cb23-26"><a href="#cb23-26"></a><span class="in">&gt;=stealth',</span></span>
+<span id="cb23-27"><a href="#cb23-27"></a><span class="in">punkt/.style={</span></span>
+<span id="cb23-28"><a href="#cb23-28"></a><span class="in">rectangle,</span></span>
+<span id="cb23-29"><a href="#cb23-29"></a><span class="in">rounded corners,</span></span>
+<span id="cb23-30"><a href="#cb23-30"></a><span class="in">draw=black, very thick,</span></span>
+<span id="cb23-31"><a href="#cb23-31"></a><span class="in">text width=6.5em,</span></span>
+<span id="cb23-32"><a href="#cb23-32"></a><span class="in">minimum height=2em,</span></span>
+<span id="cb23-33"><a href="#cb23-33"></a><span class="in">text centered},</span></span>
+<span id="cb23-34"><a href="#cb23-34"></a><span class="in">pil/.style={</span></span>
+<span id="cb23-35"><a href="#cb23-35"></a><span class="in">-&gt;,</span></span>
+<span id="cb23-36"><a href="#cb23-36"></a><span class="in">thick,</span></span>
+<span id="cb23-37"><a href="#cb23-37"></a><span class="in">shorten &lt;=2pt,</span></span>
+<span id="cb23-38"><a href="#cb23-38"></a><span class="in">shorten &gt;=2pt,}</span></span>
+<span id="cb23-39"><a href="#cb23-39"></a><span class="in">}</span></span>
+<span id="cb23-40"><a href="#cb23-40"></a><span class="in">\newcommand{\Vertex}[2]</span></span>
+<span id="cb23-41"><a href="#cb23-41"></a><span class="in">{\node[minimum width=0.6cm,inner sep=0.05cm] (#2) at (#1) {$#2$};</span></span>
+<span id="cb23-42"><a href="#cb23-42"></a><span class="in">}</span></span>
+<span id="cb23-43"><a href="#cb23-43"></a><span class="in">\newcommand{\VertexR}[2]</span></span>
+<span id="cb23-44"><a href="#cb23-44"></a><span class="in">{\node[rectangle, draw, minimum width=0.6cm,inner sep=0.05cm] (#2) at (#1) {$#2$};</span></span>
+<span id="cb23-45"><a href="#cb23-45"></a><span class="in">}</span></span>
+<span id="cb23-46"><a href="#cb23-46"></a><span class="in">\newcommand{\ArrowR}[3]</span></span>
+<span id="cb23-47"><a href="#cb23-47"></a><span class="in">{ \begin{pgfonlayer}{background}</span></span>
+<span id="cb23-48"><a href="#cb23-48"></a><span class="in">\draw[-&gt;,#3] (#1) to[bend right=30] (#2);</span></span>
+<span id="cb23-49"><a href="#cb23-49"></a><span class="in">\end{pgfonlayer}</span></span>
+<span id="cb23-50"><a href="#cb23-50"></a><span class="in">}</span></span>
+<span id="cb23-51"><a href="#cb23-51"></a><span class="in">\newcommand{\ArrowL}[3]</span></span>
+<span id="cb23-52"><a href="#cb23-52"></a><span class="in">{ \begin{pgfonlayer}{background}</span></span>
+<span id="cb23-53"><a href="#cb23-53"></a><span class="in">\draw[-&gt;,#3] (#1) to[bend left=45] (#2);</span></span>
+<span id="cb23-54"><a href="#cb23-54"></a><span class="in">\end{pgfonlayer}</span></span>
+<span id="cb23-55"><a href="#cb23-55"></a><span class="in">}</span></span>
+<span id="cb23-56"><a href="#cb23-56"></a><span class="in">\newcommand{\EdgeL}[3]</span></span>
+<span id="cb23-57"><a href="#cb23-57"></a><span class="in">{ \begin{pgfonlayer}{background}</span></span>
+<span id="cb23-58"><a href="#cb23-58"></a><span class="in">\draw[dashed,#3] (#1) to[bend right=-45] (#2);</span></span>
+<span id="cb23-59"><a href="#cb23-59"></a><span class="in">\end{pgfonlayer}</span></span>
+<span id="cb23-60"><a href="#cb23-60"></a><span class="in">}</span></span>
+<span id="cb23-61"><a href="#cb23-61"></a><span class="in">\newcommand{\Arrow}[3]</span></span>
+<span id="cb23-62"><a href="#cb23-62"></a><span class="in">{ \begin{pgfonlayer}{background}</span></span>
+<span id="cb23-63"><a href="#cb23-63"></a><span class="in">\draw[-&gt;,#3] (#1) -- +(#2);</span></span>
+<span id="cb23-64"><a href="#cb23-64"></a><span class="in">\end{pgfonlayer}</span></span>
+<span id="cb23-65"><a href="#cb23-65"></a><span class="in">}</span></span>
+<span id="cb23-66"><a href="#cb23-66"></a><span class="in">\begin{tikzpicture}</span></span>
+<span id="cb23-67"><a href="#cb23-67"></a><span class="in">  \Vertex{-4, 0}{W}</span></span>
+<span id="cb23-68"><a href="#cb23-68"></a><span class="in">  \Vertex{0, 0}{M}</span></span>
+<span id="cb23-69"><a href="#cb23-69"></a><span class="in">  \Vertex{-2, 0}{A}</span></span>
+<span id="cb23-70"><a href="#cb23-70"></a><span class="in">  \Vertex{2, 0}{Y}</span></span>
+<span id="cb23-71"><a href="#cb23-71"></a><span class="in">  \Arrow{W}{A}{black}</span></span>
+<span id="cb23-72"><a href="#cb23-72"></a><span class="in">  \Arrow{A}{M}{black}</span></span>
+<span id="cb23-73"><a href="#cb23-73"></a><span class="in">  \Arrow{M}{Y}{black}</span></span>
+<span id="cb23-74"><a href="#cb23-74"></a><span class="in">  \ArrowL{W}{Y}{black}</span></span>
+<span id="cb23-75"><a href="#cb23-75"></a><span class="in">  \ArrowL{A}{Y}{black}</span></span>
+<span id="cb23-76"><a href="#cb23-76"></a><span class="in">  \ArrowL{W}{M}{black}</span></span>
+<span id="cb23-77"><a href="#cb23-77"></a><span class="in">\end{tikzpicture}</span></span>
+<span id="cb23-78"><a href="#cb23-78"></a><span class="in">```</span></span>
+<span id="cb23-79"><a href="#cb23-79"></a></span>
+<span id="cb23-80"><a href="#cb23-80"></a><span class="fu">## Controlled direct effects</span></span>
+<span id="cb23-81"><a href="#cb23-81"></a></span>
+<span id="cb23-82"><a href="#cb23-82"></a>$$\psi_{\text{CDE}} = \E(Y_{1,m} - Y_{0,m})$$</span>
+<span id="cb23-83"><a href="#cb23-83"></a></span>
+<span id="cb23-84"><a href="#cb23-84"></a><span class="al">![](img/graphic4a3.png)</span>{width=40%}</span>
+<span id="cb23-85"><a href="#cb23-85"></a></span>
+<span id="cb23-86"><a href="#cb23-86"></a><span class="ss">- </span>Set the mediator to a reference value $M=m$ uniformly for everyone in the</span>
+<span id="cb23-87"><a href="#cb23-87"></a>  population</span>
+<span id="cb23-88"><a href="#cb23-88"></a><span class="ss">- </span>Compare $A=1$ vs $A=0$ with $M=m$ fixed</span>
+<span id="cb23-89"><a href="#cb23-89"></a></span>
+<span id="cb23-90"><a href="#cb23-90"></a><span class="fu">### Identification assumptions:</span></span>
+<span id="cb23-91"><a href="#cb23-91"></a><span class="ss">- </span>Confounder assumptions:</span>
+<span id="cb23-92"><a href="#cb23-92"></a><span class="ss">  + </span>$A \indep Y_{a,m} \mid W$</span>
+<span id="cb23-93"><a href="#cb23-93"></a><span class="ss">  + </span>$M \indep Y_{a,m} \mid W, A$</span>
+<span id="cb23-94"><a href="#cb23-94"></a><span class="ss">- </span>Positivity assumptions:</span>
+<span id="cb23-95"><a href="#cb23-95"></a><span class="ss">  + </span>$\P(M = m \mid A=a, W) &gt; 0 \text{  } a.e.$</span>
+<span id="cb23-96"><a href="#cb23-96"></a><span class="ss">  + </span>$\P(A=a \mid W) &gt; 0 \text{  } a.e.$</span>
+<span id="cb23-97"><a href="#cb23-97"></a></span>
+<span id="cb23-98"><a href="#cb23-98"></a>Under the above identification assumptions, the controlled direct effect can be</span>
+<span id="cb23-99"><a href="#cb23-99"></a>identified:</span>
+<span id="cb23-100"><a href="#cb23-100"></a>$$</span>
+<span id="cb23-101"><a href="#cb23-101"></a>  \E(Y_{1,m} - Y_{0,m}) = \E<span class="sc">\{</span> \color{ForestGreen}{\E(Y \mid A=1, M=m, W) -</span>
+<span id="cb23-102"><a href="#cb23-102"></a>    \E(Y \mid A=0, M=m, W)} <span class="sc">\}</span></span>
+<span id="cb23-103"><a href="#cb23-103"></a>$$</span>
+<span id="cb23-104"><a href="#cb23-104"></a></span>
+<span id="cb23-105"><a href="#cb23-105"></a><span class="ss">- </span>For intuition about this formula in R, let's continue with a toy example:</span>
+<span id="cb23-106"><a href="#cb23-106"></a>  <span class="in">```{r}</span></span>
+<span id="cb23-107"><a href="#cb23-107"></a><span class="in">  n &lt;- 1e6</span></span>
+<span id="cb23-108"><a href="#cb23-108"></a><span class="in">  w &lt;- rnorm(n)</span></span>
+<span id="cb23-109"><a href="#cb23-109"></a><span class="in">  a &lt;- rbinom(n, 1, 0.5)</span></span>
+<span id="cb23-110"><a href="#cb23-110"></a><span class="in">  m &lt;- rnorm(n, w + a)</span></span>
+<span id="cb23-111"><a href="#cb23-111"></a><span class="in">  y &lt;- rnorm(n, w + a + m)</span></span>
+<span id="cb23-112"><a href="#cb23-112"></a><span class="in">  ```</span></span>
+<span id="cb23-113"><a href="#cb23-113"></a><span class="ss">- </span>First we fit a correct model for the outcome</span>
+<span id="cb23-114"><a href="#cb23-114"></a>  <span class="in">```{r}</span></span>
+<span id="cb23-115"><a href="#cb23-115"></a><span class="in">  lm_y &lt;- lm(y ~ m + a + w)</span></span>
+<span id="cb23-116"><a href="#cb23-116"></a><span class="in">  ```</span></span>
+<span id="cb23-117"><a href="#cb23-117"></a><span class="ss">- </span>Assume we would like the CDE at $m=0$</span>
+<span id="cb23-118"><a href="#cb23-118"></a><span class="ss">- </span>Then we generate predictions</span>
+<span id="cb23-119"><a href="#cb23-119"></a>  $$</span>
+<span id="cb23-120"><a href="#cb23-120"></a>    \color{ForestGreen}{\E(Y \mid A=1, M=m, W)} \text{ and }</span>
+<span id="cb23-121"><a href="#cb23-121"></a>      \color{ForestGreen}{\E(Y \mid A=0, M=m, W)} \ :</span>
+<span id="cb23-122"><a href="#cb23-122"></a>  $$</span>
+<span id="cb23-123"><a href="#cb23-123"></a>  <span class="in">```{r}</span></span>
+<span id="cb23-124"><a href="#cb23-124"></a><span class="in">  pred_y1 &lt;- predict(lm_y, newdata = data.frame(a = 1, m = 0, w = w))</span></span>
+<span id="cb23-125"><a href="#cb23-125"></a><span class="in">  pred_y0 &lt;- predict(lm_y, newdata = data.frame(a = 0, m = 0, w = w))</span></span>
+<span id="cb23-126"><a href="#cb23-126"></a><span class="in">  ```</span></span>
+<span id="cb23-127"><a href="#cb23-127"></a><span class="ss">- </span>Then we compute the difference between the predicted values</span>
+<span id="cb23-128"><a href="#cb23-128"></a>  $\color{ForestGreen}{\E(Y \mid A=1, M=m, W) - \E(Y \mid A=0, M=m, W)}$, and</span>
+<span id="cb23-129"><a href="#cb23-129"></a>  average across values of $W$</span>
+<span id="cb23-130"><a href="#cb23-130"></a>  <span class="in">```{r}</span></span>
+<span id="cb23-131"><a href="#cb23-131"></a><span class="in">  ## CDE at m = 0</span></span>
+<span id="cb23-132"><a href="#cb23-132"></a><span class="in">  mean(pred_y1 - pred_y0)</span></span>
+<span id="cb23-133"><a href="#cb23-133"></a><span class="in">  ```</span></span>
+<span id="cb23-134"><a href="#cb23-134"></a></span>
+<span id="cb23-135"><a href="#cb23-135"></a><span class="fu">### Is this the estimand I want?</span></span>
+<span id="cb23-136"><a href="#cb23-136"></a></span>
+<span id="cb23-137"><a href="#cb23-137"></a><span class="ss">+ </span>Makes the most sense if can intervene directly on $M$</span>
+<span id="cb23-138"><a href="#cb23-138"></a><span class="ss">  + </span>And can think of a policy that would set everyone to a constant level $m</span>
+<span id="cb23-139"><a href="#cb23-139"></a>    \in \mathcal{M}$.</span>
+<span id="cb23-140"><a href="#cb23-140"></a><span class="ss">  + </span>Judea Pearl calls this _prescriptive_.</span>
+<span id="cb23-141"><a href="#cb23-141"></a><span class="ss">  + </span>Can you think of an example? (Air pollution, rescue inhaler dosage,</span>
+<span id="cb23-142"><a href="#cb23-142"></a>    hospital visits...)</span>
+<span id="cb23-143"><a href="#cb23-143"></a><span class="ss">  + </span>Does not provide a decomposition of the average treatment effect into</span>
+<span id="cb23-144"><a href="#cb23-144"></a>    direct and indirect effects.</span>
+<span id="cb23-145"><a href="#cb23-145"></a></span>
+<span id="cb23-146"><a href="#cb23-146"></a>_What if our research question doesn't involve intervening directly on the</span>
+<span id="cb23-147"><a href="#cb23-147"></a>mediator?_</span>
+<span id="cb23-148"><a href="#cb23-148"></a></span>
+<span id="cb23-149"><a href="#cb23-149"></a>_What if we want to decompose the average treatment effect into its direct and</span>
+<span id="cb23-150"><a href="#cb23-150"></a>indirect counterparts?_</span>
+<span id="cb23-151"><a href="#cb23-151"></a></span>
+<span id="cb23-152"><a href="#cb23-152"></a><span class="fu">## Natural direct and indirect effects</span></span>
+<span id="cb23-153"><a href="#cb23-153"></a></span>
+<span id="cb23-154"><a href="#cb23-154"></a>Still using the same DAG as above,</span>
+<span id="cb23-155"><a href="#cb23-155"></a></span>
+<span id="cb23-156"><a href="#cb23-156"></a><span class="ss">- </span>Recall the definition of the nested counterfactual:</span>
+<span id="cb23-157"><a href="#cb23-157"></a>  \begin{equation*}</span>
+<span id="cb23-158"><a href="#cb23-158"></a>    Y_{1, M_0} = f_Y(W, 1, M_0, U_Y)</span>
+<span id="cb23-159"><a href="#cb23-159"></a>  \end{equation*}</span>
+<span id="cb23-160"><a href="#cb23-160"></a></span>
+<span id="cb23-161"><a href="#cb23-161"></a><span class="ss">- </span>Interpreted as _the outcome for an individual in a hypothetical world where</span>
+<span id="cb23-162"><a href="#cb23-162"></a>  treatment was given but the mediator was held at the value it would have</span>
+<span id="cb23-163"><a href="#cb23-163"></a>  taken under no treatment_</span>
+<span id="cb23-164"><a href="#cb23-164"></a></span>
+<span id="cb23-165"><a href="#cb23-165"></a>  <span class="al">![](img/graphic4a.png)</span>{width=40%}</span>
+<span id="cb23-166"><a href="#cb23-166"></a></span>
+<span id="cb23-167"><a href="#cb23-167"></a><span class="ss">- </span>Recall that, because of the definition of counterfactuals</span>
+<span id="cb23-168"><a href="#cb23-168"></a>  \begin{equation*}</span>
+<span id="cb23-169"><a href="#cb23-169"></a>    Y_{1, M_1} = Y_1</span>
+<span id="cb23-170"><a href="#cb23-170"></a>  \end{equation*}</span>
+<span id="cb23-171"><a href="#cb23-171"></a></span>
+<span id="cb23-172"><a href="#cb23-172"></a>Then we can decompose the _average treatment effect_ $\E(Y_1-Y_0)$ as follows</span>
+<span id="cb23-173"><a href="#cb23-173"></a></span>
+<span id="cb23-174"><a href="#cb23-174"></a>\begin{equation*}</span>
+<span id="cb23-175"><a href="#cb23-175"></a>\E<span class="co">[</span><span class="ot">Y_{1,M_1} - Y_{0,M_0}</span><span class="co">]</span> = \underbrace{\E[Y_{\color{red}{1},\color{blue}{M_1}}</span>
+<span id="cb23-176"><a href="#cb23-176"></a><span class="ss">  - </span>Y_{\color{red}{1},\color{blue}{M_0}}]}_{\text{natural indirect effect}} +</span>
+<span id="cb23-177"><a href="#cb23-177"></a>  \underbrace{\E[Y_{\color{blue}{1},\color{red}{M_0}} -</span>
+<span id="cb23-178"><a href="#cb23-178"></a>  Y_{\color{blue}{0},\color{red}{M_0}}]}_{\text{natural direct effect}}</span>
+<span id="cb23-179"><a href="#cb23-179"></a>\end{equation*}</span>
+<span id="cb23-180"><a href="#cb23-180"></a></span>
+<span id="cb23-181"><a href="#cb23-181"></a><span class="ss">- </span>Natural direct effect (NDE): Varying treatment while keeping the mediator</span>
+<span id="cb23-182"><a href="#cb23-182"></a>  fixed at the value it would have taken under no treatment</span>
+<span id="cb23-183"><a href="#cb23-183"></a><span class="ss">- </span>Natural indirect effect (NIE): Varying the mediator from the value it would</span>
+<span id="cb23-184"><a href="#cb23-184"></a>  have taken under treatment to the value it would have taken under control,</span>
+<span id="cb23-185"><a href="#cb23-185"></a>  while keeping treatment fixed</span>
+<span id="cb23-186"><a href="#cb23-186"></a></span>
+<span id="cb23-187"><a href="#cb23-187"></a><span class="fu">### Identification assumptions:</span></span>
+<span id="cb23-188"><a href="#cb23-188"></a></span>
+<span id="cb23-189"><a href="#cb23-189"></a><span class="ss">- </span>$A \indep Y_{a,m} \mid W$</span>
+<span id="cb23-190"><a href="#cb23-190"></a><span class="ss">- </span>$M \indep Y_{a,m} \mid W, A$</span>
+<span id="cb23-191"><a href="#cb23-191"></a><span class="ss">- </span>$A \indep M_a \mid W$</span>
+<span id="cb23-192"><a href="#cb23-192"></a><span class="ss">- </span>$M_0 \indep Y_{1,m} \mid W$</span>
+<span id="cb23-193"><a href="#cb23-193"></a><span class="ss">- </span>and positivity assumptions</span>
+<span id="cb23-194"><a href="#cb23-194"></a></span>
+<span id="cb23-195"><a href="#cb23-195"></a><span class="fu">### Cross-world independence assumption</span></span>
+<span id="cb23-196"><a href="#cb23-196"></a></span>
+<span id="cb23-197"><a href="#cb23-197"></a>What does $M_0 \indep Y_{1,m} \mid W$ mean?</span>
+<span id="cb23-198"><a href="#cb23-198"></a></span>
+<span id="cb23-199"><a href="#cb23-199"></a><span class="ss">- </span>Conditional on $W$, knowledge of the mediator value in the absence of</span>
+<span id="cb23-200"><a href="#cb23-200"></a>  treatment, $M_0$,</span>
+<span id="cb23-201"><a href="#cb23-201"></a>  provides no information about the outcome under treatment, $Y_{1,m}$.</span>
+<span id="cb23-202"><a href="#cb23-202"></a><span class="ss">- </span>Can you think of a data-generating mechanism that would violate this</span>
+<span id="cb23-203"><a href="#cb23-203"></a>  assumption?</span>
+<span id="cb23-204"><a href="#cb23-204"></a><span class="ss">- </span>Example: in a randomized study, whenever we believe that treatment assignment</span>
+<span id="cb23-205"><a href="#cb23-205"></a>  works through adherence (i.e., almost</span>
+<span id="cb23-206"><a href="#cb23-206"></a>  always), we are violating this assumption (more on this later).</span>
+<span id="cb23-207"><a href="#cb23-207"></a><span class="ss">- </span>Cross-world assumptions are problematic for other reasons, including:</span>
+<span id="cb23-208"><a href="#cb23-208"></a><span class="ss">  - </span>You can never design a randomized study where the assumption holds by</span>
+<span id="cb23-209"><a href="#cb23-209"></a>    design.</span>
+<span id="cb23-210"><a href="#cb23-210"></a></span>
+<span id="cb23-211"><a href="#cb23-211"></a>**If the cross-world assumption holds, can write the NDE as a weighted average</span>
+<span id="cb23-212"><a href="#cb23-212"></a>of controlled direct effects at each level of $M=m$.**</span>
+<span id="cb23-213"><a href="#cb23-213"></a></span>
+<span id="cb23-214"><a href="#cb23-214"></a>$$</span>
+<span id="cb23-215"><a href="#cb23-215"></a>  \E \sum_m <span class="sc">\{</span>\E(Y_{1,m} \mid W) - \E(Y_{0,m} \mid W)<span class="sc">\}</span> \P(M_{0}=m \mid W)</span>
+<span id="cb23-216"><a href="#cb23-216"></a>$$</span>
+<span id="cb23-217"><a href="#cb23-217"></a></span>
+<span id="cb23-218"><a href="#cb23-218"></a><span class="ss">- </span>If CDE($m$) is constant across $m$, then CDE = NDE.</span>
+<span id="cb23-219"><a href="#cb23-219"></a></span>
+<span id="cb23-220"><a href="#cb23-220"></a><span class="fu">### Identification formula:</span></span>
+<span id="cb23-221"><a href="#cb23-221"></a></span>
+<span id="cb23-222"><a href="#cb23-222"></a><span class="ss">- </span>Under the above identification assumptions, the natural direct effect can be</span>
+<span id="cb23-223"><a href="#cb23-223"></a>  identified:</span>
+<span id="cb23-224"><a href="#cb23-224"></a>  \begin{equation*}</span>
+<span id="cb23-225"><a href="#cb23-225"></a>    \E(Y_{1,M_0} - Y_{0,M_0}) =</span>
+<span id="cb23-226"><a href="#cb23-226"></a>    \E[\color{Goldenrod}{\E<span class="sc">\{</span>}\color{ForestGreen}{\E(Y \mid A=1, M, W) -</span>
+<span id="cb23-227"><a href="#cb23-227"></a>    \E(Y \mid A=0, M, W)}\color{Goldenrod}{\mid A=0,W<span class="sc">\}</span>}]</span>
+<span id="cb23-228"><a href="#cb23-228"></a>  \end{equation*}</span>
+<span id="cb23-229"><a href="#cb23-229"></a></span>
+<span id="cb23-230"><a href="#cb23-230"></a><span class="ss">- </span>The natural indirect effect can be identified similarly.</span>
+<span id="cb23-231"><a href="#cb23-231"></a><span class="ss">- </span>Let's dissect this formula in <span class="in">`R`</span>:</span>
+<span id="cb23-232"><a href="#cb23-232"></a>  <span class="in">```{r}</span></span>
+<span id="cb23-233"><a href="#cb23-233"></a><span class="in">  n &lt;- 1e6</span></span>
+<span id="cb23-234"><a href="#cb23-234"></a><span class="in">  w &lt;- rnorm(n)</span></span>
+<span id="cb23-235"><a href="#cb23-235"></a><span class="in">  a &lt;- rbinom(n, 1, 0.5)</span></span>
+<span id="cb23-236"><a href="#cb23-236"></a><span class="in">  m &lt;- rnorm(n, w + a)</span></span>
+<span id="cb23-237"><a href="#cb23-237"></a><span class="in">  y &lt;- rnorm(n, w + a + m)</span></span>
+<span id="cb23-238"><a href="#cb23-238"></a><span class="in">  ```</span></span>
+<span id="cb23-239"><a href="#cb23-239"></a><span class="ss">- </span>First we fit a correct model for the outcome</span>
+<span id="cb23-240"><a href="#cb23-240"></a>  <span class="in">```{r}</span></span>
+<span id="cb23-241"><a href="#cb23-241"></a><span class="in">  lm_y &lt;- lm(y ~ m + a + w)</span></span>
+<span id="cb23-242"><a href="#cb23-242"></a><span class="in">  ```</span></span>
+<span id="cb23-243"><a href="#cb23-243"></a></span>
+<span id="cb23-244"><a href="#cb23-244"></a><span class="ss">- </span>Then we generate predictions $\color{ForestGreen}{\E(Y \mid A=1, M, W)}</span>
+<span id="cb23-245"><a href="#cb23-245"></a>  \text{ and }\color{ForestGreen}{\E(Y \mid A=0, M, W)}$ with $A$ fixed but</span>
+<span id="cb23-246"><a href="#cb23-246"></a>  letting $M$ and $W$ take their observed values</span>
+<span id="cb23-247"><a href="#cb23-247"></a>  <span class="in">```{r}</span></span>
+<span id="cb23-248"><a href="#cb23-248"></a><span class="in">  pred_y1 &lt;- predict(lm_y, newdata = data.frame(a = 1, m = m, w = w))</span></span>
+<span id="cb23-249"><a href="#cb23-249"></a><span class="in">  pred_y0 &lt;- predict(lm_y, newdata = data.frame(a = 0, m = m, w = w))</span></span>
+<span id="cb23-250"><a href="#cb23-250"></a><span class="in">  ```</span></span>
+<span id="cb23-251"><a href="#cb23-251"></a><span class="ss">- </span>Then we compute the difference between the predicted values</span>
+<span id="cb23-252"><a href="#cb23-252"></a>  $\color{ForestGreen}{\E(Y \mid A=1, M, W) - \E(Y \mid A=0, M, W)},$</span>
+<span id="cb23-253"><a href="#cb23-253"></a><span class="ss">- </span>and use this difference as a pseudo-outcome in a regression on $A$ and $W$:</span>
+<span id="cb23-254"><a href="#cb23-254"></a>  $\color{Goldenrod}{\E<span class="sc">\{</span>}\color{ForestGreen}{\E(Y \mid A=1, M, W) - \E(Y \mid</span>
+<span id="cb23-255"><a href="#cb23-255"></a>  A=0, M, W)}\color{Goldenrod}{\mid A=0,W<span class="sc">\}</span>}$</span>
+<span id="cb23-256"><a href="#cb23-256"></a>  <span class="in">```{r}</span></span>
+<span id="cb23-257"><a href="#cb23-257"></a><span class="in">  pseudo &lt;- pred_y1 - pred_y0</span></span>
+<span id="cb23-258"><a href="#cb23-258"></a><span class="in">  lm_pseudo &lt;- lm(pseudo ~ a + w)</span></span>
+<span id="cb23-259"><a href="#cb23-259"></a><span class="in">  ```</span></span>
+<span id="cb23-260"><a href="#cb23-260"></a></span>
+<span id="cb23-261"><a href="#cb23-261"></a><span class="ss">- </span>Now we predict the value of this pseudo-outcome under $A=0$, and average the</span>
+<span id="cb23-262"><a href="#cb23-262"></a>  result</span>
+<span id="cb23-263"><a href="#cb23-263"></a>  <span class="in">```{r}</span></span>
+<span id="cb23-264"><a href="#cb23-264"></a><span class="in">  pred_pseudo &lt;- predict(lm_pseudo, newdata = data.frame(a = 0, w = w))</span></span>
+<span id="cb23-265"><a href="#cb23-265"></a><span class="in">  ## NDE:</span></span>
+<span id="cb23-266"><a href="#cb23-266"></a><span class="in">  mean(pred_pseudo)</span></span>
+<span id="cb23-267"><a href="#cb23-267"></a><span class="in">  ```</span></span>
+<span id="cb23-268"><a href="#cb23-268"></a></span>
+<span id="cb23-269"><a href="#cb23-269"></a><span class="fu">### Is this the estimand I want?</span></span>
+<span id="cb23-270"><a href="#cb23-270"></a></span>
+<span id="cb23-271"><a href="#cb23-271"></a><span class="ss">- </span>Makes sense to intervene on $A$ but not directly on $M$.</span>
+<span id="cb23-272"><a href="#cb23-272"></a><span class="ss">- </span>Want to understand a natural mechanism underlying an association / total</span>
+<span id="cb23-273"><a href="#cb23-273"></a>  effect. J. Pearl calls this _descriptive_.</span>
+<span id="cb23-274"><a href="#cb23-274"></a><span class="ss">- </span>NDE + NIE = total effect (ATE).</span>
+<span id="cb23-275"><a href="#cb23-275"></a><span class="ss">- </span>Okay with the assumptions.</span>
+<span id="cb23-276"><a href="#cb23-276"></a></span>
+<span id="cb23-277"><a href="#cb23-277"></a>_What if our data structure involves a post-treatment confounder of the</span>
+<span id="cb23-278"><a href="#cb23-278"></a>mediator-outcome relationship (e.g., adherence)?_</span>
+<span id="cb23-279"><a href="#cb23-279"></a></span>
+<span id="cb23-282"><a href="#cb23-282"></a><span class="in">```{tikz}</span></span>
+<span id="cb23-283"><a href="#cb23-283"></a><span class="in">#| fig-cap: Directed acyclic graph under intermediate confounders of the mediator-outcome relation affected by treatment</span></span>
+<span id="cb23-284"><a href="#cb23-284"></a><span class="in">\dimendef\prevdepth=0</span></span>
+<span id="cb23-285"><a href="#cb23-285"></a><span class="in">\pgfdeclarelayer{background}</span></span>
+<span id="cb23-286"><a href="#cb23-286"></a><span class="in">\pgfsetlayers{background,main}</span></span>
+<span id="cb23-287"><a href="#cb23-287"></a><span class="in">\usetikzlibrary{arrows,positioning}</span></span>
+<span id="cb23-288"><a href="#cb23-288"></a><span class="in">\tikzset{</span></span>
+<span id="cb23-289"><a href="#cb23-289"></a><span class="in">&gt;=stealth',</span></span>
+<span id="cb23-290"><a href="#cb23-290"></a><span class="in">punkt/.style={</span></span>
+<span id="cb23-291"><a href="#cb23-291"></a><span class="in">rectangle,</span></span>
+<span id="cb23-292"><a href="#cb23-292"></a><span class="in">rounded corners,</span></span>
+<span id="cb23-293"><a href="#cb23-293"></a><span class="in">draw=black, very thick,</span></span>
+<span id="cb23-294"><a href="#cb23-294"></a><span class="in">text width=6.5em,</span></span>
+<span id="cb23-295"><a href="#cb23-295"></a><span class="in">minimum height=2em,</span></span>
+<span id="cb23-296"><a href="#cb23-296"></a><span class="in">text centered},</span></span>
+<span id="cb23-297"><a href="#cb23-297"></a><span class="in">pil/.style={</span></span>
+<span id="cb23-298"><a href="#cb23-298"></a><span class="in">-&gt;,</span></span>
+<span id="cb23-299"><a href="#cb23-299"></a><span class="in">thick,</span></span>
+<span id="cb23-300"><a href="#cb23-300"></a><span class="in">shorten &lt;=2pt,</span></span>
+<span id="cb23-301"><a href="#cb23-301"></a><span class="in">shorten &gt;=2pt,}</span></span>
+<span id="cb23-302"><a href="#cb23-302"></a><span class="in">}</span></span>
+<span id="cb23-303"><a href="#cb23-303"></a><span class="in">\newcommand{\Vertex}[2]</span></span>
+<span id="cb23-304"><a href="#cb23-304"></a><span class="in">{\node[minimum width=0.6cm,inner sep=0.05cm] (#2) at (#1) {$#2$};</span></span>
+<span id="cb23-305"><a href="#cb23-305"></a><span class="in">}</span></span>
+<span id="cb23-306"><a href="#cb23-306"></a><span class="in">\newcommand{\VertexR}[2]</span></span>
+<span id="cb23-307"><a href="#cb23-307"></a><span class="in">{\node[rectangle, draw, minimum width=0.6cm,inner sep=0.05cm] (#2) at (#1) {$#2$};</span></span>
+<span id="cb23-308"><a href="#cb23-308"></a><span class="in">}</span></span>
+<span id="cb23-309"><a href="#cb23-309"></a><span class="in">\newcommand{\ArrowR}[3]</span></span>
+<span id="cb23-310"><a href="#cb23-310"></a><span class="in">{ \begin{pgfonlayer}{background}</span></span>
+<span id="cb23-311"><a href="#cb23-311"></a><span class="in">\draw[-&gt;,#3] (#1) to[bend right=30] (#2);</span></span>
+<span id="cb23-312"><a href="#cb23-312"></a><span class="in">\end{pgfonlayer}</span></span>
+<span id="cb23-313"><a href="#cb23-313"></a><span class="in">}</span></span>
+<span id="cb23-314"><a href="#cb23-314"></a><span class="in">\newcommand{\ArrowL}[3]</span></span>
+<span id="cb23-315"><a href="#cb23-315"></a><span class="in">{ \begin{pgfonlayer}{background}</span></span>
+<span id="cb23-316"><a href="#cb23-316"></a><span class="in">\draw[-&gt;,#3] (#1) to[bend left=45] (#2);</span></span>
+<span id="cb23-317"><a href="#cb23-317"></a><span class="in">\end{pgfonlayer}</span></span>
+<span id="cb23-318"><a href="#cb23-318"></a><span class="in">}</span></span>
+<span id="cb23-319"><a href="#cb23-319"></a><span class="in">\newcommand{\EdgeL}[3]</span></span>
+<span id="cb23-320"><a href="#cb23-320"></a><span class="in">{ \begin{pgfonlayer}{background}</span></span>
+<span id="cb23-321"><a href="#cb23-321"></a><span class="in">\draw[dashed,#3] (#1) to[bend right=-45] (#2);</span></span>
+<span id="cb23-322"><a href="#cb23-322"></a><span class="in">\end{pgfonlayer}</span></span>
+<span id="cb23-323"><a href="#cb23-323"></a><span class="in">}</span></span>
+<span id="cb23-324"><a href="#cb23-324"></a><span class="in">\newcommand{\Arrow}[3]</span></span>
+<span id="cb23-325"><a href="#cb23-325"></a><span class="in">{ \begin{pgfonlayer}{background}</span></span>
+<span id="cb23-326"><a href="#cb23-326"></a><span class="in">\draw[-&gt;,#3] (#1) -- +(#2);</span></span>
+<span id="cb23-327"><a href="#cb23-327"></a><span class="in">\end{pgfonlayer}</span></span>
+<span id="cb23-328"><a href="#cb23-328"></a><span class="in">}</span></span>
+<span id="cb23-329"><a href="#cb23-329"></a><span class="in">\begin{tikzpicture}</span></span>
+<span id="cb23-330"><a href="#cb23-330"></a><span class="in">  \Vertex{0, -1}{Z}</span></span>
+<span id="cb23-331"><a href="#cb23-331"></a><span class="in">  \Vertex{-4, 0}{W}</span></span>
+<span id="cb23-332"><a href="#cb23-332"></a><span class="in">  \Vertex{0, 0}{M}</span></span>
+<span id="cb23-333"><a href="#cb23-333"></a><span class="in">  \Vertex{-2, 0}{A}</span></span>
+<span id="cb23-334"><a href="#cb23-334"></a><span class="in">  \Vertex{2, 0}{Y}</span></span>
+<span id="cb23-335"><a href="#cb23-335"></a><span class="in">  \ArrowR{W}{Z}{black}</span></span>
+<span id="cb23-336"><a href="#cb23-336"></a><span class="in">  \Arrow{Z}{M}{black}</span></span>
+<span id="cb23-337"><a href="#cb23-337"></a><span class="in">  \Arrow{W}{A}{black}</span></span>
+<span id="cb23-338"><a href="#cb23-338"></a><span class="in">  \Arrow{A}{M}{black}</span></span>
+<span id="cb23-339"><a href="#cb23-339"></a><span class="in">  \Arrow{M}{Y}{black}</span></span>
+<span id="cb23-340"><a href="#cb23-340"></a><span class="in">  \Arrow{A}{Z}{black}</span></span>
+<span id="cb23-341"><a href="#cb23-341"></a><span class="in">  \Arrow{Z}{Y}{black}</span></span>
+<span id="cb23-342"><a href="#cb23-342"></a><span class="in">  \ArrowL{W}{Y}{black}</span></span>
+<span id="cb23-343"><a href="#cb23-343"></a><span class="in">  \ArrowL{A}{Y}{black}</span></span>
+<span id="cb23-344"><a href="#cb23-344"></a><span class="in">  \ArrowL{W}{M}{black}</span></span>
+<span id="cb23-345"><a href="#cb23-345"></a><span class="in">\end{tikzpicture}</span></span>
+<span id="cb23-346"><a href="#cb23-346"></a><span class="in">```</span></span>
+<span id="cb23-347"><a href="#cb23-347"></a></span>
+<span id="cb23-348"><a href="#cb23-348"></a><span class="al">![](img/ctndag.png)</span></span>
+<span id="cb23-349"><a href="#cb23-349"></a></span>
+<span id="cb23-350"><a href="#cb23-350"></a><span class="fu">### Unidentifiability of the NDE and NIE in this setting</span></span>
+<span id="cb23-351"><a href="#cb23-351"></a></span>
+<span id="cb23-352"><a href="#cb23-352"></a><span class="ss">- </span>In this example, natural direct and indirect effects are not generally point</span>
+<span id="cb23-353"><a href="#cb23-353"></a>  identified from observed data $O=(W,A,Z,M,Y)$.</span>
+<span id="cb23-354"><a href="#cb23-354"></a><span class="ss">- </span>The reason for this is that the cross-world counterfactual</span>
+<span id="cb23-355"><a href="#cb23-355"></a>  assumption</span>
+<span id="cb23-356"><a href="#cb23-356"></a>  $$</span>
+<span id="cb23-357"><a href="#cb23-357"></a>    Y_{1,m} \indep M_0 \mid W</span>
+<span id="cb23-358"><a href="#cb23-358"></a>  $$</span>
+<span id="cb23-359"><a href="#cb23-359"></a>  does not hold in the above directed acyclic graph.</span>
+<span id="cb23-360"><a href="#cb23-360"></a></span>
+<span id="cb23-361"><a href="#cb23-361"></a><span class="ss">- </span>To give intuition, we focus on the counterfactual outcome $Y_{A=1, M_{A=0}}$.</span>
+<span id="cb23-362"><a href="#cb23-362"></a><span class="ss">  - </span>This counterfactual outcome involves two counterfactual worlds</span>
+<span id="cb23-363"><a href="#cb23-363"></a>    simultaneously: one in which $A=1$ for the first portion of the</span>
+<span id="cb23-364"><a href="#cb23-364"></a>    counterfactual outcome, and one in which $A=0$ for the nested portion of the</span>
+<span id="cb23-365"><a href="#cb23-365"></a>    counterfactual outcome.</span>
+<span id="cb23-366"><a href="#cb23-366"></a><span class="ss">  - </span>Setting $A=1$ induces a counterfactual treatment-induced confounder, denoted</span>
+<span id="cb23-367"><a href="#cb23-367"></a>    $Z_{A=1}$. Setting $A=0$ induces another counterfactual treatment-induced</span>
+<span id="cb23-368"><a href="#cb23-368"></a>    confounder, denoted $Z_{A=0}$.</span>
+<span id="cb23-369"><a href="#cb23-369"></a><span class="ss">  - </span>The two treatment-induced counterfactual confounders, $Z_{A=1}$ and</span>
+<span id="cb23-370"><a href="#cb23-370"></a>    $Z_{A=0}$ share unmeasured common causes, $U_Z$, which creates a spurious</span>
+<span id="cb23-371"><a href="#cb23-371"></a>    association.</span>
+<span id="cb23-372"><a href="#cb23-372"></a><span class="ss">  - </span>Because $Z_{A=1}$ is causally related to $Y_{A=1, M=m}$, and $Z_{A=0}$ is</span>
+<span id="cb23-373"><a href="#cb23-373"></a>    also casually related to $M_{A=0}$, the path through $U_Z$ means that the</span>
+<span id="cb23-374"><a href="#cb23-374"></a>    backdoor criterion is not met for identification of $Y_{A=1, M_{A=0}}$,</span>
+<span id="cb23-375"><a href="#cb23-375"></a>    i.e., $M_{0} \notindep Y_{A=1, m} \mid W$, where $W$ denotes</span>
+<span id="cb23-376"><a href="#cb23-376"></a>    baseline covariates.</span>
+<span id="cb23-377"><a href="#cb23-377"></a></span>
+<span id="cb23-378"><a href="#cb23-378"></a></span>
+<span id="cb23-381"><a href="#cb23-381"></a><span class="in">```{tikz}</span></span>
+<span id="cb23-382"><a href="#cb23-382"></a><span class="in">#| fig-cap: Parallel worlds model of the scenario considered</span></span>
+<span id="cb23-383"><a href="#cb23-383"></a><span class="in">\dimendef\prevdepth=0</span></span>
+<span id="cb23-384"><a href="#cb23-384"></a><span class="in">\pgfdeclarelayer{background}</span></span>
+<span id="cb23-385"><a href="#cb23-385"></a><span class="in">\pgfsetlayers{background,main}</span></span>
+<span id="cb23-386"><a href="#cb23-386"></a><span class="in">\usetikzlibrary{arrows,positioning}</span></span>
+<span id="cb23-387"><a href="#cb23-387"></a><span class="in">\tikzset{</span></span>
+<span id="cb23-388"><a href="#cb23-388"></a><span class="in">&gt;=stealth',</span></span>
+<span id="cb23-389"><a href="#cb23-389"></a><span class="in">punkt/.style={</span></span>
+<span id="cb23-390"><a href="#cb23-390"></a><span class="in">rectangle,</span></span>
+<span id="cb23-391"><a href="#cb23-391"></a><span class="in">rounded corners,</span></span>
+<span id="cb23-392"><a href="#cb23-392"></a><span class="in">draw=black, very thick,</span></span>
+<span id="cb23-393"><a href="#cb23-393"></a><span class="in">text width=6.5em,</span></span>
+<span id="cb23-394"><a href="#cb23-394"></a><span class="in">minimum height=2em,</span></span>
+<span id="cb23-395"><a href="#cb23-395"></a><span class="in">text centered},</span></span>
+<span id="cb23-396"><a href="#cb23-396"></a><span class="in">pil/.style={</span></span>
+<span id="cb23-397"><a href="#cb23-397"></a><span class="in">-&gt;,</span></span>
+<span id="cb23-398"><a href="#cb23-398"></a><span class="in">thick,</span></span>
+<span id="cb23-399"><a href="#cb23-399"></a><span class="in">shorten &lt;=2pt,</span></span>
+<span id="cb23-400"><a href="#cb23-400"></a><span class="in">shorten &gt;=2pt,}</span></span>
+<span id="cb23-401"><a href="#cb23-401"></a><span class="in">}</span></span>
+<span id="cb23-402"><a href="#cb23-402"></a><span class="in">\newcommand{\Vertex}[2]</span></span>
+<span id="cb23-403"><a href="#cb23-403"></a><span class="in">{\node[minimum width=0.6cm,inner sep=0.05cm] (#2) at (#1) {$#2$};</span></span>
+<span id="cb23-404"><a href="#cb23-404"></a><span class="in">}</span></span>
+<span id="cb23-405"><a href="#cb23-405"></a><span class="in">\newcommand{\VertexR}[2]</span></span>
+<span id="cb23-406"><a href="#cb23-406"></a><span class="in">{\node[rectangle, draw, minimum width=0.6cm,inner sep=0.05cm] (#2) at (#1) {$#2$};</span></span>
+<span id="cb23-407"><a href="#cb23-407"></a><span class="in">}</span></span>
+<span id="cb23-408"><a href="#cb23-408"></a><span class="in">\newcommand{\ArrowR}[3]</span></span>
+<span id="cb23-409"><a href="#cb23-409"></a><span class="in">{ \begin{pgfonlayer}{background}</span></span>
+<span id="cb23-410"><a href="#cb23-410"></a><span class="in">\draw[-&gt;,#3] (#1) to[bend right=30] (#2);</span></span>
+<span id="cb23-411"><a href="#cb23-411"></a><span class="in">\end{pgfonlayer}</span></span>
+<span id="cb23-412"><a href="#cb23-412"></a><span class="in">}</span></span>
+<span id="cb23-413"><a href="#cb23-413"></a><span class="in">\newcommand{\ArrowL}[3]</span></span>
+<span id="cb23-414"><a href="#cb23-414"></a><span class="in">{ \begin{pgfonlayer}{background}</span></span>
+<span id="cb23-415"><a href="#cb23-415"></a><span class="in">\draw[-&gt;,#3] (#1) to[bend left=45] (#2);</span></span>
+<span id="cb23-416"><a href="#cb23-416"></a><span class="in">\end{pgfonlayer}</span></span>
+<span id="cb23-417"><a href="#cb23-417"></a><span class="in">}</span></span>
+<span id="cb23-418"><a href="#cb23-418"></a><span class="in">\newcommand{\EdgeL}[3]</span></span>
+<span id="cb23-419"><a href="#cb23-419"></a><span class="in">{ \begin{pgfonlayer}{background}</span></span>
+<span id="cb23-420"><a href="#cb23-420"></a><span class="in">\draw[dashed,#3] (#1) to[bend left=45] (#2);</span></span>
+<span id="cb23-421"><a href="#cb23-421"></a><span class="in">\end{pgfonlayer}</span></span>
+<span id="cb23-422"><a href="#cb23-422"></a><span class="in">}</span></span>
+<span id="cb23-423"><a href="#cb23-423"></a><span class="in">\newcommand{\EdgeR}[3]</span></span>
+<span id="cb23-424"><a href="#cb23-424"></a><span class="in">{ \begin{pgfonlayer}{background}</span></span>
+<span id="cb23-425"><a href="#cb23-425"></a><span class="in">\draw[dashed,#3] (#1) to[bend right=-45] (#2);</span></span>
+<span id="cb23-426"><a href="#cb23-426"></a><span class="in">\end{pgfonlayer}</span></span>
+<span id="cb23-427"><a href="#cb23-427"></a><span class="in">}</span></span>
+<span id="cb23-428"><a href="#cb23-428"></a><span class="in">\newcommand{\Arrow}[3]</span></span>
+<span id="cb23-429"><a href="#cb23-429"></a><span class="in">{ \begin{pgfonlayer}{background}</span></span>
+<span id="cb23-430"><a href="#cb23-430"></a><span class="in">\draw[-&gt;,#3] (#1) -- +(#2);</span></span>
+<span id="cb23-431"><a href="#cb23-431"></a><span class="in">\end{pgfonlayer}</span></span>
+<span id="cb23-432"><a href="#cb23-432"></a><span class="in">}</span></span>
+<span id="cb23-433"><a href="#cb23-433"></a></span>
+<span id="cb23-434"><a href="#cb23-434"></a><span class="in">\begin{tikzpicture}</span></span>
+<span id="cb23-435"><a href="#cb23-435"></a><span class="in">  \Vertex{0, 1}{Z_0}</span></span>
+<span id="cb23-436"><a href="#cb23-436"></a><span class="in">  \Vertex{0, -1}{Z_1}</span></span>
+<span id="cb23-437"><a href="#cb23-437"></a><span class="in">  \Vertex{-2, 0}{U_Z}</span></span>
+<span id="cb23-438"><a href="#cb23-438"></a><span class="in">  \Vertex{2, 1}{M_0}</span></span>
+<span id="cb23-439"><a href="#cb23-439"></a><span class="in">  \Vertex{4, -1}{Y_{1, m}}</span></span>
+<span id="cb23-440"><a href="#cb23-440"></a><span class="in">  \Arrow{Z_0}{M_0}{black}</span></span>
+<span id="cb23-441"><a href="#cb23-441"></a><span class="in">  \Arrow{Z_1}{Y_{1, m}}{black}</span></span>
+<span id="cb23-442"><a href="#cb23-442"></a><span class="in">  \Arrow{U_Z}{Z_0}{black}</span></span>
+<span id="cb23-443"><a href="#cb23-443"></a><span class="in">  \Arrow{U_Z}{Z_1}{black}</span></span>
+<span id="cb23-444"><a href="#cb23-444"></a><span class="in">\end{tikzpicture}</span></span>
+<span id="cb23-445"><a href="#cb23-445"></a><span class="in">```</span></span>
+<span id="cb23-446"><a href="#cb23-446"></a></span>
+<span id="cb23-447"><a href="#cb23-447"></a><span class="co">&lt;!--</span></span>
+<span id="cb23-448"><a href="#cb23-448"></a><span class="co">this is what we used to have</span></span>
+<span id="cb23-449"><a href="#cb23-449"></a><span class="co">- Technically, the reason for this is that an intervention setting $A=1$</span></span>
+<span id="cb23-450"><a href="#cb23-450"></a><span class="co">  (necessary for the definition of $Y_{1,m}$) induces a counterfactual variable</span></span>
+<span id="cb23-451"><a href="#cb23-451"></a><span class="co">  $Z_1$.</span></span>
+<span id="cb23-452"><a href="#cb23-452"></a><span class="co">- Likewise, an intervention setting $A=0$ (necessary for the definition of</span></span>
+<span id="cb23-453"><a href="#cb23-453"></a><span class="co">  $M_0$) induces a counterfactual $Z_0$.</span></span>
+<span id="cb23-454"><a href="#cb23-454"></a><span class="co">- The variables $Z_1$ and $Z_0$ are correlated because they share unmeasured</span></span>
+<span id="cb23-455"><a href="#cb23-455"></a><span class="co">  common causes, $U_Z$.</span></span>
+<span id="cb23-456"><a href="#cb23-456"></a><span class="co">- The variable $Z_1$ is correlated with $Y_{1,m}$, and the variable $Z_0$ is</span></span>
+<span id="cb23-457"><a href="#cb23-457"></a><span class="co">  correlated with $M_0$, because they are counterfactual outcomes in the same</span></span>
+<span id="cb23-458"><a href="#cb23-458"></a><span class="co">  hypothetical worlds.</span></span>
+<span id="cb23-459"><a href="#cb23-459"></a><span class="co">- To see this in the definition of counterfactual from a causal structural</span></span>
+<span id="cb23-460"><a href="#cb23-460"></a><span class="co">  model:</span></span>
+<span id="cb23-461"><a href="#cb23-461"></a><span class="co">\begin{align*}</span></span>
+<span id="cb23-462"><a href="#cb23-462"></a><span class="co">  Y_{1,m} &amp;= f_Y(W, 1, Z_1, m, U_Y), \text{ and }\\</span></span>
+<span id="cb23-463"><a href="#cb23-463"></a><span class="co">  M_0 &amp;= f_M(W, 0, Z_0, U_M)\\</span></span>
+<span id="cb23-464"><a href="#cb23-464"></a><span class="co">\end{align*}</span></span>
+<span id="cb23-465"><a href="#cb23-465"></a><span class="co">are correlated even after adjusting for $W$ by virtue of $Z_1$ and $Z_0$ being</span></span>
+<span id="cb23-466"><a href="#cb23-466"></a><span class="co">correlated.</span></span>
+<span id="cb23-467"><a href="#cb23-467"></a><span class="co">--&gt;</span></span>
+<span id="cb23-468"><a href="#cb23-468"></a></span>
+<span id="cb23-469"><a href="#cb23-469"></a><span class="co">&lt;!--</span></span>
+<span id="cb23-470"><a href="#cb23-470"></a><span class="co">Intuitively:</span></span>
+<span id="cb23-471"><a href="#cb23-471"></a><span class="co">- $Z$ is a confounder of the relation $M \rightarrow Y$, which requires</span></span>
+<span id="cb23-472"><a href="#cb23-472"></a><span class="co">  adjustment</span></span>
+<span id="cb23-473"><a href="#cb23-473"></a><span class="co">- But $Z$ is on the pathway $A\rightarrow Y$, which precludes adjustment</span></span>
+<span id="cb23-474"><a href="#cb23-474"></a><span class="co">--&gt;</span></span>
+<span id="cb23-475"><a href="#cb23-475"></a></span>
+<span id="cb23-476"><a href="#cb23-476"></a>However:</span>
+<span id="cb23-477"><a href="#cb23-477"></a></span>
+<span id="cb23-478"><a href="#cb23-478"></a><span class="ss">- </span>We can actually actually identify the NIE/NDE in the above setting if we are</span>
+<span id="cb23-479"><a href="#cb23-479"></a>  willing to invoke monotonicity between a treatment and one or more binary</span>
+<span id="cb23-480"><a href="#cb23-480"></a>  treatment-induced confounders <span class="co">[</span><span class="ot">@tchetgen2014identification</span><span class="co">]</span>.</span>
+<span id="cb23-481"><a href="#cb23-481"></a><span class="ss">- </span>Assuming monotonicity is also sometimes referred to as assuming "no defiers"</span>
+<span id="cb23-482"><a href="#cb23-482"></a>  -- in other words, assuming that there are no individuals who would do the</span>
+<span id="cb23-483"><a href="#cb23-483"></a>  opposite of the encouragement.</span>
+<span id="cb23-484"><a href="#cb23-484"></a><span class="ss">- </span>Monotonicity may seem like a restrictive assumption, but may be reasonable in</span>
+<span id="cb23-485"><a href="#cb23-485"></a>  some common scenarios (e.g., in trials where the intervention is randomized</span>
+<span id="cb23-486"><a href="#cb23-486"></a>  treatment assignment and the treatment-induced confounder is whether or not</span>
+<span id="cb23-487"><a href="#cb23-487"></a>  treatment was actually taken -- in this setting, we may feel comfortable</span>
+<span id="cb23-488"><a href="#cb23-488"></a>  assuming that there are no "defiers", frequently assumed when using IVs to</span>
+<span id="cb23-489"><a href="#cb23-489"></a>  identify causal effects)</span>
+<span id="cb23-490"><a href="#cb23-490"></a></span>
+<span id="cb23-491"><a href="#cb23-491"></a>Note: CDEs are still identified in this setting. They can be identified and</span>
+<span id="cb23-492"><a href="#cb23-492"></a>estimated similarly to a longitudinal data sructure with a two-time-point</span>
+<span id="cb23-493"><a href="#cb23-493"></a>intervention.</span>
+<span id="cb23-494"><a href="#cb23-494"></a></span>
+<span id="cb23-495"><a href="#cb23-495"></a><span class="fu">## Interventional (in)direct effects</span></span>
+<span id="cb23-496"><a href="#cb23-496"></a></span>
+<span id="cb23-497"><a href="#cb23-497"></a><span class="ss">- </span>Let $G_a$ denote a random draw from the distribution of $M_a \mid W$</span>
+<span id="cb23-498"><a href="#cb23-498"></a><span class="ss">- </span>Define the counterfactual $Y_{1,G_0}$ as the counterfactual</span>
+<span id="cb23-499"><a href="#cb23-499"></a>  variable in a hypothetical world where $A$ is set $A=1$ and $M$ is</span>
+<span id="cb23-500"><a href="#cb23-500"></a>  set to $M=G_0$ with probability one.</span>
+<span id="cb23-501"><a href="#cb23-501"></a></span>
+<span id="cb23-502"><a href="#cb23-502"></a><span class="al">![](img/graphic4b.png)</span>{width=60%}</span>
+<span id="cb23-503"><a href="#cb23-503"></a></span>
+<span id="cb23-504"><a href="#cb23-504"></a><span class="ss">- </span>Define $Y_{0,G_0}$ and $Y_{1,G_1}$ similarly</span>
+<span id="cb23-505"><a href="#cb23-505"></a><span class="ss">- </span>Then we can define:</span>
+<span id="cb23-506"><a href="#cb23-506"></a>  $$</span>
+<span id="cb23-507"><a href="#cb23-507"></a>    \E<span class="co">[</span><span class="ot">Y_{1,G_1} - Y_{0,G_0}</span><span class="co">]</span> = \underbrace{\E[Y_{\color{red}{1},</span>
+<span id="cb23-508"><a href="#cb23-508"></a>      \color{blue}{G_1}} - Y_{\color{red}{1},</span>
+<span id="cb23-509"><a href="#cb23-509"></a>      \color{blue}{G_0}}]}_{\text{interventional indirect effect}} +</span>
+<span id="cb23-510"><a href="#cb23-510"></a>      \underbrace{\E[Y_{\color{blue}{1},\color{red}{G_0}} -</span>
+<span id="cb23-511"><a href="#cb23-511"></a>      Y_{\color{blue}{0},</span>
+<span id="cb23-512"><a href="#cb23-512"></a>      \color{red}{G_0}}]}_{\text{interventional direct effect}}</span>
+<span id="cb23-513"><a href="#cb23-513"></a>  $$</span>
+<span id="cb23-514"><a href="#cb23-514"></a></span>
+<span id="cb23-515"><a href="#cb23-515"></a><span class="ss">- </span>Note that $\E<span class="co">[</span><span class="ot">Y_{1,G_1} - Y_{0,G_0}</span><span class="co">]</span>$ is still a _total effect_ of treatment,</span>
+<span id="cb23-516"><a href="#cb23-516"></a>  even if it is different from the ATE $\E<span class="co">[</span><span class="ot">Y_{1} - Y_{0}</span><span class="co">]</span>$</span>
+<span id="cb23-517"><a href="#cb23-517"></a><span class="ss">- </span>We gain in the ability to solve a problem, but lose in terms of interpretation</span>
+<span id="cb23-518"><a href="#cb23-518"></a>  of the causal effect (cannot decompose the ATE)</span>
+<span id="cb23-519"><a href="#cb23-519"></a></span>
+<span id="cb23-520"><a href="#cb23-520"></a><span class="fu">### An alternative definition of the effects:</span></span>
+<span id="cb23-521"><a href="#cb23-521"></a></span>
+<span id="cb23-522"><a href="#cb23-522"></a><span class="ss">- </span>Above  we defined $G_a$ as a random draw from the distribution of $M_a \mid W$</span>
+<span id="cb23-523"><a href="#cb23-523"></a><span class="ss">- </span>What if instead we define $G_a$ as a random draw from the distribution of $M_a</span>
+<span id="cb23-524"><a href="#cb23-524"></a>  \mid (Z_a,W)$</span>
+<span id="cb23-525"><a href="#cb23-525"></a><span class="ss">- </span>It turns out the indirect effect defined in this way only measures the path</span>
+<span id="cb23-526"><a href="#cb23-526"></a>  $A\rightarrow M \rightarrow Y$, and not the path $A\rightarrow Z\rightarrow M</span>
+<span id="cb23-527"><a href="#cb23-527"></a>  \rightarrow Y$</span>
+<span id="cb23-528"><a href="#cb23-528"></a><span class="ss">- </span>There may be important reasons to choose one over another (e.g., survival</span>
+<span id="cb23-529"><a href="#cb23-529"></a>  analyses where we want the distribution conditional on $Z$, instrumental</span>
+<span id="cb23-530"><a href="#cb23-530"></a>  variable designs where it doesn't make sense to condition on $Z$)</span>
+<span id="cb23-531"><a href="#cb23-531"></a></span>
+<span id="cb23-532"><a href="#cb23-532"></a><span class="co">&lt;!--</span></span>
+<span id="cb23-533"><a href="#cb23-533"></a><span class="co"> + Marginal PIDE: $\E(Y_{a, g_{M \mid a^{\star}, W}}) -</span></span>
+<span id="cb23-534"><a href="#cb23-534"></a><span class="co">   \E(Y_{a^{\star}, g_{M \mid a^{\star}, W}})$</span></span>
+<span id="cb23-535"><a href="#cb23-535"></a><span class="co"> + Marginal PIIE: $\E(Y_{a, g_{M \mid a, W}}) -</span></span>
+<span id="cb23-536"><a href="#cb23-536"></a><span class="co">   \E(Y_{a, g_{M \mid a^{\star}, W}})$</span></span>
+<span id="cb23-537"><a href="#cb23-537"></a><span class="co"> + Conditional PIDE: $\E(Y_{a, g_{M \mid Z, a^{\star}, W}}) -</span></span>
+<span id="cb23-538"><a href="#cb23-538"></a><span class="co">   \E(Y_{a^{\star}, g_{M \mid Z, a^{\star}, W}})$</span></span>
+<span id="cb23-539"><a href="#cb23-539"></a><span class="co"> + Conditional PIIE: $\E(Y_{a, g_{M \mid Z, a, W}}) -</span></span>
+<span id="cb23-540"><a href="#cb23-540"></a><span class="co">   \E(Y_{a, g_{M \mid Z, a^{\star}, W}})$</span></span>
+<span id="cb23-541"><a href="#cb23-541"></a><span class="co"> + Can you think of an example when you would want the conditional versions?</span></span>
+<span id="cb23-542"><a href="#cb23-542"></a><span class="co">   Marginal versions?</span></span>
+<span id="cb23-543"><a href="#cb23-543"></a><span class="co">--&gt;</span></span>
+<span id="cb23-544"><a href="#cb23-544"></a></span>
+<span id="cb23-545"><a href="#cb23-545"></a><span class="fu">### Identification assumptions:</span></span>
+<span id="cb23-546"><a href="#cb23-546"></a></span>
+<span id="cb23-547"><a href="#cb23-547"></a><span class="ss">- </span>$A \indep Y_{a,m} \mid W$</span>
+<span id="cb23-548"><a href="#cb23-548"></a><span class="ss">- </span>$M \indep Y_{a,m} \mid W, A, Z$</span>
+<span id="cb23-549"><a href="#cb23-549"></a><span class="ss">- </span>$A \indep M_a \mid W$</span>
+<span id="cb23-550"><a href="#cb23-550"></a><span class="ss">- </span>and positivity assumptions.</span>
+<span id="cb23-551"><a href="#cb23-551"></a></span>
+<span id="cb23-552"><a href="#cb23-552"></a>Under these assumptions, the population interventional direct and indirect</span>
+<span id="cb23-553"><a href="#cb23-553"></a>effect is identified:</span>
+<span id="cb23-554"><a href="#cb23-554"></a>\begin{align*}</span>
+<span id="cb23-555"><a href="#cb23-555"></a>  \E &amp;(Y_{a, G_{a'}}) = <span class="sc">\\</span></span>
+<span id="cb23-556"><a href="#cb23-556"></a>     &amp; \E\left[\color{Purple}{\E\left<span class="sc">\{</span>\color{Goldenrod}{\sum_z}</span>
+<span id="cb23-557"><a href="#cb23-557"></a>      \color{ForestGreen}{\E(Y \mid A=a, Z=z, M, W)}</span>
+<span id="cb23-558"><a href="#cb23-558"></a>      \color{Goldenrod}{\P(Z=z \mid A=a, W)}\mid A=a', W\right<span class="sc">\}</span>} \right]</span>
+<span id="cb23-559"><a href="#cb23-559"></a>\end{align*}</span>
+<span id="cb23-560"><a href="#cb23-560"></a></span>
+<span id="cb23-561"><a href="#cb23-561"></a><span class="ss">- </span>Let's dissect this formula in <span class="in">`R`</span>:</span>
+<span id="cb23-562"><a href="#cb23-562"></a>  <span class="in">```{r}</span></span>
+<span id="cb23-563"><a href="#cb23-563"></a><span class="in">  n &lt;- 1e6</span></span>
+<span id="cb23-564"><a href="#cb23-564"></a><span class="in">  w &lt;- rnorm(n)</span></span>
+<span id="cb23-565"><a href="#cb23-565"></a><span class="in">  a &lt;- rbinom(n, 1, 0.5)</span></span>
+<span id="cb23-566"><a href="#cb23-566"></a><span class="in">  z &lt;- rbinom(n, 1, 0.5 + 0.2 * a)</span></span>
+<span id="cb23-567"><a href="#cb23-567"></a><span class="in">  m &lt;- rnorm(n, w + a - z)</span></span>
+<span id="cb23-568"><a href="#cb23-568"></a><span class="in">  y &lt;- rnorm(n, w + a + z + m)</span></span>
+<span id="cb23-569"><a href="#cb23-569"></a><span class="in">  ```</span></span>
+<span id="cb23-570"><a href="#cb23-570"></a></span>
+<span id="cb23-571"><a href="#cb23-571"></a><span class="ss">- </span>Let us compute $\E(Y_{1, G_0})$ (so that $a = 1$, and $a'=0$).</span>
+<span id="cb23-572"><a href="#cb23-572"></a><span class="ss">- </span>First, fit a regression model for the outcome, and compute</span>
+<span id="cb23-573"><a href="#cb23-573"></a>  $\color{ForestGreen}{\E(Y \mid A=a, Z=z, M, W)}$ for all values of $z$</span>
+<span id="cb23-574"><a href="#cb23-574"></a>  <span class="in">```{r}</span></span>
+<span id="cb23-575"><a href="#cb23-575"></a><span class="in">  lm_y &lt;- lm(y ~ m + a + z + w)</span></span>
+<span id="cb23-576"><a href="#cb23-576"></a><span class="in">  pred_a1z0 &lt;- predict(lm_y, newdata = data.frame(m = m, a = 1, z = 0, w = w))</span></span>
+<span id="cb23-577"><a href="#cb23-577"></a><span class="in">  pred_a1z1 &lt;- predict(lm_y, newdata = data.frame(m = m, a = 1, z = 1, w = w))</span></span>
+<span id="cb23-578"><a href="#cb23-578"></a><span class="in">  ```</span></span>
+<span id="cb23-579"><a href="#cb23-579"></a></span>
+<span id="cb23-580"><a href="#cb23-580"></a><span class="ss">- </span>Now we fit the true model for $Z \mid A, W$ and get the conditional</span>
+<span id="cb23-581"><a href="#cb23-581"></a>  probability that $Z=1$ fixing $A=1$</span>
+<span id="cb23-582"><a href="#cb23-582"></a>  <span class="in">```{r}</span></span>
+<span id="cb23-583"><a href="#cb23-583"></a><span class="in">  prob_z &lt;- lm(z ~ a)</span></span>
+<span id="cb23-584"><a href="#cb23-584"></a><span class="in">  pred_z &lt;- predict(prob_z, newdata = data.frame(a = 1))</span></span>
+<span id="cb23-585"><a href="#cb23-585"></a><span class="in">  ```</span></span>
+<span id="cb23-586"><a href="#cb23-586"></a></span>
+<span id="cb23-587"><a href="#cb23-587"></a><span class="ss">- </span>Now we compute the following pseudo-outcome:</span>
+<span id="cb23-588"><a href="#cb23-588"></a>  $\color{Goldenrod}{\sum_z}\color{ForestGreen}{\E(Y \mid A=a, Z=z, M, W)}</span>
+<span id="cb23-589"><a href="#cb23-589"></a>   \color{Goldenrod}{\P(Z=z \mid A=a, w)}$</span>
+<span id="cb23-590"><a href="#cb23-590"></a>  <span class="in">```{r}</span></span>
+<span id="cb23-591"><a href="#cb23-591"></a><span class="in">  pseudo_out &lt;- pred_a1z0 * (1 - pred_z) + pred_a1z1 * pred_z</span></span>
+<span id="cb23-592"><a href="#cb23-592"></a><span class="in">  ```</span></span>
+<span id="cb23-593"><a href="#cb23-593"></a></span>
+<span id="cb23-594"><a href="#cb23-594"></a><span class="ss">- </span>Now we regress this pseudo-outcome on $A,W$, and compute the predictions</span>
+<span id="cb23-595"><a href="#cb23-595"></a>  setting $A=0$, that is, <span class="sc">\[</span>\color{Purple}{\E\left<span class="sc">\{</span>\color{Goldenrod}{\sum_z}</span>
+<span id="cb23-596"><a href="#cb23-596"></a>  \color{ForestGreen}{\E(Y \mid A=a, Z=z, M, W)}</span>
+<span id="cb23-597"><a href="#cb23-597"></a>  \color{Goldenrod}{\P(Z=z \mid A=a, w)}\mid A=a', W\right<span class="sc">\}</span>}<span class="sc">\]</span></span>
+<span id="cb23-598"><a href="#cb23-598"></a>  <span class="in">```{r}</span></span>
+<span id="cb23-599"><a href="#cb23-599"></a><span class="in">  fit_pseudo &lt;- lm(pseudo_out ~ a + w)</span></span>
+<span id="cb23-600"><a href="#cb23-600"></a><span class="in">  pred_pseudo &lt;- predict(fit_pseudo, data.frame(a = 0, w = w))</span></span>
+<span id="cb23-601"><a href="#cb23-601"></a><span class="in">  ```</span></span>
+<span id="cb23-602"><a href="#cb23-602"></a></span>
+<span id="cb23-603"><a href="#cb23-603"></a><span class="ss">- </span>And finally, just average those predictions!</span>
+<span id="cb23-604"><a href="#cb23-604"></a>  <span class="in">```{r}</span></span>
+<span id="cb23-605"><a href="#cb23-605"></a><span class="in">  ## Mean(Y(1, G(0)))</span></span>
+<span id="cb23-606"><a href="#cb23-606"></a><span class="in">  mean(pred_pseudo)</span></span>
+<span id="cb23-607"><a href="#cb23-607"></a><span class="in">  ```</span></span>
+<span id="cb23-608"><a href="#cb23-608"></a></span>
+<span id="cb23-609"><a href="#cb23-609"></a><span class="ss">- </span>This was for $(a,a')=(1,0)$. Can do the same with $(a,a')=(1,1)$, and</span>
+<span id="cb23-610"><a href="#cb23-610"></a>  $(a,a')=(0,0)$ to obtain an effect decomposition</span>
+<span id="cb23-611"><a href="#cb23-611"></a></span>
+<span id="cb23-612"><a href="#cb23-612"></a>  \begin{equation*}</span>
+<span id="cb23-613"><a href="#cb23-613"></a>    \E<span class="co">[</span><span class="ot">Y_{1,G_1} - Y_{0,G_0}</span><span class="co">]</span> = \underbrace{\E[Y_{\color{red}{1},</span>
+<span id="cb23-614"><a href="#cb23-614"></a>      \color{blue}{G_1}} -</span>
+<span id="cb23-615"><a href="#cb23-615"></a>      Y_{\color{red}{1},</span>
+<span id="cb23-616"><a href="#cb23-616"></a>      \color{blue}{G_0}}]}_{\text{interventional indirect effect}} +</span>
+<span id="cb23-617"><a href="#cb23-617"></a>      \underbrace{\E[Y_{\color{blue}{1},\color{red}{G_0}} -</span>
+<span id="cb23-618"><a href="#cb23-618"></a>      Y_{\color{blue}{0},</span>
+<span id="cb23-619"><a href="#cb23-619"></a>      \color{red}{G_0}}]}_{\text{interventional direct effect}}</span>
+<span id="cb23-620"><a href="#cb23-620"></a>  \end{equation*}</span>
+<span id="cb23-621"><a href="#cb23-621"></a></span>
+<span id="cb23-622"><a href="#cb23-622"></a><span class="fu">### Is this the estimand I want?</span></span>
+<span id="cb23-623"><a href="#cb23-623"></a></span>
+<span id="cb23-624"><a href="#cb23-624"></a><span class="ss">- </span>Makes sense to intervene on $A$ but not directly on $M$.</span>
+<span id="cb23-625"><a href="#cb23-625"></a><span class="ss">- </span>Goal is to understand a descriptive type of mediation.</span>
+<span id="cb23-626"><a href="#cb23-626"></a><span class="ss">- </span>Okay with the assumptions!</span>
+<span id="cb23-627"><a href="#cb23-627"></a></span>
+<span id="cb23-628"><a href="#cb23-628"></a><span class="fu">### But, there is an important limitation of interventional effects</span></span>
+<span id="cb23-629"><a href="#cb23-629"></a></span>
+<span id="cb23-630"><a href="#cb23-630"></a>@miles2022causal recently uncovered an important limitation of these effects,</span>
+<span id="cb23-631"><a href="#cb23-631"></a>which can be described as follows. The sharp mediational hull hypothesis can be</span>
+<span id="cb23-632"><a href="#cb23-632"></a>defined as</span>
+<span id="cb23-633"><a href="#cb23-633"></a></span>
+<span id="cb23-634"><a href="#cb23-634"></a>$$</span>
+<span id="cb23-635"><a href="#cb23-635"></a>  H_0:Y(a, M(a')) = Y(a, M(a^\star));\text{ for all }a, a', a^\star \ .</span>
+<span id="cb23-636"><a href="#cb23-636"></a>$$</span>
+<span id="cb23-637"><a href="#cb23-637"></a></span>
+<span id="cb23-638"><a href="#cb23-638"></a>The problem is that interventional effects are not guaranteed to be null when</span>
+<span id="cb23-639"><a href="#cb23-639"></a>the sharp mediational hypothesis is true.</span>
+<span id="cb23-640"><a href="#cb23-640"></a></span>
+<span id="cb23-641"><a href="#cb23-641"></a>This could present a problem in practice if some subgroup of the population has</span>
+<span id="cb23-642"><a href="#cb23-642"></a>a relationship between $A$ and $M$, but not between $M$ and $Y$. Then, another</span>
+<span id="cb23-643"><a href="#cb23-643"></a>distinct subgroup of the population has a relationship between $M$ and $Y$ but</span>
+<span id="cb23-644"><a href="#cb23-644"></a>not between $A$ and $M$.  In such a scenario, the interventional indirect effect</span>
+<span id="cb23-645"><a href="#cb23-645"></a>would be nonzero, but there would be no one person in the population whose</span>
+<span id="cb23-646"><a href="#cb23-646"></a>effect of $A$ on $Y$ would be mediated by $M$.</span>
+<span id="cb23-647"><a href="#cb23-647"></a></span>
+<span id="cb23-648"><a href="#cb23-648"></a><span class="co">&lt;!--</span></span>
+<span id="cb23-649"><a href="#cb23-649"></a><span class="co">One counterexample involves creating an NPSEM with independent errors,</span></span>
+<span id="cb23-650"><a href="#cb23-650"></a><span class="co">$W=\emptyset$, and an exogenous binary variable $U_Z$ such that $M(a)</span></span>
+<span id="cb23-651"><a href="#cb23-651"></a><span class="co">= M(a')$ in the event $U_Z=1$ and $Y(a,m') = Y(a,m)$ in the event</span></span>
+<span id="cb23-652"><a href="#cb23-652"></a><span class="co">$U_Z=0$ for all $a$, $a'$, and $m$, such that there is no causal</span></span>
+<span id="cb23-653"><a href="#cb23-653"></a><span class="co">influence of $A$ on $Y$ operating through $M$. It is easy to see that</span></span>
+<span id="cb23-654"><a href="#cb23-654"></a><span class="co">the randomized interventional indirect effect in this example equals</span></span>
+<span id="cb23-655"><a href="#cb23-655"></a></span>
+<span id="cb23-656"><a href="#cb23-656"></a><span class="co">\[\sum_{z,m} E(Y\mid m, z,a) P(Z=z\mid a)[P(M=m\mid a)-P(M=m\mid</span></span>
+<span id="cb23-657"><a href="#cb23-657"></a><span class="co">a')],\]</span></span>
+<span id="cb23-658"><a href="#cb23-658"></a></span>
+<span id="cb23-659"><a href="#cb23-659"></a><span class="co">which is generally not null, and would only be null if $U_Z$</span></span>
+<span id="cb23-660"><a href="#cb23-660"></a><span class="co">was observed and conditioned upon in all the above quantities.</span></span>
+<span id="cb23-661"><a href="#cb23-661"></a><span class="co">--&gt;</span></span>
+<span id="cb23-662"><a href="#cb23-662"></a></span>
+<span id="cb23-663"><a href="#cb23-663"></a>More details in the original paper.</span>
+<span id="cb23-664"><a href="#cb23-664"></a></span>
+<span id="cb23-665"><a href="#cb23-665"></a><span class="fu">## Estimand Summary</span></span>
+<span id="cb23-666"><a href="#cb23-666"></a></span>
+<span id="cb23-667"><a href="#cb23-667"></a><span class="al">![](img/table1.png)</span></span>
+</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div></div></div></div></div>
+</div> <!-- /content -->
+
+
+
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/nhejazi/causal_mediation_workshops/edit/master/effects_defn.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/nhejazi/causal_mediation_workshops/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>

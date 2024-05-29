@@ -1,0 +1,1334 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.554">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>Modern Causal Mediation Analysis - 1&nbsp; Causal mediation analysis intro</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./effects_defn.html" rel="next">
+<link href="./index.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script><script>
+  MathJax = {
+    tex: {
+      tags: 'ams',  // should be 'ams', 'none', or 'all'
+      macros: {
+        E: '{\\mathbb{E}}',
+        V: '{\\mathbb{V}}',
+        P: '{\\mathsf{P}}',
+        M: '{\\mathsf{M}}',
+        Pr: '{\\mathbb{P}}',
+        R: '{\\mathbb{R}}',
+        I: '{\\mathbb{I}}',
+        1: '{\\mathbb{1}}',
+        D: '{\\mathcal{D}}',
+        F: '{\\mathcal{F}}',
+        M: '{\\mathcal{M}}',
+        C: '{\\mathcal{C}}',
+        G: '{\\mathcal{G}}',
+        X: '{\\mathcal{X}}',
+        Z: '{\\mathcal{Z}}',
+        Hold: '{\\mathcal{H}}',
+        lik: '{\\mathcal{L}}',
+        logit: '{\\operatorname{logit}}',
+        expit: '{\\operatorname{expit}}',
+        argmin: '{\\operatorname*{arg\\,min}}',
+        argmax: '{\\operatorname*{arg\\,max}}',
+        indep: '{\\perp\\!\\!\\!\\perp}',
+        notindep: '{\\centernot{\\perp\\!\\!\\!\\perp}}',
+        coloneqq: '{\\mathrel{\\vcenter{:}}=}',
+        iid: '{\\,\\, \\mathbin{\\overset{\\text{iid}}{\\sim}} \\,\\,}',
+        asto: '{\\mathbin{\\underset{a.s.}{\\to}}}',
+        pto: '{\\mathbin{\\underset{p}{\\to}}}',
+        dto: '{\\mathbin{\\underset{d}{\\to}}}'
+      }
+    }
+  };
+</script><script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script><script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+</head>
+<body class="nav-sidebar floating slimcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./preface.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Causal mediation analysis intro</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Modern Causal Mediation Analysis</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/nhejazi/causal_mediation_workshops/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Welcome!</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./preface.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Causal mediation analysis intro</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./effects_defn.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Types of path-specific causal mediation effects</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./how_to_choose.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">How to choose an estimand: Real-world example</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./estimation_prelims.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Estimation preliminaries: review of doubly robust estimators for the average treatment effect</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./estimation_natural_interv.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Construction of G-computation and weighted estimators for the NDE: The case of the natural direct effect</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./estimation_walkthrough.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title"><code>R</code> packages for estimation of the causal (in)direct effects</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./longitudinal.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Mediation with time-varying treatments, mediators, and covariates</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./appx_additional_readings.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Appendix: Additional topics of interest</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./appx_stochastic_effects.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Appendix: Stochastic direct and indirect effects</span></span></a>
+  </div>
+</li>
+    </ul>
+</div>
+</nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Contents</h2>
+   
+  <ul class="collapse">
+<li><a href="#motivating-study" id="toc-motivating-study" class="nav-link active" data-scroll-target="#motivating-study"><span class="header-section-number">1.1</span> Motivating study</a></li>
+  <li><a href="#what-is-causal-mediation-analysis" id="toc-what-is-causal-mediation-analysis" class="nav-link" data-scroll-target="#what-is-causal-mediation-analysis"><span class="header-section-number">1.2</span> What is causal mediation analysis?</a></li>
+  <li><a href="#causal-mediation-models" id="toc-causal-mediation-models" class="nav-link" data-scroll-target="#causal-mediation-models"><span class="header-section-number">1.3</span> Causal mediation models</a></li>
+  <li><a href="#counterfactuals" id="toc-counterfactuals" class="nav-link" data-scroll-target="#counterfactuals"><span class="header-section-number">1.4</span> Counterfactuals</a></li>
+  </ul><div class="toc-actions"><ul class="collapse"><li><a href="https://github.com/nhejazi/causal_mediation_workshops/edit/master/preface.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/nhejazi/causal_mediation_workshops/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content page-columns page-full" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
+<div class="quarto-title-block"><div><h1 class="title"><span id="mediation" class="quarto-section-identifier"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Causal mediation analysis intro</span></span></h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header><div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>- The project is out-of-sync -- use `renv::status()` for details.</code></pre>
+</div>
+</div>
+<section id="motivating-study" class="level2 page-columns page-full" data-number="1.1"><h2 data-number="1.1" class="anchored" data-anchor-id="motivating-study">
+<span class="header-section-number">1.1</span> Motivating study</h2>
+<ul>
+<li><p>A recent, large, multi-site trial (X:BOT) compared the effectiveness of XR-NTX to buprenorphine–naloxone (BUP-NX) in preventing relapse among those with OUD starting medication in inpatient treatment settings.</p></li>
+<li><p>An analysis of potential moderators of medication effectiveness found that homeless individuals had a lower risk of relapse on XR-NTX, whereas non-homeless individuals had a lower risk of relapse on BUP-NX.</p></li>
+<li><p>The effect sizes were similarly large for these groups but in opposite directions.</p></li>
+<li><p>The underlying mechanisms for these differences have not yet been explored. We can to identify these mechanisms by using mediation analysis.</p></li>
+<li><p>We can to use mediation analysis to explore the mechanisms underlying these differences.</p></li>
+<li>
+<p>Key questions:</p>
+<ul>
+<li>Do differences in the effects of treatment (comparing two medications for opioid use disorder, naltrexone vs buprenorphine) on risk of relapse operate through mediators of adherence, opioid use, pain, and depressive symptoms? <span class="citation" data-cites="rudolph2020explaining">(<a href="#ref-rudolph2020explaining" role="doc-biblioref">Rudolph et al. 2020</a>)</span>
+</li>
+<li>Are those mediated effects different for homeless vs non-homeless individuals?</li>
+</ul>
+</li>
+</ul>
+<div class="no-row-height column-margin column-container"><div id="ref-rudolph2020explaining" class="csl-entry" role="listitem">
+Rudolph, Kara, Ivan Diaz, Nima Hejazi, Mark van der Laan, Sean Luo, Matisyahu Shulman, Aimee Campbell, John Rotrosen, and Edward Nunes. 2020. <span>“Explaining Differential Effects of Medication for Opioid Use Disorder Using a Novel Approach Incorporating Mediating Variables.”</span> <em>Addiction</em>.
+</div></div><p><img src="./img/ctndag.png" class="img-fluid"></p>
+</section><section id="what-is-causal-mediation-analysis" class="level2" data-number="1.2"><h2 data-number="1.2" class="anchored" data-anchor-id="what-is-causal-mediation-analysis">
+<span class="header-section-number">1.2</span> What is causal mediation analysis?</h2>
+<ul>
+<li>Statistical mediation analyses assess associations between the variables. They can help you establish, for example, if the <em>association</em> between treatment and outcome can be mostly explained by an <em>association</em> between treatment and mediator</li>
+<li>Causal mediation analyses, on the other hand, seek to asess causal relations. For example, they help you establish whether treatment <em>causes</em> the outcome because it <em>causes</em> the mediator. To do this, causal mediation seek to understand how the paths behave under circumstances different from the observed circumstances (e.g., interventions)</li>
+</ul>
+<!--- Causal mediation analysis is thus useful to understand mechanisms--><section id="why-are-the-causal-methods-that-we-will-discuss-today-important" class="level3" data-number="1.2.1"><h3 data-number="1.2.1" class="anchored" data-anchor-id="why-are-the-causal-methods-that-we-will-discuss-today-important">
+<span class="header-section-number">1.2.1</span> Why are the causal methods that we will discuss today important?</h3>
+<ul>
+<li>Assume you are interested in the effect of treatment assignment <span class="math inline">\(A\)</span> (naltrexone vs.&nbsp;buprenorphine) on an outcome <span class="math inline">\(Y\)</span> (risk of relapse) through mediators <span class="math inline">\(M\)</span> (e.g., opioid use, pain, depressive symptoms)</li>
+<li>We have pre-treatment confounders <span class="math inline">\(W\)</span>
+</li>
+<li>There is a confounder <span class="math inline">\(Z\)</span> of <span class="math inline">\(M \rightarrow Y\)</span> affected by treatment assignment (with adherence)</li>
+<li>We could fit the following models: <span class="math display">\[\begin{align}
+    \E(M \mid A=a, W=w, Z=z) &amp; = \gamma_0 + \gamma_1 a + \gamma_2 w + \gamma_3 z \\
+    \E(Y \mid M=m, A=a, W=w, Z=z) &amp; = \beta_0 + \beta_1 m + \beta_2 a + \beta_3 w + \beta_4 z
+  \end{align}\]</span>
+</li>
+<li>The product <span class="math inline">\(\gamma_1 \beta_1\)</span> has been proposed as a measure of the effect of <span class="math inline">\(A\)</span> on <span class="math inline">\(Y\)</span> through <span class="math inline">\(M\)</span>
+</li>
+<li>Causal interpretation problems with this method: We will see that this parameter cannot be interpreted as a causal effect</li>
+</ul></section><section id="r-example" class="level3" data-number="1.2.2"><h3 data-number="1.2.2" class="anchored" data-anchor-id="r-example">
+<span class="header-section-number">1.2.2</span> <code>R</code> Example:</h3>
+<ul>
+<li>Assume we have a pre-treamtment confounder of <span class="math inline">\(Y\)</span> and <span class="math inline">\(M\)</span>, denote it with <span class="math inline">\(W\)</span>
+</li>
+<li>For simplicity, assume <span class="math inline">\(A\)</span> is randomized</li>
+<li>We’ll generate a really large sample from a data generating mechanism so that we are not concerned with sampling errors</li>
+</ul>
+<div class="cell">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>n <span class="ot">&lt;-</span> <span class="fl">1e6</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a>w <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n)</span>
+<span id="cb2-3"><a href="#cb2-3"></a>a <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(n, <span class="dv">1</span>, <span class="fl">0.5</span>)</span>
+<span id="cb2-4"><a href="#cb2-4"></a>z <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(n, <span class="dv">1</span>, <span class="fl">0.2</span> <span class="sc">*</span> a <span class="sc">+</span> <span class="fl">0.3</span>)</span>
+<span id="cb2-5"><a href="#cb2-5"></a>m <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, w <span class="sc">+</span> z)</span>
+<span id="cb2-6"><a href="#cb2-6"></a>y <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, m <span class="sc">+</span> w <span class="sc">-</span> a <span class="sc">+</span> z)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<ul>
+<li>Note that the indirect effect (i.e., the effect through <span class="math inline">\(M\)</span>) in this example is nonzero (there is a pathway <span class="math inline">\(A \rightarrow Z \rightarrow M \rightarrow Y\)</span>)</li>
+<li>Let’s see what the product of coefficients method would say:</li>
+</ul>
+<div class="cell">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>lm_y <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> m <span class="sc">+</span> a <span class="sc">+</span> w <span class="sc">+</span> z)</span>
+<span id="cb3-2"><a href="#cb3-2"></a>lm_m <span class="ot">&lt;-</span> <span class="fu">lm</span>(m <span class="sc">~</span> a <span class="sc">+</span> w <span class="sc">+</span> z)</span>
+<span id="cb3-3"><a href="#cb3-3"></a><span class="do">## product of coefficients</span></span>
+<span id="cb3-4"><a href="#cb3-4"></a><span class="fu">coef</span>(lm_y)[<span class="dv">2</span>] <span class="sc">*</span> <span class="fu">coef</span>(lm_m)[<span class="dv">2</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>           m 
+-0.001363311 </code></pre>
+</div>
+</div>
+<p>Among other things, in this workshop:</p>
+<ul>
+<li>We will provide some understanding for why the above method fails in this example</li>
+<li>We will study estimators that are robust to misspecification in the above models</li>
+</ul></section></section><section id="causal-mediation-models" class="level2" data-number="1.3"><h2 data-number="1.3" class="anchored" data-anchor-id="causal-mediation-models">
+<span class="header-section-number">1.3</span> Causal mediation models</h2>
+<p>In this workshop we will use directed acyclic graphs. We will focus on the two types of graph:</p>
+<section id="no-intermediate-confounders" class="level3" data-number="1.3.1"><h3 data-number="1.3.1" class="anchored" data-anchor-id="no-intermediate-confounders">
+<span class="header-section-number">1.3.1</span> No intermediate confounders</h3>
+<div class="cell">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource tex number-lines code-with-copy"><code class="sourceCode latex"><span id="cb5-1"><a href="#cb5-1"></a><span class="fu">\dimendef\prevdepth</span>=0</span>
+<span id="cb5-2"><a href="#cb5-2"></a><span class="fu">\pgfdeclarelayer</span>{background}</span>
+<span id="cb5-3"><a href="#cb5-3"></a><span class="fu">\pgfsetlayers</span>{background,main}</span>
+<span id="cb5-4"><a href="#cb5-4"></a><span class="fu">\usetikzlibrary</span>{arrows,positioning}</span>
+<span id="cb5-5"><a href="#cb5-5"></a><span class="fu">\tikzset</span>{</span>
+<span id="cb5-6"><a href="#cb5-6"></a>&gt;=stealth',</span>
+<span id="cb5-7"><a href="#cb5-7"></a>punkt/.style={</span>
+<span id="cb5-8"><a href="#cb5-8"></a>rectangle,</span>
+<span id="cb5-9"><a href="#cb5-9"></a>rounded corners,</span>
+<span id="cb5-10"><a href="#cb5-10"></a>draw=black, very thick,</span>
+<span id="cb5-11"><a href="#cb5-11"></a>text width=6.5em,</span>
+<span id="cb5-12"><a href="#cb5-12"></a>minimum height=2em,</span>
+<span id="cb5-13"><a href="#cb5-13"></a>text centered},</span>
+<span id="cb5-14"><a href="#cb5-14"></a>pil/.style={</span>
+<span id="cb5-15"><a href="#cb5-15"></a>-&gt;,</span>
+<span id="cb5-16"><a href="#cb5-16"></a>thick,</span>
+<span id="cb5-17"><a href="#cb5-17"></a>shorten &lt;=2pt,</span>
+<span id="cb5-18"><a href="#cb5-18"></a>shorten &gt;=2pt,}</span>
+<span id="cb5-19"><a href="#cb5-19"></a>}</span>
+<span id="cb5-20"><a href="#cb5-20"></a><span class="fu">\newcommand</span>{<span class="ex">\Vertex</span>}[2]</span>
+<span id="cb5-21"><a href="#cb5-21"></a>{<span class="fu">\node</span>[minimum width=0.6cm,inner sep=0.05cm] (#2) at (#1) {<span class="ss">$#2$</span>};</span>
+<span id="cb5-22"><a href="#cb5-22"></a>}</span>
+<span id="cb5-23"><a href="#cb5-23"></a><span class="fu">\newcommand</span>{<span class="ex">\VertexR</span>}[2]</span>
+<span id="cb5-24"><a href="#cb5-24"></a>{<span class="fu">\node</span>[rectangle, draw, minimum width=0.6cm,inner sep=0.05cm] (#2) at (#1) {<span class="ss">$#2$</span>};</span>
+<span id="cb5-25"><a href="#cb5-25"></a>}</span>
+<span id="cb5-26"><a href="#cb5-26"></a><span class="fu">\newcommand</span>{<span class="ex">\ArrowR</span>}[3]</span>
+<span id="cb5-27"><a href="#cb5-27"></a>{ <span class="kw">\begin</span>{<span class="ex">pgfonlayer</span>}{background}</span>
+<span id="cb5-28"><a href="#cb5-28"></a><span class="fu">\draw</span>[-&gt;,#3] (#1) to[bend right=30] (#2);</span>
+<span id="cb5-29"><a href="#cb5-29"></a><span class="kw">\end</span>{<span class="ex">pgfonlayer</span>}</span>
+<span id="cb5-30"><a href="#cb5-30"></a>}</span>
+<span id="cb5-31"><a href="#cb5-31"></a><span class="fu">\newcommand</span>{<span class="ex">\ArrowL</span>}[3]</span>
+<span id="cb5-32"><a href="#cb5-32"></a>{ <span class="kw">\begin</span>{<span class="ex">pgfonlayer</span>}{background}</span>
+<span id="cb5-33"><a href="#cb5-33"></a><span class="fu">\draw</span>[-&gt;,#3] (#1) to[bend left=45] (#2);</span>
+<span id="cb5-34"><a href="#cb5-34"></a><span class="kw">\end</span>{<span class="ex">pgfonlayer</span>}</span>
+<span id="cb5-35"><a href="#cb5-35"></a>}</span>
+<span id="cb5-36"><a href="#cb5-36"></a><span class="fu">\newcommand</span>{<span class="ex">\EdgeL</span>}[3]</span>
+<span id="cb5-37"><a href="#cb5-37"></a>{ <span class="kw">\begin</span>{<span class="ex">pgfonlayer</span>}{background}</span>
+<span id="cb5-38"><a href="#cb5-38"></a><span class="fu">\draw</span>[dashed,#3] (#1) to[bend right=-45] (#2);</span>
+<span id="cb5-39"><a href="#cb5-39"></a><span class="kw">\end</span>{<span class="ex">pgfonlayer</span>}</span>
+<span id="cb5-40"><a href="#cb5-40"></a>}</span>
+<span id="cb5-41"><a href="#cb5-41"></a><span class="fu">\newcommand</span>{<span class="ex">\Arrow</span>}[3]</span>
+<span id="cb5-42"><a href="#cb5-42"></a>{ <span class="kw">\begin</span>{<span class="ex">pgfonlayer</span>}{background}</span>
+<span id="cb5-43"><a href="#cb5-43"></a><span class="fu">\draw</span>[-&gt;,#3] (#1) -- +(#2);</span>
+<span id="cb5-44"><a href="#cb5-44"></a><span class="kw">\end</span>{<span class="ex">pgfonlayer</span>}</span>
+<span id="cb5-45"><a href="#cb5-45"></a>}</span>
+<span id="cb5-46"><a href="#cb5-46"></a><span class="kw">\begin</span>{<span class="ex">tikzpicture</span>}</span>
+<span id="cb5-47"><a href="#cb5-47"></a>  <span class="fu">\Vertex</span>{-4, 0}{W}</span>
+<span id="cb5-48"><a href="#cb5-48"></a>  <span class="fu">\Vertex</span>{0, 0}{M}</span>
+<span id="cb5-49"><a href="#cb5-49"></a>  <span class="fu">\Vertex</span>{-2, 0}{A}</span>
+<span id="cb5-50"><a href="#cb5-50"></a>  <span class="fu">\Vertex</span>{2, 0}{Y}</span>
+<span id="cb5-51"><a href="#cb5-51"></a>  <span class="fu">\Arrow</span>{W}{A}{black}</span>
+<span id="cb5-52"><a href="#cb5-52"></a>  <span class="fu">\Arrow</span>{A}{M}{black}</span>
+<span id="cb5-53"><a href="#cb5-53"></a>  <span class="fu">\Arrow</span>{M}{Y}{black}</span>
+<span id="cb5-54"><a href="#cb5-54"></a>  <span class="fu">\ArrowL</span>{W}{Y}{black}</span>
+<span id="cb5-55"><a href="#cb5-55"></a>  <span class="fu">\ArrowL</span>{A}{Y}{black}</span>
+<span id="cb5-56"><a href="#cb5-56"></a>  <span class="fu">\ArrowL</span>{W}{M}{black}</span>
+<span id="cb5-57"><a href="#cb5-57"></a><span class="kw">\end</span>{<span class="ex">tikzpicture</span>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="preface_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="768"></p>
+<figcaption>Directed acyclic graph under <em>no intermediate confounders</em> of the mediator-outcome relation affected by treatment</figcaption></figure>
+</div>
+</div>
+</div>
+</section><section id="intermediate-confounders" class="level3" data-number="1.3.2"><h3 data-number="1.3.2" class="anchored" data-anchor-id="intermediate-confounders">
+<span class="header-section-number">1.3.2</span> Intermediate confounders</h3>
+<div class="cell">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="preface_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="768"></p>
+<figcaption>Directed acyclic graph under intermediate confounders of the mediator-outcome relation affected by treatment</figcaption></figure>
+</div>
+</div>
+</div>
+<p>The above graphs can be interpreted as a <em>non-parametric structural equation model</em> (NPSEM), also known as <em>structural causal model</em> (SCM):</p>
+<p><span class="math display">\[\begin{align}
+  W &amp; = f_W(U_W) \nonumber \\
+  A &amp; = f_A(W, U_A) \nonumber \\
+  Z &amp; = f_Z(W, A, U_Z) \nonumber \\
+  M &amp; = f_M(W, A, Z, U_M) \nonumber \\
+  Y &amp; = f_Y(W, A, Z, M, U_Y)
+\end{align}\]</span></p>
+<ul>
+<li>Here <span class="math inline">\(U=(U_W, U_A, U_Z, U_M, U_Y)\)</span> is a vector of all unmeasured exogenous factors affecting the system</li>
+<li>The functions <span class="math inline">\(f\)</span> are assumed fixed but unknown</li>
+<li>We posit this model as a system of equations that nature uses to generate the data</li>
+<li>Therefore we leave the functions <span class="math inline">\(f\)</span> unspecified (i.e., we do not know the true nature mechanisms)</li>
+<li>Sometimes we know something: e.g., if <span class="math inline">\(A\)</span> is randomized we know <span class="math inline">\(A=f_A(U_A)\)</span> where <span class="math inline">\(U_A\)</span> is the flip of a coin (i.e., independent of everything).</li>
+</ul></section></section><section id="counterfactuals" class="level2" data-number="1.4"><h2 data-number="1.4" class="anchored" data-anchor-id="counterfactuals">
+<span class="header-section-number">1.4</span> Counterfactuals</h2>
+<ul>
+<li>Recall that we are interested in assessing how the pathways would behave under circumstances different from the observed circumstances</li>
+<li>We operationalize this idea using <em>counterfactual</em> random variables</li>
+<li>Counterfactuals are hypothetical random variables that would have been observed in an alternative world where something had happened, possibly contrary to fact <!--we would be able to perform interventions on the
+  random variables of interest-->
+</li>
+</ul>
+<section id="we-will-use-the-following-counterfactual-variables" class="level3 unnumbered"><h3 class="unnumbered anchored" data-anchor-id="we-will-use-the-following-counterfactual-variables">We will use the following counterfactual variables:</h3>
+<ul>
+<li>
+<span class="math inline">\(Y_a\)</span> is a counterfactual variable in a hypothetical world where <span class="math inline">\(\P(A=a)=1\)</span> with probability one for some value <span class="math inline">\(a\)</span>
+</li>
+<li>
+<span class="math inline">\(Y_{a,m}\)</span> is the counterfactual outcome in a world where <span class="math inline">\(\P(A=a,M=m)=1\)</span>
+</li>
+<li>
+<span class="math inline">\(M_a\)</span> is the counterfactual variable representing the mediator in a world where <span class="math inline">\(\P(A=a)=1\)</span>.</li>
+</ul></section><section id="how-are-counterfactuals-defined" class="level3" data-number="1.4.1"><h3 data-number="1.4.1" class="anchored" data-anchor-id="how-are-counterfactuals-defined">
+<span class="header-section-number">1.4.1</span> How are counterfactuals defined?</h3>
+<!-- - You can use counterfactual variables as _primitives_ -->
+<ul>
+<li>In the NPSEM framework, counterfactuals are quantities <em>derived</em> from the model.</li>
+<li>Once you define a change to the causal system, that change needs to be progagated downstream.
+<ul>
+<li>Example: modifying the system to make everyone receive XR-NTX yields counterfactual adherence, mediators, and outcomes.</li>
+</ul>
+</li>
+<li>Take as example the DAG in Figure 1.2: <span class="math display">\[\begin{align}
+  A    &amp;= a \nonumber \\
+  Z_a  &amp;= f_Z(W, a, U_M) \nonumber \\
+  M_a  &amp;= f_M(W, a, Z_a, U_M) \nonumber \\
+  Y_a  &amp;= f_Y(W, a, Z_a, M_a, U_Y)
+\end{align}\]</span>
+</li>
+<li>We will also be interested in <em>joint changes</em> to the system: <span class="math display">\[\begin{align}
+  A        &amp;= a \nonumber \\
+  Z_a      &amp;= f_Z(W, a, U_M) \nonumber \\
+  M        &amp;= m \nonumber \\
+  Y_{a,m}  &amp;= f_Y(W, a, Z_a, m, U_Y)
+\end{align}\]</span>
+</li>
+<li>And, perhaps more importantly, we will use <em>nested counterfactuals</em>
+</li>
+<li>For example, if <span class="math inline">\(A\)</span> is binary, you can think of the following counterfactual <span class="math display">\[\begin{align}
+  A          &amp;= 1 \nonumber \\
+  Z_1        &amp;= f_Z(W, 1, U_M) \nonumber \\
+  M          &amp;= M_0 \nonumber \\
+  Y_{1, M_0} &amp;= f_Y(W, 1, Z_1, M_0, U_Y)
+\end{align}\]</span>
+</li>
+<li>
+<span class="math inline">\(Y_{1, M_0}\)</span> is interpreted as <em>the outcome for an individual in a hypothetical world where treatment was given but the mediator was held at the value it would have taken under no treatment</em>.</li>
+<li>Causal mediation effects are often defined in terms of the distribution of these nested counterfactuals.</li>
+<li>That is, causal effects give you information about what would have happened <em>in some hypothetical world</em> where the mediator and treatment mechanisms changed.</li>
+</ul>
+
+
+<!-- -->
+
+
+</section></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  const viewSource = window.document.getElementById('quarto-view-source') ||
+                     window.document.getElementById('quarto-code-tools-source');
+  if (viewSource) {
+    const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+    viewSource.addEventListener("click", function(e) {
+      if (sourceUrl) {
+        // rstudio viewer pane
+        if (/\bcapabilities=\b/.test(window.location)) {
+          window.open(sourceUrl);
+        } else {
+          window.location.href = sourceUrl;
+        }
+      } else {
+        const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+        modal.show();
+      }
+      return false;
+    });
+  }
+  function toggleCodeHandler(show) {
+    return function(e) {
+      const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+      for (let i=0; i<detailsSrc.length; i++) {
+        const details = detailsSrc[i].parentElement;
+        if (show) {
+          details.open = true;
+        } else {
+          details.removeAttribute("open");
+        }
+      }
+      const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+      const fromCls = show ? "hidden" : "unhidden";
+      const toCls = show ? "unhidden" : "hidden";
+      for (let i=0; i<cellCodeDivs.length; i++) {
+        const codeDiv = cellCodeDivs[i];
+        if (codeDiv.classList.contains(fromCls)) {
+          codeDiv.classList.remove(fromCls);
+          codeDiv.classList.add(toCls);
+        } 
+      }
+      return false;
+    }
+  }
+  const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+  if (hideAllCode) {
+    hideAllCode.addEventListener("click", toggleCodeHandler(false));
+  }
+  const showAllCode = window.document.getElementById("quarto-show-all-code");
+  if (showAllCode) {
+    showAllCode.addEventListener("click", toggleCodeHandler(true));
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/codex\.nimahejazi\.org\/causal_mediation_workshops\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script><nav class="page-navigation"><div class="nav-page nav-page-previous">
+      <a href="./index.html" class="pagination-link" aria-label="Welcome!">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Welcome!</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./effects_defn.html" class="pagination-link" aria-label="Types of path-specific causal mediation effects">
+        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Types of path-specific causal mediation effects</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="sourceCode" id="cb6" data-shortcodes="false"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb6-1"><a href="#cb6-1"></a><span class="fu"># Causal mediation analysis intro {#mediation}</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a></span>
+<span id="cb6-5"><a href="#cb6-5"></a><span class="in">```{r}</span></span>
+<span id="cb6-6"><a href="#cb6-6"></a><span class="co">#| label: load-renv</span></span>
+<span id="cb6-7"><a href="#cb6-7"></a><span class="co">#| echo: false</span></span>
+<span id="cb6-8"><a href="#cb6-8"></a><span class="co">#| message: false</span></span>
+<span id="cb6-9"><a href="#cb6-9"></a>renv<span class="sc">::</span><span class="fu">load</span>(here<span class="sc">::</span><span class="fu">here</span>())</span>
+<span id="cb6-10"><a href="#cb6-10"></a><span class="fu">library</span>(here)</span>
+<span id="cb6-11"><a href="#cb6-11"></a><span class="in">```</span></span>
+<span id="cb6-12"><a href="#cb6-12"></a></span>
+<span id="cb6-13"><a href="#cb6-13"></a><span class="fu">## Motivating study</span></span>
+<span id="cb6-14"><a href="#cb6-14"></a></span>
+<span id="cb6-15"><a href="#cb6-15"></a><span class="ss">- </span>A recent, large, multi-site trial (X:BOT) compared the effectiveness of XR-NTX</span>
+<span id="cb6-16"><a href="#cb6-16"></a>  to buprenorphine–naloxone (BUP-NX) in preventing relapse among those with OUD</span>
+<span id="cb6-17"><a href="#cb6-17"></a>  starting medication in inpatient treatment settings.</span>
+<span id="cb6-18"><a href="#cb6-18"></a><span class="ss">- </span>An analysis of potential moderators of medication effectiveness found that</span>
+<span id="cb6-19"><a href="#cb6-19"></a>  homeless individuals had a lower risk of relapse on XR-NTX, whereas</span>
+<span id="cb6-20"><a href="#cb6-20"></a>  non-homeless individuals had a lower risk of relapse on BUP-NX.</span>
+<span id="cb6-21"><a href="#cb6-21"></a><span class="ss">- </span>The effect sizes were similarly large for these groups but in opposite</span>
+<span id="cb6-22"><a href="#cb6-22"></a>  directions.</span>
+<span id="cb6-23"><a href="#cb6-23"></a><span class="ss">- </span>The underlying mechanisms for these differences have not yet been explored. We</span>
+<span id="cb6-24"><a href="#cb6-24"></a>  can to identify these mechanisms by using mediation analysis.</span>
+<span id="cb6-25"><a href="#cb6-25"></a><span class="ss">- </span>We can to use mediation analysis to explore the mechanisms underlying these</span>
+<span id="cb6-26"><a href="#cb6-26"></a>  differences.</span>
+<span id="cb6-27"><a href="#cb6-27"></a></span>
+<span id="cb6-28"><a href="#cb6-28"></a><span class="ss">- </span>Key questions:</span>
+<span id="cb6-29"><a href="#cb6-29"></a><span class="ss">  - </span>Do differences in the effects of treatment (comparing two medications for</span>
+<span id="cb6-30"><a href="#cb6-30"></a>    opioid use disorder, naltrexone vs buprenorphine) on risk of relapse operate</span>
+<span id="cb6-31"><a href="#cb6-31"></a>    through mediators of adherence, opioid use, pain, and depressive symptoms?</span>
+<span id="cb6-32"><a href="#cb6-32"></a>    <span class="co">[</span><span class="ot">@rudolph2020explaining</span><span class="co">]</span></span>
+<span id="cb6-33"><a href="#cb6-33"></a><span class="ss">  - </span>Are those mediated effects different for homeless vs non-homeless</span>
+<span id="cb6-34"><a href="#cb6-34"></a>    individuals?</span>
+<span id="cb6-35"><a href="#cb6-35"></a></span>
+<span id="cb6-36"><a href="#cb6-36"></a><span class="al">![](/img/ctndag.png)</span></span>
+<span id="cb6-37"><a href="#cb6-37"></a></span>
+<span id="cb6-38"><a href="#cb6-38"></a><span class="fu">## What is causal mediation analysis?</span></span>
+<span id="cb6-39"><a href="#cb6-39"></a></span>
+<span id="cb6-40"><a href="#cb6-40"></a><span class="ss">- </span>Statistical mediation analyses assess associations between the</span>
+<span id="cb6-41"><a href="#cb6-41"></a>  variables. They can help you establish, for example, if the</span>
+<span id="cb6-42"><a href="#cb6-42"></a>  _association_ between treatment and outcome can be mostly explained</span>
+<span id="cb6-43"><a href="#cb6-43"></a>  by an _association_ between treatment and mediator</span>
+<span id="cb6-44"><a href="#cb6-44"></a><span class="ss">- </span>Causal mediation analyses, on the other hand, seek to asess causal</span>
+<span id="cb6-45"><a href="#cb6-45"></a>  relations. For example, they help you establish whether treatment</span>
+<span id="cb6-46"><a href="#cb6-46"></a>  _causes_ the outcome because it _causes_ the mediator. To do this,</span>
+<span id="cb6-47"><a href="#cb6-47"></a>  causal mediation seek to understand how the</span>
+<span id="cb6-48"><a href="#cb6-48"></a>  paths behave under circumstances different from the observed</span>
+<span id="cb6-49"><a href="#cb6-49"></a>  circumstances (e.g., interventions)</span>
+<span id="cb6-50"><a href="#cb6-50"></a></span>
+<span id="cb6-51"><a href="#cb6-51"></a><span class="co">&lt;!--- Causal mediation analysis is thus useful to understand mechanisms--&gt;</span></span>
+<span id="cb6-52"><a href="#cb6-52"></a></span>
+<span id="cb6-53"><a href="#cb6-53"></a><span class="fu">### Why are the causal methods that we will discuss today important?</span></span>
+<span id="cb6-54"><a href="#cb6-54"></a></span>
+<span id="cb6-55"><a href="#cb6-55"></a><span class="ss">- </span>Assume you are interested in the effect of treatment assignment $A$</span>
+<span id="cb6-56"><a href="#cb6-56"></a>  (naltrexone vs. buprenorphine) on an outcome $Y$ (risk of relapse) through</span>
+<span id="cb6-57"><a href="#cb6-57"></a>  mediators $M$ (e.g., opioid use, pain, depressive symptoms)</span>
+<span id="cb6-58"><a href="#cb6-58"></a><span class="ss">- </span>We have pre-treatment confounders $W$</span>
+<span id="cb6-59"><a href="#cb6-59"></a><span class="ss">- </span>There is a confounder $Z$ of $M \rightarrow Y$ affected by treatment</span>
+<span id="cb6-60"><a href="#cb6-60"></a>  assignment (with adherence)</span>
+<span id="cb6-61"><a href="#cb6-61"></a><span class="ss">- </span>We could fit the following models:</span>
+<span id="cb6-62"><a href="#cb6-62"></a>    \begin{align}</span>
+<span id="cb6-63"><a href="#cb6-63"></a>      \E(M \mid A=a, W=w, Z=z) &amp; = \gamma_0 + \gamma_1 a + \gamma_2 w + \gamma_3 z <span class="sc">\\</span></span>
+<span id="cb6-64"><a href="#cb6-64"></a>      \E(Y \mid M=m, A=a, W=w, Z=z) &amp; = \beta_0 + \beta_1 m + \beta_2 a + \beta_3 w + \beta_4 z</span>
+<span id="cb6-65"><a href="#cb6-65"></a>    \end{align}</span>
+<span id="cb6-66"><a href="#cb6-66"></a><span class="ss">- </span>The product $\gamma_1 \beta_1$ has been proposed as a measure of the effect</span>
+<span id="cb6-67"><a href="#cb6-67"></a>  of $A$ on $Y$ through $M$</span>
+<span id="cb6-68"><a href="#cb6-68"></a><span class="ss">- </span>Causal interpretation problems with this method: We will see that this</span>
+<span id="cb6-69"><a href="#cb6-69"></a>  parameter cannot be interpreted as a causal effect</span>
+<span id="cb6-70"><a href="#cb6-70"></a></span>
+<span id="cb6-71"><a href="#cb6-71"></a><span class="fu">### `R` Example:</span></span>
+<span id="cb6-72"><a href="#cb6-72"></a><span class="ss">- </span>Assume we have a pre-treamtment confounder of $Y$ and $M$, denote it with $W$</span>
+<span id="cb6-73"><a href="#cb6-73"></a><span class="ss">- </span>For simplicity, assume $A$ is randomized</span>
+<span id="cb6-74"><a href="#cb6-74"></a><span class="ss">- </span>We'll generate a really large sample from a data generating mechanism so that</span>
+<span id="cb6-75"><a href="#cb6-75"></a>  we are not concerned with sampling errors</span>
+<span id="cb6-78"><a href="#cb6-78"></a><span class="in">```{r}</span></span>
+<span id="cb6-79"><a href="#cb6-79"></a>n <span class="ot">&lt;-</span> <span class="fl">1e6</span></span>
+<span id="cb6-80"><a href="#cb6-80"></a>w <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n)</span>
+<span id="cb6-81"><a href="#cb6-81"></a>a <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(n, <span class="dv">1</span>, <span class="fl">0.5</span>)</span>
+<span id="cb6-82"><a href="#cb6-82"></a>z <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(n, <span class="dv">1</span>, <span class="fl">0.2</span> <span class="sc">*</span> a <span class="sc">+</span> <span class="fl">0.3</span>)</span>
+<span id="cb6-83"><a href="#cb6-83"></a>m <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, w <span class="sc">+</span> z)</span>
+<span id="cb6-84"><a href="#cb6-84"></a>y <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, m <span class="sc">+</span> w <span class="sc">-</span> a <span class="sc">+</span> z)</span>
+<span id="cb6-85"><a href="#cb6-85"></a><span class="in">```</span></span>
+<span id="cb6-86"><a href="#cb6-86"></a></span>
+<span id="cb6-87"><a href="#cb6-87"></a><span class="ss">- </span>Note that the indirect effect (i.e., the effect through $M$) in this example</span>
+<span id="cb6-88"><a href="#cb6-88"></a>  is nonzero (there is a pathway $A \rightarrow Z \rightarrow M \rightarrow Y$)</span>
+<span id="cb6-89"><a href="#cb6-89"></a><span class="ss">- </span>Let's see what the product of coefficients method would say:</span>
+<span id="cb6-90"><a href="#cb6-90"></a></span>
+<span id="cb6-93"><a href="#cb6-93"></a><span class="in">```{r}</span></span>
+<span id="cb6-94"><a href="#cb6-94"></a>lm_y <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> m <span class="sc">+</span> a <span class="sc">+</span> w <span class="sc">+</span> z)</span>
+<span id="cb6-95"><a href="#cb6-95"></a>lm_m <span class="ot">&lt;-</span> <span class="fu">lm</span>(m <span class="sc">~</span> a <span class="sc">+</span> w <span class="sc">+</span> z)</span>
+<span id="cb6-96"><a href="#cb6-96"></a><span class="do">## product of coefficients</span></span>
+<span id="cb6-97"><a href="#cb6-97"></a><span class="fu">coef</span>(lm_y)[<span class="dv">2</span>] <span class="sc">*</span> <span class="fu">coef</span>(lm_m)[<span class="dv">2</span>]</span>
+<span id="cb6-98"><a href="#cb6-98"></a><span class="in">```</span></span>
+<span id="cb6-99"><a href="#cb6-99"></a></span>
+<span id="cb6-100"><a href="#cb6-100"></a>Among other things, in this workshop:</span>
+<span id="cb6-101"><a href="#cb6-101"></a></span>
+<span id="cb6-102"><a href="#cb6-102"></a><span class="ss">- </span>We will provide some understanding for why the above method fails in this</span>
+<span id="cb6-103"><a href="#cb6-103"></a>  example</span>
+<span id="cb6-104"><a href="#cb6-104"></a><span class="ss">- </span>We will study estimators that are robust to misspecification in the above</span>
+<span id="cb6-105"><a href="#cb6-105"></a>  models</span>
+<span id="cb6-106"><a href="#cb6-106"></a></span>
+<span id="cb6-107"><a href="#cb6-107"></a><span class="fu">## Causal mediation models</span></span>
+<span id="cb6-108"><a href="#cb6-108"></a></span>
+<span id="cb6-109"><a href="#cb6-109"></a>In this workshop we will use directed acyclic graphs. We will focus on the two</span>
+<span id="cb6-110"><a href="#cb6-110"></a>types of graph:</span>
+<span id="cb6-111"><a href="#cb6-111"></a></span>
+<span id="cb6-112"><a href="#cb6-112"></a><span class="fu">### No intermediate confounders</span></span>
+<span id="cb6-113"><a href="#cb6-113"></a></span>
+<span id="cb6-116"><a href="#cb6-116"></a><span class="in">```{tikz}</span></span>
+<span id="cb6-117"><a href="#cb6-117"></a><span class="in">#| fig-cap: Directed acyclic graph under *no intermediate confounders* of the mediator-outcome relation affected by treatment</span></span>
+<span id="cb6-118"><a href="#cb6-118"></a><span class="in">\dimendef\prevdepth=0</span></span>
+<span id="cb6-119"><a href="#cb6-119"></a><span class="in">\pgfdeclarelayer{background}</span></span>
+<span id="cb6-120"><a href="#cb6-120"></a><span class="in">\pgfsetlayers{background,main}</span></span>
+<span id="cb6-121"><a href="#cb6-121"></a><span class="in">\usetikzlibrary{arrows,positioning}</span></span>
+<span id="cb6-122"><a href="#cb6-122"></a><span class="in">\tikzset{</span></span>
+<span id="cb6-123"><a href="#cb6-123"></a><span class="in">&gt;=stealth',</span></span>
+<span id="cb6-124"><a href="#cb6-124"></a><span class="in">punkt/.style={</span></span>
+<span id="cb6-125"><a href="#cb6-125"></a><span class="in">rectangle,</span></span>
+<span id="cb6-126"><a href="#cb6-126"></a><span class="in">rounded corners,</span></span>
+<span id="cb6-127"><a href="#cb6-127"></a><span class="in">draw=black, very thick,</span></span>
+<span id="cb6-128"><a href="#cb6-128"></a><span class="in">text width=6.5em,</span></span>
+<span id="cb6-129"><a href="#cb6-129"></a><span class="in">minimum height=2em,</span></span>
+<span id="cb6-130"><a href="#cb6-130"></a><span class="in">text centered},</span></span>
+<span id="cb6-131"><a href="#cb6-131"></a><span class="in">pil/.style={</span></span>
+<span id="cb6-132"><a href="#cb6-132"></a><span class="in">-&gt;,</span></span>
+<span id="cb6-133"><a href="#cb6-133"></a><span class="in">thick,</span></span>
+<span id="cb6-134"><a href="#cb6-134"></a><span class="in">shorten &lt;=2pt,</span></span>
+<span id="cb6-135"><a href="#cb6-135"></a><span class="in">shorten &gt;=2pt,}</span></span>
+<span id="cb6-136"><a href="#cb6-136"></a><span class="in">}</span></span>
+<span id="cb6-137"><a href="#cb6-137"></a><span class="in">\newcommand{\Vertex}[2]</span></span>
+<span id="cb6-138"><a href="#cb6-138"></a><span class="in">{\node[minimum width=0.6cm,inner sep=0.05cm] (#2) at (#1) {$#2$};</span></span>
+<span id="cb6-139"><a href="#cb6-139"></a><span class="in">}</span></span>
+<span id="cb6-140"><a href="#cb6-140"></a><span class="in">\newcommand{\VertexR}[2]</span></span>
+<span id="cb6-141"><a href="#cb6-141"></a><span class="in">{\node[rectangle, draw, minimum width=0.6cm,inner sep=0.05cm] (#2) at (#1) {$#2$};</span></span>
+<span id="cb6-142"><a href="#cb6-142"></a><span class="in">}</span></span>
+<span id="cb6-143"><a href="#cb6-143"></a><span class="in">\newcommand{\ArrowR}[3]</span></span>
+<span id="cb6-144"><a href="#cb6-144"></a><span class="in">{ \begin{pgfonlayer}{background}</span></span>
+<span id="cb6-145"><a href="#cb6-145"></a><span class="in">\draw[-&gt;,#3] (#1) to[bend right=30] (#2);</span></span>
+<span id="cb6-146"><a href="#cb6-146"></a><span class="in">\end{pgfonlayer}</span></span>
+<span id="cb6-147"><a href="#cb6-147"></a><span class="in">}</span></span>
+<span id="cb6-148"><a href="#cb6-148"></a><span class="in">\newcommand{\ArrowL}[3]</span></span>
+<span id="cb6-149"><a href="#cb6-149"></a><span class="in">{ \begin{pgfonlayer}{background}</span></span>
+<span id="cb6-150"><a href="#cb6-150"></a><span class="in">\draw[-&gt;,#3] (#1) to[bend left=45] (#2);</span></span>
+<span id="cb6-151"><a href="#cb6-151"></a><span class="in">\end{pgfonlayer}</span></span>
+<span id="cb6-152"><a href="#cb6-152"></a><span class="in">}</span></span>
+<span id="cb6-153"><a href="#cb6-153"></a><span class="in">\newcommand{\EdgeL}[3]</span></span>
+<span id="cb6-154"><a href="#cb6-154"></a><span class="in">{ \begin{pgfonlayer}{background}</span></span>
+<span id="cb6-155"><a href="#cb6-155"></a><span class="in">\draw[dashed,#3] (#1) to[bend right=-45] (#2);</span></span>
+<span id="cb6-156"><a href="#cb6-156"></a><span class="in">\end{pgfonlayer}</span></span>
+<span id="cb6-157"><a href="#cb6-157"></a><span class="in">}</span></span>
+<span id="cb6-158"><a href="#cb6-158"></a><span class="in">\newcommand{\Arrow}[3]</span></span>
+<span id="cb6-159"><a href="#cb6-159"></a><span class="in">{ \begin{pgfonlayer}{background}</span></span>
+<span id="cb6-160"><a href="#cb6-160"></a><span class="in">\draw[-&gt;,#3] (#1) -- +(#2);</span></span>
+<span id="cb6-161"><a href="#cb6-161"></a><span class="in">\end{pgfonlayer}</span></span>
+<span id="cb6-162"><a href="#cb6-162"></a><span class="in">}</span></span>
+<span id="cb6-163"><a href="#cb6-163"></a><span class="in">\begin{tikzpicture}</span></span>
+<span id="cb6-164"><a href="#cb6-164"></a><span class="in">  \Vertex{-4, 0}{W}</span></span>
+<span id="cb6-165"><a href="#cb6-165"></a><span class="in">  \Vertex{0, 0}{M}</span></span>
+<span id="cb6-166"><a href="#cb6-166"></a><span class="in">  \Vertex{-2, 0}{A}</span></span>
+<span id="cb6-167"><a href="#cb6-167"></a><span class="in">  \Vertex{2, 0}{Y}</span></span>
+<span id="cb6-168"><a href="#cb6-168"></a><span class="in">  \Arrow{W}{A}{black}</span></span>
+<span id="cb6-169"><a href="#cb6-169"></a><span class="in">  \Arrow{A}{M}{black}</span></span>
+<span id="cb6-170"><a href="#cb6-170"></a><span class="in">  \Arrow{M}{Y}{black}</span></span>
+<span id="cb6-171"><a href="#cb6-171"></a><span class="in">  \ArrowL{W}{Y}{black}</span></span>
+<span id="cb6-172"><a href="#cb6-172"></a><span class="in">  \ArrowL{A}{Y}{black}</span></span>
+<span id="cb6-173"><a href="#cb6-173"></a><span class="in">  \ArrowL{W}{M}{black}</span></span>
+<span id="cb6-174"><a href="#cb6-174"></a><span class="in">\end{tikzpicture}</span></span>
+<span id="cb6-175"><a href="#cb6-175"></a><span class="in">```</span></span>
+<span id="cb6-176"><a href="#cb6-176"></a></span>
+<span id="cb6-177"><a href="#cb6-177"></a><span class="fu">### Intermediate confounders</span></span>
+<span id="cb6-178"><a href="#cb6-178"></a></span>
+<span id="cb6-179"><a href="#cb6-179"></a><span class="in">```{r, engine="tikz", fig.cap = "Directed acyclic graph under intermediate confounders of the mediator-outcome relation affected by treatment", fig.ext=if (knitr:::is_latex_output()) "pdf" else "png", echo = FALSE}</span></span>
+<span id="cb6-180"><a href="#cb6-180"></a><span class="in">\dimendef\prevdepth=0</span></span>
+<span id="cb6-181"><a href="#cb6-181"></a><span class="in">\pgfdeclarelayer{background}</span></span>
+<span id="cb6-182"><a href="#cb6-182"></a><span class="in">\pgfsetlayers{background,main}</span></span>
+<span id="cb6-183"><a href="#cb6-183"></a><span class="in">\usetikzlibrary{arrows,positioning}</span></span>
+<span id="cb6-184"><a href="#cb6-184"></a><span class="in">\tikzset{</span></span>
+<span id="cb6-185"><a href="#cb6-185"></a><span class="in">&gt;=stealth',</span></span>
+<span id="cb6-186"><a href="#cb6-186"></a><span class="in">punkt/.style={</span></span>
+<span id="cb6-187"><a href="#cb6-187"></a><span class="in">rectangle,</span></span>
+<span id="cb6-188"><a href="#cb6-188"></a><span class="in">rounded corners,</span></span>
+<span id="cb6-189"><a href="#cb6-189"></a><span class="in">draw=black, very thick,</span></span>
+<span id="cb6-190"><a href="#cb6-190"></a><span class="in">text width=6.5em,</span></span>
+<span id="cb6-191"><a href="#cb6-191"></a><span class="in">minimum height=2em,</span></span>
+<span id="cb6-192"><a href="#cb6-192"></a><span class="in">text centered},</span></span>
+<span id="cb6-193"><a href="#cb6-193"></a><span class="in">pil/.style={</span></span>
+<span id="cb6-194"><a href="#cb6-194"></a><span class="in">-&gt;,</span></span>
+<span id="cb6-195"><a href="#cb6-195"></a><span class="in">thick,</span></span>
+<span id="cb6-196"><a href="#cb6-196"></a><span class="in">shorten &lt;=2pt,</span></span>
+<span id="cb6-197"><a href="#cb6-197"></a><span class="in">shorten &gt;=2pt,}</span></span>
+<span id="cb6-198"><a href="#cb6-198"></a><span class="in">}</span></span>
+<span id="cb6-199"><a href="#cb6-199"></a><span class="in">\newcommand{\Vertex}[2]</span></span>
+<span id="cb6-200"><a href="#cb6-200"></a><span class="in">{\node[minimum width=0.6cm,inner sep=0.05cm] (#2) at (#1) {$#2$};</span></span>
+<span id="cb6-201"><a href="#cb6-201"></a><span class="in">}</span></span>
+<span id="cb6-202"><a href="#cb6-202"></a><span class="in">\newcommand{\VertexR}[2]</span></span>
+<span id="cb6-203"><a href="#cb6-203"></a><span class="in">{\node[rectangle, draw, minimum width=0.6cm,inner sep=0.05cm] (#2) at (#1) {$#2$};</span></span>
+<span id="cb6-204"><a href="#cb6-204"></a><span class="in">}</span></span>
+<span id="cb6-205"><a href="#cb6-205"></a><span class="in">\newcommand{\ArrowR}[3]</span></span>
+<span id="cb6-206"><a href="#cb6-206"></a><span class="in">{ \begin{pgfonlayer}{background}</span></span>
+<span id="cb6-207"><a href="#cb6-207"></a><span class="in">\draw[-&gt;,#3] (#1) to[bend right=30] (#2);</span></span>
+<span id="cb6-208"><a href="#cb6-208"></a><span class="in">\end{pgfonlayer}</span></span>
+<span id="cb6-209"><a href="#cb6-209"></a><span class="in">}</span></span>
+<span id="cb6-210"><a href="#cb6-210"></a><span class="in">\newcommand{\ArrowL}[3]</span></span>
+<span id="cb6-211"><a href="#cb6-211"></a><span class="in">{ \begin{pgfonlayer}{background}</span></span>
+<span id="cb6-212"><a href="#cb6-212"></a><span class="in">\draw[-&gt;,#3] (#1) to[bend left=45] (#2);</span></span>
+<span id="cb6-213"><a href="#cb6-213"></a><span class="in">\end{pgfonlayer}</span></span>
+<span id="cb6-214"><a href="#cb6-214"></a><span class="in">}</span></span>
+<span id="cb6-215"><a href="#cb6-215"></a><span class="in">\newcommand{\EdgeL}[3]</span></span>
+<span id="cb6-216"><a href="#cb6-216"></a><span class="in">{ \begin{pgfonlayer}{background}</span></span>
+<span id="cb6-217"><a href="#cb6-217"></a><span class="in">\draw[dashed,#3] (#1) to[bend right=-45] (#2);</span></span>
+<span id="cb6-218"><a href="#cb6-218"></a><span class="in">\end{pgfonlayer}</span></span>
+<span id="cb6-219"><a href="#cb6-219"></a><span class="in">}</span></span>
+<span id="cb6-220"><a href="#cb6-220"></a><span class="in">\newcommand{\Arrow}[3]</span></span>
+<span id="cb6-221"><a href="#cb6-221"></a><span class="in">{ \begin{pgfonlayer}{background}</span></span>
+<span id="cb6-222"><a href="#cb6-222"></a><span class="in">\draw[-&gt;,#3] (#1) -- +(#2);</span></span>
+<span id="cb6-223"><a href="#cb6-223"></a><span class="in">\end{pgfonlayer}</span></span>
+<span id="cb6-224"><a href="#cb6-224"></a><span class="in">}</span></span>
+<span id="cb6-225"><a href="#cb6-225"></a><span class="in">\begin{tikzpicture}</span></span>
+<span id="cb6-226"><a href="#cb6-226"></a><span class="in">  \Vertex{0, -1}{Z}</span></span>
+<span id="cb6-227"><a href="#cb6-227"></a><span class="in">  \Vertex{-4, 0}{W}</span></span>
+<span id="cb6-228"><a href="#cb6-228"></a><span class="in">  \Vertex{0, 0}{M}</span></span>
+<span id="cb6-229"><a href="#cb6-229"></a><span class="in">  \Vertex{-2, 0}{A}</span></span>
+<span id="cb6-230"><a href="#cb6-230"></a><span class="in">  \Vertex{2, 0}{Y}</span></span>
+<span id="cb6-231"><a href="#cb6-231"></a><span class="in">  \ArrowR{W}{Z}{black}</span></span>
+<span id="cb6-232"><a href="#cb6-232"></a><span class="in">  \Arrow{Z}{M}{black}</span></span>
+<span id="cb6-233"><a href="#cb6-233"></a><span class="in">  \Arrow{W}{A}{black}</span></span>
+<span id="cb6-234"><a href="#cb6-234"></a><span class="in">  \Arrow{A}{M}{black}</span></span>
+<span id="cb6-235"><a href="#cb6-235"></a><span class="in">  \Arrow{M}{Y}{black}</span></span>
+<span id="cb6-236"><a href="#cb6-236"></a><span class="in">  \Arrow{A}{Z}{black}</span></span>
+<span id="cb6-237"><a href="#cb6-237"></a><span class="in">  \Arrow{Z}{Y}{black}</span></span>
+<span id="cb6-238"><a href="#cb6-238"></a><span class="in">  \ArrowL{W}{Y}{black}</span></span>
+<span id="cb6-239"><a href="#cb6-239"></a><span class="in">  \ArrowL{A}{Y}{black}</span></span>
+<span id="cb6-240"><a href="#cb6-240"></a><span class="in">  \ArrowL{W}{M}{black}</span></span>
+<span id="cb6-241"><a href="#cb6-241"></a><span class="in">\end{tikzpicture}</span></span>
+<span id="cb6-242"><a href="#cb6-242"></a><span class="in">```</span></span>
+<span id="cb6-243"><a href="#cb6-243"></a></span>
+<span id="cb6-244"><a href="#cb6-244"></a>The above graphs can be interpreted as a _non-parametric structural equation</span>
+<span id="cb6-245"><a href="#cb6-245"></a>model_ (NPSEM), also known as _structural causal model_ (SCM):</span>
+<span id="cb6-246"><a href="#cb6-246"></a></span>
+<span id="cb6-247"><a href="#cb6-247"></a>\begin{align}</span>
+<span id="cb6-248"><a href="#cb6-248"></a>  W &amp; = f_W(U_W) \nonumber <span class="sc">\\</span></span>
+<span id="cb6-249"><a href="#cb6-249"></a>  A &amp; = f_A(W, U_A) \nonumber <span class="sc">\\</span></span>
+<span id="cb6-250"><a href="#cb6-250"></a>  Z &amp; = f_Z(W, A, U_Z) \nonumber <span class="sc">\\</span></span>
+<span id="cb6-251"><a href="#cb6-251"></a>  M &amp; = f_M(W, A, Z, U_M) \nonumber <span class="sc">\\</span></span>
+<span id="cb6-252"><a href="#cb6-252"></a>  Y &amp; = f_Y(W, A, Z, M, U_Y)</span>
+<span id="cb6-253"><a href="#cb6-253"></a>\end{align}</span>
+<span id="cb6-254"><a href="#cb6-254"></a></span>
+<span id="cb6-255"><a href="#cb6-255"></a><span class="ss">- </span>Here $U=(U_W, U_A, U_Z, U_M, U_Y)$ is a vector of all unmeasured exogenous</span>
+<span id="cb6-256"><a href="#cb6-256"></a>  factors affecting the system</span>
+<span id="cb6-257"><a href="#cb6-257"></a><span class="ss">- </span>The functions $f$ are assumed fixed but unknown</span>
+<span id="cb6-258"><a href="#cb6-258"></a><span class="ss">- </span>We posit this model as a system of equations that nature uses to generate the</span>
+<span id="cb6-259"><a href="#cb6-259"></a>  data</span>
+<span id="cb6-260"><a href="#cb6-260"></a><span class="ss">- </span>Therefore we leave the functions $f$ unspecified (i.e., we do not know the</span>
+<span id="cb6-261"><a href="#cb6-261"></a>  true nature mechanisms)</span>
+<span id="cb6-262"><a href="#cb6-262"></a><span class="ss">- </span>Sometimes we know something: e.g., if $A$ is randomized we know $A=f_A(U_A)$</span>
+<span id="cb6-263"><a href="#cb6-263"></a>  where $U_A$ is the flip of a coin (i.e., independent of everything).</span>
+<span id="cb6-264"><a href="#cb6-264"></a></span>
+<span id="cb6-265"><a href="#cb6-265"></a><span class="fu">## Counterfactuals</span></span>
+<span id="cb6-266"><a href="#cb6-266"></a></span>
+<span id="cb6-267"><a href="#cb6-267"></a><span class="ss">- </span>Recall that we are interested in assessing how the pathways would behave under</span>
+<span id="cb6-268"><a href="#cb6-268"></a>  circumstances different from the observed circumstances</span>
+<span id="cb6-269"><a href="#cb6-269"></a><span class="ss">- </span>We operationalize this idea using _counterfactual_ random variables</span>
+<span id="cb6-270"><a href="#cb6-270"></a><span class="ss">- </span>Counterfactuals are hypothetical random variables that would have been</span>
+<span id="cb6-271"><a href="#cb6-271"></a>  observed in an alternative world where something had happened, possibly</span>
+<span id="cb6-272"><a href="#cb6-272"></a>  contrary to fact <span class="co">&lt;!--we would be able to perform interventions on the</span></span>
+<span id="cb6-273"><a href="#cb6-273"></a><span class="co">  random variables of interest--&gt;</span></span>
+<span id="cb6-274"><a href="#cb6-274"></a></span>
+<span id="cb6-275"><a href="#cb6-275"></a><span class="fu">### We will use the following counterfactual variables: {-}</span></span>
+<span id="cb6-276"><a href="#cb6-276"></a></span>
+<span id="cb6-277"><a href="#cb6-277"></a><span class="ss">- </span>$Y_a$ is a counterfactual variable in a hypothetical world where $\P(A=a)=1$</span>
+<span id="cb6-278"><a href="#cb6-278"></a>  with probability one for some value $a$</span>
+<span id="cb6-279"><a href="#cb6-279"></a><span class="ss">- </span>$Y_{a,m}$ is the counterfactual outcome in a world where $\P(A=a,M=m)=1$</span>
+<span id="cb6-280"><a href="#cb6-280"></a><span class="ss">- </span>$M_a$ is the counterfactual variable representing the mediator in a world</span>
+<span id="cb6-281"><a href="#cb6-281"></a>  where $\P(A=a)=1$.</span>
+<span id="cb6-282"><a href="#cb6-282"></a></span>
+<span id="cb6-283"><a href="#cb6-283"></a><span class="fu">### How are counterfactuals defined?</span></span>
+<span id="cb6-284"><a href="#cb6-284"></a></span>
+<span id="cb6-285"><a href="#cb6-285"></a><span class="co">&lt;!-- - You can use counterfactual variables as _primitives_ --&gt;</span></span>
+<span id="cb6-286"><a href="#cb6-286"></a><span class="ss">- </span>In the NPSEM framework, counterfactuals are quantities _derived_ from the</span>
+<span id="cb6-287"><a href="#cb6-287"></a>  model.</span>
+<span id="cb6-288"><a href="#cb6-288"></a><span class="ss">- </span>Once you define a change to the causal system, that change needs to be</span>
+<span id="cb6-289"><a href="#cb6-289"></a>  progagated downstream.</span>
+<span id="cb6-290"><a href="#cb6-290"></a><span class="ss">  - </span>Example: modifying the system to make everyone receive XR-NTX yields</span>
+<span id="cb6-291"><a href="#cb6-291"></a>    counterfactual adherence, mediators, and outcomes.</span>
+<span id="cb6-292"><a href="#cb6-292"></a><span class="ss">- </span>Take as example the DAG in Figure 1.2:</span>
+<span id="cb6-293"><a href="#cb6-293"></a>  \begin{align}</span>
+<span id="cb6-294"><a href="#cb6-294"></a>    A    &amp;= a \nonumber <span class="sc">\\</span></span>
+<span id="cb6-295"><a href="#cb6-295"></a>    Z_a  &amp;= f_Z(W, a, U_M) \nonumber <span class="sc">\\</span></span>
+<span id="cb6-296"><a href="#cb6-296"></a>    M_a  &amp;= f_M(W, a, Z_a, U_M) \nonumber <span class="sc">\\</span></span>
+<span id="cb6-297"><a href="#cb6-297"></a>    Y_a  &amp;= f_Y(W, a, Z_a, M_a, U_Y)</span>
+<span id="cb6-298"><a href="#cb6-298"></a>\end{align}</span>
+<span id="cb6-299"><a href="#cb6-299"></a><span class="ss">- </span>We will also be interested in _joint changes_ to the system:</span>
+<span id="cb6-300"><a href="#cb6-300"></a>  \begin{align}</span>
+<span id="cb6-301"><a href="#cb6-301"></a>    A        &amp;= a \nonumber <span class="sc">\\</span></span>
+<span id="cb6-302"><a href="#cb6-302"></a>    Z_a      &amp;= f_Z(W, a, U_M) \nonumber <span class="sc">\\</span></span>
+<span id="cb6-303"><a href="#cb6-303"></a>    M        &amp;= m \nonumber <span class="sc">\\</span></span>
+<span id="cb6-304"><a href="#cb6-304"></a>    Y_{a,m}  &amp;= f_Y(W, a, Z_a, m, U_Y)</span>
+<span id="cb6-305"><a href="#cb6-305"></a>\end{align}</span>
+<span id="cb6-306"><a href="#cb6-306"></a><span class="ss">- </span>And, perhaps more importantly, we will use _nested counterfactuals_</span>
+<span id="cb6-307"><a href="#cb6-307"></a><span class="ss">- </span>For example, if $A$ is binary, you can think of the following counterfactual</span>
+<span id="cb6-308"><a href="#cb6-308"></a>  \begin{align}</span>
+<span id="cb6-309"><a href="#cb6-309"></a>    A          &amp;= 1 \nonumber <span class="sc">\\</span></span>
+<span id="cb6-310"><a href="#cb6-310"></a>    Z_1        &amp;= f_Z(W, 1, U_M) \nonumber <span class="sc">\\</span></span>
+<span id="cb6-311"><a href="#cb6-311"></a>    M          &amp;= M_0 \nonumber <span class="sc">\\</span></span>
+<span id="cb6-312"><a href="#cb6-312"></a>    Y_{1, M_0} &amp;= f_Y(W, 1, Z_1, M_0, U_Y)</span>
+<span id="cb6-313"><a href="#cb6-313"></a>  \end{align}</span>
+<span id="cb6-314"><a href="#cb6-314"></a><span class="ss">- </span>$Y_{1, M_0}$ is interpreted as *the outcome for an individual in a</span>
+<span id="cb6-315"><a href="#cb6-315"></a>  hypothetical world where treatment was given but the mediator was held at the</span>
+<span id="cb6-316"><a href="#cb6-316"></a>  value it would have taken under no treatment*.</span>
+<span id="cb6-317"><a href="#cb6-317"></a><span class="ss">- </span>Causal mediation effects are often defined in terms of the distribution of</span>
+<span id="cb6-318"><a href="#cb6-318"></a>  these nested counterfactuals.</span>
+<span id="cb6-319"><a href="#cb6-319"></a><span class="ss">- </span>That is, causal effects give you information about what would have happened</span>
+<span id="cb6-320"><a href="#cb6-320"></a>  *in some hypothetical world* where the mediator and treatment mechanisms</span>
+<span id="cb6-321"><a href="#cb6-321"></a>  changed.</span>
+</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div></div></div></div></div>
+</div> <!-- /content -->
+
+
+
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/nhejazi/causal_mediation_workshops/edit/master/preface.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/nhejazi/causal_mediation_workshops/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>
