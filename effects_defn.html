@@ -199,7 +199,7 @@ window.Quarto = {
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Modern Causal Mediation Analysis</a> 
         <div class="sidebar-tools-main">
-    <a href="https://github.com/nhejazi/causal_mediation_workshops/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="https://github.com/nhejazi/steno2024_mediation_workshop/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
   <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
   <div class="quarto-reader-toggle-btn">
   <i class="bi"></i>
@@ -287,7 +287,7 @@ window.Quarto = {
   <li><a href="#natural-direct-and-indirect-effects" id="toc-natural-direct-and-indirect-effects" class="nav-link" data-scroll-target="#natural-direct-and-indirect-effects"><span class="header-section-number">2.2</span> Natural direct and indirect effects</a></li>
   <li><a href="#interventional-indirect-effects" id="toc-interventional-indirect-effects" class="nav-link" data-scroll-target="#interventional-indirect-effects"><span class="header-section-number">2.3</span> Interventional (in)direct effects</a></li>
   <li><a href="#estimand-summary" id="toc-estimand-summary" class="nav-link" data-scroll-target="#estimand-summary"><span class="header-section-number">2.4</span> Estimand Summary</a></li>
-  </ul><div class="toc-actions"><ul class="collapse"><li><a href="https://github.com/nhejazi/causal_mediation_workshops/edit/master/effects_defn.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/nhejazi/causal_mediation_workshops/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+  </ul><div class="toc-actions"><ul class="collapse"><li><a href="https://github.com/nhejazi/steno2024_mediation_workshop/edit/master/effects_defn.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/nhejazi/steno2024_mediation_workshop/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content page-columns page-full" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
@@ -445,7 +445,7 @@ window.Quarto = {
 <details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="do">## CDE at m = 0</span></span>
 <span id="cb6-2"><a href="#cb6-2"></a><span class="fu">mean</span>(pred_y1 <span class="sc">-</span> pred_y0)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.9990842</code></pre>
+<pre><code>[1] 0.9987367</code></pre>
 </div>
 </div>
 </li>
@@ -570,7 +570,7 @@ A=0, M, W)}\color{Goldenrod}{\mid A=0,W\}}\)</span></p>
 <span id="cb12-2"><a href="#cb12-2"></a><span class="do">## NDE:</span></span>
 <span id="cb12-3"><a href="#cb12-3"></a><span class="fu">mean</span>(pred_pseudo)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
-<pre><code>[1] 1.001073</code></pre>
+<pre><code>[1] 0.9959407</code></pre>
 </div>
 </div>
 </li>
@@ -889,7 +889,7 @@ Tchetgen Tchetgen, Eric J, and Tyler J VanderWeele. 2014. <span>“On Identifica
 <details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a><span class="do">## Mean(Y(1, G(0)))</span></span>
 <span id="cb21-2"><a href="#cb21-2"></a><span class="fu">mean</span>(pred_pseudo)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
-<pre><code>[1] 1.194464</code></pre>
+<pre><code>[1] 1.198942</code></pre>
 </div>
 </div>
 </li>
@@ -1076,7 +1076,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp("https:\/\/codex\.nimahejazi\.org\/causal_mediation_workshops\/");
+      var filterRegex = new RegExp("https:\/\/codex\.nimahejazi\.org\/steno2024_mediation_workshop\/");
     var isInternal = (href) => {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
@@ -2079,4 +2079,4 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/nhejazi/causal_mediation_workshops/edit/master/effects_defn.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/nhejazi/causal_mediation_workshops/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/nhejazi/steno2024_mediation_workshop/edit/master/effects_defn.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/nhejazi/steno2024_mediation_workshop/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>

@@ -199,7 +199,7 @@ window.Quarto = {
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Modern Causal Mediation Analysis</a> 
         <div class="sidebar-tools-main">
-    <a href="https://github.com/nhejazi/causal_mediation_workshops/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="https://github.com/nhejazi/steno2024_mediation_workshop/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
   <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
   <div class="quarto-reader-toggle-btn">
   <i class="bi"></i>
@@ -303,7 +303,7 @@ window.Quarto = {
   <li><a href="#a-note-about-cross-fitting" id="toc-a-note-about-cross-fitting" class="nav-link" data-scroll-target="#a-note-about-cross-fitting"><span class="header-section-number">6.4</span> A note about cross-fitting</a></li>
   </ul>
 </li>
-  </ul><div class="toc-actions"><ul class="collapse"><li><a href="https://github.com/nhejazi/causal_mediation_workshops/edit/master/estimation_natural_interv.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/nhejazi/causal_mediation_workshops/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+  </ul><div class="toc-actions"><ul class="collapse"><li><a href="https://github.com/nhejazi/steno2024_mediation_workshop/edit/master/estimation_natural_interv.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/nhejazi/steno2024_mediation_workshop/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content page-columns page-full" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
@@ -851,7 +851,7 @@ window.Quarto = {
 <details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="do">## One-step estimator</span></span>
 <span id="cb13-2"><a href="#cb13-2"></a><span class="fu">mean</span>(eif)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.4608033</code></pre>
+<pre><code>[1] 0.6069674</code></pre>
 </div>
 </div>
 </li>
@@ -896,7 +896,7 @@ van der Laan, Mark J, Eric C Polley, and Alan E Hubbard. 2007. <span>“<span>Su
 <span id="cb16-3"><a href="#cb16-3"></a>  <span class="sc">+</span> (<span class="fu">mean_y</span>(<span class="dv">0</span>, <span class="dv">1</span>, w_big) <span class="sc">-</span> <span class="fu">mean_y</span>(<span class="dv">0</span>, <span class="dv">0</span>, w_big)) <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> <span class="fu">mean_m</span>(<span class="dv">0</span>, w_big)))</span>
 <span id="cb16-4"><a href="#cb16-4"></a><span class="fu">print</span>(trueval)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.5805508</code></pre>
+<pre><code>[1] 0.5805669</code></pre>
 </div>
 </div>
 <ul>
@@ -1120,7 +1120,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp("https:\/\/codex\.nimahejazi\.org\/causal_mediation_workshops\/");
+      var filterRegex = new RegExp("https:\/\/codex\.nimahejazi\.org\/steno2024_mediation_workshop\/");
     var isInternal = (href) => {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
@@ -2107,4 +2107,4 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/nhejazi/causal_mediation_workshops/edit/master/estimation_natural_interv.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/nhejazi/causal_mediation_workshops/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/nhejazi/steno2024_mediation_workshop/edit/master/estimation_natural_interv.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/nhejazi/steno2024_mediation_workshop/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>

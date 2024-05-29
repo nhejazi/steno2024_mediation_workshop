@@ -198,7 +198,7 @@ window.Quarto = {
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Modern Causal Mediation Analysis</a> 
         <div class="sidebar-tools-main">
-    <a href="https://github.com/nhejazi/causal_mediation_workshops/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="https://github.com/nhejazi/steno2024_mediation_workshop/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
   <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
   <div class="quarto-reader-toggle-btn">
   <i class="bi"></i>
@@ -288,7 +288,7 @@ window.Quarto = {
   <li><a href="#identification-assumptions" id="toc-identification-assumptions" class="nav-link" data-scroll-target="#identification-assumptions"><span class="header-section-number">9.4</span> Identification assumptions</a></li>
   <li><a href="#what-are-the-odds-of-exposure-under-intervention-vs-real-world" id="toc-what-are-the-odds-of-exposure-under-intervention-vs-real-world" class="nav-link" data-scroll-target="#what-are-the-odds-of-exposure-under-intervention-vs-real-world"><span class="header-section-number">9.5</span> What are the odds of exposure under intervention vs real world?</a></li>
   <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">9.6</span> Summary</a></li>
-  </ul><div class="toc-actions"><ul class="collapse"><li><a href="https://github.com/nhejazi/causal_mediation_workshops/edit/master/appx_stochastic_effects.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/nhejazi/causal_mediation_workshops/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+  </ul><div class="toc-actions"><ul class="collapse"><li><a href="https://github.com/nhejazi/steno2024_mediation_workshop/edit/master/appx_stochastic_effects.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/nhejazi/steno2024_mediation_workshop/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content page-columns page-full" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
@@ -598,7 +598,7 @@ Y_{A,M_{A}}\)</span></p></li>
 <details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="do">## E[Y(Adelta) - Y(Adelta, M)]</span></span>
 <span id="cb12-2"><a href="#cb12-2"></a><span class="fu">mean</span>(indirect)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.1094772</code></pre>
+<pre><code>[1] 0.1088416</code></pre>
 </div>
 </div>
 </li>
@@ -614,7 +614,7 @@ Y_{A,M_{A}}\)</span></p></li>
 <span id="cb14-2"><a href="#cb14-2"></a>       (pred_y1_a0 <span class="sc">-</span> y) <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> pscore_delta)</span>
 <span id="cb14-3"><a href="#cb14-3"></a><span class="fu">mean</span>(direct)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.1093145</code></pre>
+<pre><code>[1] 0.1087929</code></pre>
 </div>
 </div>
 </li>
@@ -777,7 +777,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp("https:\/\/codex\.nimahejazi\.org\/causal_mediation_workshops\/");
+      var filterRegex = new RegExp("https:\/\/codex\.nimahejazi\.org\/steno2024_mediation_workshop\/");
     var isInternal = (href) => {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
@@ -1416,4 +1416,4 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/nhejazi/causal_mediation_workshops/edit/master/appx_stochastic_effects.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/nhejazi/causal_mediation_workshops/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/nhejazi/steno2024_mediation_workshop/edit/master/appx_stochastic_effects.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/nhejazi/steno2024_mediation_workshop/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>
